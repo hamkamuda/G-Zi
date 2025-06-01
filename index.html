@@ -1,13 +1,53 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>G-zi - Gizi Interaktif</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>G-zi</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 1s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .form-section {
+      background-color: #e6f4ea;
+      padding: 2rem;
+      border-radius: 10px;
+      margin-bottom: 2rem;
+    }
+
+    input[type="number"] {
+      padding: 0.5rem;
+      margin: 0.5rem 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    button.calc-btn {
+      padding: 0.5rem 1rem;
+      background-color: #0e3f1f;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button.calc-btn:hover {
+      background-color: #14883b;
+    }
+  </style>
 </head>
-<body>
+<body class="fade-in">
   <header class="header">
     <div class="container">
       <h1 class="logo">G-zi</h1>
@@ -21,39 +61,48 @@
     </div>
   </header>
 
-  <main class="main">
+  <main class="main container">
     <section id="imt" class="section">
       <h2>Perhitungan Indeks Massa Tubuh</h2>
-      <!-- Form IMT -->
+      <div class="form-section">
+        <input type="number" id="berat" placeholder="Berat badan (kg)" />
+        <input type="number" id="tinggi" placeholder="Tinggi badan (cm)" />
+        <button class="calc-btn" onclick="hitungIMT()">Hitung IMT</button>
+        <p id="hasilIMT"></p>
+      </div>
     </section>
 
-    <section id="bbi" class="section bg-light">
+    <section id="bbi" class="section">
       <h2>Perhitungan Berat Badan Ideal</h2>
-      <!-- Form BB Ideal -->
+      <div class="form-section">
+        <input type="number" id="tinggiBBI" placeholder="Tinggi badan (cm)" />
+        <button class="calc-btn" onclick="hitungBBI()">Hitung BB Ideal</button>
+        <p id="hasilBBI"></p>
+      </div>
     </section>
 
-    <section id="rekomendasi" class="section">
+    <section id="rekomendasi" class="section bg-light">
       <h2>Rekomendasi Makanan</h2>
       <div class="kategori">
-        <button onclick="tampilkanKategori('anak')">Anak</button>
-        <button onclick="tampilkanKategori('remaja')">Remaja</button>
-        <button onclick="tampilkanKategori('dewasa')">Dewasa</button>
-        <button onclick="tampilkanKategori('lansia')">Lansia</button>
-        <button onclick="tampilkanKategori('hamil')">Ibu Hamil</button>
+        <button onclick="tampilkanGambar('anak')">Anak</button>
+        <button onclick="tampilkanGambar('remaja')">Remaja</button>
+        <button onclick="tampilkanGambar('dewasa')">Dewasa</button>
+        <button onclick="tampilkanGambar('lansia')">Lansia</button>
+        <button onclick="tampilkanGambar('hamil')">Ibu Hamil</button>
       </div>
-      <div id="galeri-makanan" class="galeri"></div>
+      <div class="galeri" id="galeriGambar"></div>
     </section>
 
-    <section id="informasi" class="section bg-light">
+    <section id="informasi" class="section">
       <h2>Informasi Gizi</h2>
-      <!-- List berita/penemuan -->
+      <p>Berita dan penemuan terkait gizi akan ditambahkan di sini.</p>
     </section>
 
-    <section id="kontak" class="section">
+    <section id="kontak" class="section bg-light">
       <h2>Kontak</h2>
       <p>Email: <a href="mailto:01012001.fiqri@gmail.com">01012001.fiqri@gmail.com</a></p>
-      <p>Instagram: <a href="https://instagram.com/username" target="_blank">@username</a></p>
-      <p>LinkedIn: <a href="https://linkedin.com/in/username" target="_blank">linkedin.com/in/username</a></p>
+      <p>Instagram: <a href="https://instagram.com/username">@username</a></p>
+      <p>LinkedIn: <a href="https://linkedin.com/in/username">linkedin.com/in/username</a></p>
     </section>
   </main>
 
@@ -62,34 +111,60 @@
   </footer>
 
   <script>
-    const dataGambar = {
+    function hitungIMT() {
+      const berat = parseFloat(document.getElementById("berat").value);
+      const tinggi = parseFloat(document.getElementById("tinggi").value) / 100;
+      const hasil = berat / (tinggi * tinggi);
+      document.getElementById("hasilIMT").textContent = `IMT Anda adalah ${hasil.toFixed(2)}`;
+    }
+
+    function hitungBBI() {
+      const tinggi = parseFloat(document.getElementById("tinggiBBI").value);
+      const hasil = (tinggi - 100) - (0.1 * (tinggi - 100));
+      document.getElementById("hasilBBI").textContent = `Berat badan ideal Anda adalah ${hasil.toFixed(1)} kg`;
+    }
+
+    const gambarData = {
       anak: [
-        { src: 'img/makanan-anak-1.jpg', alt: 'Buah Segar' },
-        { src: 'img/makanan-anak-2.jpg', alt: 'Sayuran Berwarna' },
+        { src: "img/anak1.jpg", alt: "Makanan Anak 1" },
+        { src: "img/anak2.jpg", alt: "Makanan Anak 2" }
       ],
       remaja: [
-        { src: 'img/makanan-remaja-1.jpg', alt: 'Sereal Sehat' },
-        { src: 'img/makanan-remaja-2.jpg', alt: 'Protein Nabati' },
+        { src: "img/remaja1.jpg", alt: "Makanan Remaja 1" },
+        { src: "img/remaja2.jpg", alt: "Makanan Remaja 2" }
       ],
       dewasa: [
-        { src: 'img/makanan-dewasa-1.jpg', alt: 'Karbohidrat Kompleks' },
-        { src: 'img/makanan-dewasa-2.jpg', alt: 'Salad Sehat' },
+        { src: "img/dewasa1.jpg", alt: "Makanan Dewasa 1" },
+        { src: "img/dewasa2.jpg", alt: "Makanan Dewasa 2" }
       ],
       lansia: [
-        { src: 'img/makanan-lansia-1.jpg', alt: 'Sup Lembut' },
-        { src: 'img/makanan-lansia-2.jpg', alt: 'Puding Buah' },
+        { src: "img/lansia1.jpg", alt: "Makanan Lansia 1" },
+        { src: "img/lansia2.jpg", alt: "Makanan Lansia 2" }
       ],
       hamil: [
-        { src: 'img/makanan-hamil-1.jpg', alt: 'Susu Ibu' },
-        { src: 'img/makanan-hamil-2.jpg', alt: 'Sayur Hijau' },
+        { src: "img/hamil1.jpg", alt: "Makanan Ibu Hamil 1" },
+        { src: "img/hamil2.jpg", alt: "Makanan Ibu Hamil 2" }
       ]
     };
 
-    function tampilkanKategori(kategori) {
-      const galeri = document.getElementById('galeri-makanan');
-      galeri.innerHTML = dataGambar[kategori].map(item =>
-        `<div class="gambar-item"><img src="${item.src}" alt="${item.alt}"><p>${item.alt}</p></div>`
-      ).join('');
+    function tampilkanGambar(kategori) {
+      const galeri = document.getElementById("galeriGambar");
+      galeri.innerHTML = "";
+      gambarData[kategori].forEach(item => {
+        const div = document.createElement("div");
+        div.classList.add("gambar-item");
+
+        const img = document.createElement("img");
+        img.src = item.src;
+        img.alt = item.alt;
+
+        const caption = document.createElement("p");
+        caption.textContent = item.alt;
+
+        div.appendChild(img);
+        div.appendChild(caption);
+        galeri.appendChild(div);
+      });
     }
   </script>
 </body>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>G-zi - Gizi Interaktif</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <h1 class="logo">G-zi</h1>
+      <nav class="nav">
+        <a href="#imt">IMT</a>
+        <a href="#bbi">BB Ideal</a>
+        <a href="#rekomendasi">Rekomendasi</a>
+        <a href="#informasi">Informasi</a>
+        <a href="#kontak">Kontak</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+    <section id="imt" class="section">
+      <h2>Perhitungan Indeks Massa Tubuh</h2>
+      <!-- Form IMT -->
+    </section>
+
+    <section id="bbi" class="section bg-light">
+      <h2>Perhitungan Berat Badan Ideal</h2>
+      <!-- Form BB Ideal -->
+    </section>
+
+    <section id="rekomendasi" class="section">
+      <h2>Rekomendasi Makanan</h2>
+      <div class="kategori">
+        <button onclick="tampilkanKategori('anak')">Anak</button>
+        <button onclick="tampilkanKategori('remaja')">Remaja</button>
+        <button onclick="tampilkanKategori('dewasa')">Dewasa</button>
+        <button onclick="tampilkanKategori('lansia')">Lansia</button>
+        <button onclick="tampilkanKategori('hamil')">Ibu Hamil</button>
+      </div>
+      <div id="galeri-makanan" class="galeri"></div>
+    </section>
+
+    <section id="informasi" class="section bg-light">
+      <h2>Informasi Gizi</h2>
+      <!-- List berita/penemuan -->
+    </section>
+
+    <section id="kontak" class="section">
+      <h2>Kontak</h2>
+      <p>Email: <a href="mailto:01012001.fiqri@gmail.com">01012001.fiqri@gmail.com</a></p>
+      <p>Instagram: <a href="https://instagram.com/username" target="_blank">@username</a></p>
+      <p>LinkedIn: <a href="https://linkedin.com/in/username" target="_blank">linkedin.com/in/username</a></p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 G-zi. Semua hak dilindungi.</p>
+  </footer>
+
+  <script>
+    const dataGambar = {
+      anak: [
+        { src: 'img/makanan-anak-1.jpg', alt: 'Buah Segar' },
+        { src: 'img/makanan-anak-2.jpg', alt: 'Sayuran Berwarna' },
+      ],
+      remaja: [
+        { src: 'img/makanan-remaja-1.jpg', alt: 'Sereal Sehat' },
+        { src: 'img/makanan-remaja-2.jpg', alt: 'Protein Nabati' },
+      ],
+      dewasa: [
+        { src: 'img/makanan-dewasa-1.jpg', alt: 'Karbohidrat Kompleks' },
+        { src: 'img/makanan-dewasa-2.jpg', alt: 'Salad Sehat' },
+      ],
+      lansia: [
+        { src: 'img/makanan-lansia-1.jpg', alt: 'Sup Lembut' },
+        { src: 'img/makanan-lansia-2.jpg', alt: 'Puding Buah' },
+      ],
+      hamil: [
+        { src: 'img/makanan-hamil-1.jpg', alt: 'Susu Ibu' },
+        { src: 'img/makanan-hamil-2.jpg', alt: 'Sayur Hijau' },
+      ]
+    };
+
+    function tampilkanKategori(kategori) {
+      const galeri = document.getElementById('galeri-makanan');
+      galeri.innerHTML = dataGambar[kategori].map(item =>
+        `<div class="gambar-item"><img src="${item.src}" alt="${item.alt}"><p>${item.alt}</p></div>`
+      ).join('');
+    }
+  </script>
+</body>
+</html>

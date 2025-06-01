@@ -7,8 +7,8 @@ body, h1, h2, p, a, button {
 
 /* Warna utama mirip Vindes */
 :root {
-  --primary: #1E3A34;       /* hijau gelap */
-  --secondary: #A1C4B8;     /* hijau muda pastel */
+  --primary: #E92989;       /* hijau gelap */
+  --secondary: #20252A;     /* hijau muda pastel */
   --light: #f6f6f6;
   --text-dark: #1a1a1a;
   --text-light: #ffffff;

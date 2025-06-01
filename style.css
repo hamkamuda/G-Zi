@@ -1,110 +1,154 @@
-/* style.css */
+/* Reset */
+body, h1, h2, p, a, button {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Warna utama mirip Vindes */
+:root {
+  --primary: #1E3A34;       /* hijau gelap */
+  --secondary: #A1C4B8;     /* hijau muda pastel */
+  --light: #f6f6f6;
+  --text-dark: #1a1a1a;
+  --text-light: #ffffff;
+  --accent: #4CAF50;
+}
 
 body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background-color: #f6fff7;
-  color: #1d2e1e;
+  background-color: var(--light);
+  color: var(--text-dark);
   line-height: 1.6;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* Header */
+.header {
+  background-color: var(--primary);
+  padding: 1rem 0;
+  color: var(--text-light);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-.header {
-  position: sticky;
-  top: 0;
-  background-color: #0e3f1f;
-  color: #fff;
-  padding: 1rem 0;
-  z-index: 1000;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .logo {
   font-size: 1.8rem;
-  font-weight: 800;
-  margin: 0;
+  font-weight: bold;
+  color: var(--text-light);
+}
+
+/* Navigation */
+.nav {
+  margin-top: 0.5rem;
 }
 
 .nav a {
-  color: #fff;
+  color: var(--secondary);
+  margin-right: 1rem;
   text-decoration: none;
-  margin-left: 1rem;
-  font-weight: 600;
-  transition: color 0.3s;
+  font-weight: 500;
 }
 
 .nav a:hover {
-  color: #a3f7bf;
+  text-decoration: underline;
 }
 
-.main {
-  margin-top: 3rem;
-}
-
+/* Section */
 .section {
-  padding: 4rem 2rem;
-  border-bottom: 1px solid #d6ecd9;
+  padding: 2rem 1rem;
+  border-bottom: 1px solid #ddd;
 }
 
 .section h2 {
-  font-size: 2rem;
-  color: #0e3f1f;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: var(--primary);
 }
 
-.bg-light {
-  background-color: #e6f4ea;
+/* Form Section */
+.form-section {
+  background-color: #eef7f4;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
-.kategori button {
-  background-color: #a3f7bf;
+input[type="number"] {
+  padding: 0.6rem;
+  margin: 0.5rem 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 300px;
+  font-size: 1rem;
+}
+
+button.calc-btn {
+  padding: 0.6rem 1.2rem;
+  background-color: var(--primary);
+  color: var(--text-light);
   border: none;
-  margin: 0.5rem;
-  padding: 0.75rem 1.25rem;
-  font-weight: bold;
-  border-radius: 8px;
+  border-radius: 5px;
+  font-size: 1rem;
+  margin-top: 0.5rem;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
+button.calc-btn:hover {
+  background-color: var(--accent);
+}
+
+/* Rekomendasi Makanan */
+.kategori button {
+  background-color: var(--secondary);
+  color: var(--primary);
+  border: none;
+  padding: 0.5rem 1rem;
+  margin: 0.25rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
 .kategori button:hover {
-  background-color: #6ccf91;
+  background-color: var(--accent);
+  color: white;
 }
 
 .galeri {
   display: flex;
   flex-wrap: wrap;
+  margin-top: 1rem;
   gap: 1rem;
-  margin-top: 2rem;
 }
 
 .gambar-item {
-  background-color: #fff;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  width: 200px;
+  width: 150px;
   text-align: center;
 }
 
 .gambar-item img {
   width: 100%;
-  height: 150px;
-  object-fit: cover;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.footer {
-  text-align: center;
-  padding: 2rem;
-  background-color: #0e3f1f;
-  color: #fff;
+.gambar-item p {
+  margin-top: 0.5rem;
   font-size: 0.9rem;
+}
+
+/* Footer */
+.footer {
+  background-color: var(--primary);
+  color: var(--text-light);
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
 }

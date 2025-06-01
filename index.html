@@ -6,6 +6,14 @@
   <title>G-zi</title>
   <link rel="stylesheet" href="style.css" />
   <style>
+    body {
+      background-color: #20252A;
+      color: #ffffff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
     .fade-in {
       opacity: 0;
       animation: fadeIn 1s ease-in-out forwards;
@@ -16,8 +24,38 @@
       to { opacity: 1; }
     }
 
+    .header {
+      background-color: #f02083;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    .nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 1rem;
+    }
+
+    .main.container {
+      padding: 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .section h2 {
+      color: #f02083;
+    }
+
     .form-section {
-      background-color: #e6f4ea;
+      background-color: #2c2f36;
       padding: 2rem;
       border-radius: 10px;
       margin-bottom: 2rem;
@@ -25,16 +63,16 @@
 
     input[type="number"] {
       padding: 0.5rem;
-      margin: 0.5rem 0;
+      margin: 0.5rem 0.5rem 0.5rem 0;
       border: 1px solid #ccc;
       border-radius: 5px;
       width: 100%;
-      max-width: 300px;
+      max-width: 250px;
     }
 
     button.calc-btn {
       padding: 0.5rem 1rem;
-      background-color: #0e3f1f;
+      background-color: #f02083;
       color: white;
       border: none;
       border-radius: 5px;
@@ -43,7 +81,44 @@
     }
 
     button.calc-btn:hover {
-      background-color: #14883b;
+      background-color: #c01a6c;
+    }
+
+    .kategori button {
+      background-color: #f02083;
+      color: white;
+      margin: 0.5rem;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .kategori button:hover {
+      background-color: #c01a6c;
+    }
+
+    .galeri {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .gambar-item img {
+      max-width: 150px;
+      border-radius: 8px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #1b1f23;
+      color: #aaa;
+    }
+
+    a {
+      color: #f02083;
     }
   </style>
 </head>
@@ -54,7 +129,7 @@
       <nav class="nav">
         <a href="#imt">IMT</a>
         <a href="#bbi">BB Ideal</a>
-        <a href="rekomendasi.html">Rekomendasi</a>
+        <a href="#rekomendasi">Rekomendasi</a>
         <a href="#informasi">Informasi</a>
         <a href="#kontak">Kontak</a>
       </nav>
@@ -81,7 +156,7 @@
       </div>
     </section>
 
-    <section id="rekomendasi" class="section bg-light">
+    <section id="rekomendasi" class="section">
       <h2>Rekomendasi Makanan</h2>
       <div class="kategori">
         <button onclick="tampilkanGambar('anak')">Anak</button>
@@ -98,11 +173,11 @@
       <p>Berita dan penemuan terkait gizi akan ditambahkan di sini.</p>
     </section>
 
-    <section id="kontak" class="section bg-light">
+    <section id="kontak" class="section">
       <h2>Kontak</h2>
       <p>Email: <a href="mailto:01012001.fiqri@gmail.com">01012001.fiqri@gmail.com</a></p>
-      <p>Instagram: <a href="https://instagram.com/fiqri.septrian">@fiqri.septrian</a></p>
-      <p>LinkedIn: <a href="https://linkedin.com/in/muhammadfiqriseptrian">linkedin.com/in/muhammadfiqriseptrian</a></p>
+      <p>Instagram: <a href="https://instagram.com/username">@username</a></p>
+      <p>LinkedIn: <a href="https://linkedin.com/in/username">linkedin.com/in/username</a></p>
     </section>
   </main>
 

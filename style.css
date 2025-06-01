@@ -1,154 +1,246 @@
-/* Reset */
-body, h1, h2, p, a, button {
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>G-zi</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background-color: #20252A;
+      color: #ffffff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
 
-/* Warna utama mirip Vindes */
-:root {
-  --primary: #E92989;       /* hijau gelap */
-  --secondary: #20252A;     /* hijau muda pastel */
-  --light: #f6f6f6;
-  --text-dark: #1a1a1a;
-  --text-light: #ffffff;
-  --accent: #4CAF50;
-}
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 1s ease-in-out forwards;
+    }
 
-body {
-  background-color: var(--light);
-  color: var(--text-dark);
-  line-height: 1.6;
-}
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
 
-/* Header */
-.header {
-  background-color: var(--primary);
-  padding: 1rem 0;
-  color: var(--text-light);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
+    .header {
+      background-color: #f02083;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-.container {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: white;
+    }
 
-.logo {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: var(--text-light);
-}
+    .nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 1rem;
+    }
 
-/* Navigation */
-.nav {
-  margin-top: 0.5rem;
-}
+    .main.container {
+      padding: 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
 
-.nav a {
-  color: var(--secondary);
-  margin-right: 1rem;
-  text-decoration: none;
-  font-weight: 500;
-}
+    .section h2 {
+      color: #f02083;
+    }
 
-.nav a:hover {
-  text-decoration: underline;
-}
+    .form-section {
+      background-color: #2c2f36;
+      padding: 2rem;
+      border-radius: 10px;
+      margin-bottom: 2rem;
+    }
 
-/* Section */
-.section {
-  padding: 2rem 1rem;
-  border-bottom: 1px solid #ddd;
-}
+    input[type="number"] {
+      padding: 0.5rem;
+      margin: 0.5rem 0.5rem 0.5rem 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 100%;
+      max-width: 250px;
+    }
 
-.section h2 {
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
-  color: var(--primary);
-}
+    button.calc-btn {
+      padding: 0.5rem 1rem;
+      background-color: #f02083;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
 
-/* Form Section */
-.form-section {
-  background-color: #eef7f4;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
+    button.calc-btn:hover {
+      background-color: #c01a6c;
+    }
 
-input[type="number"] {
-  padding: 0.6rem;
-  margin: 0.5rem 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 100%;
-  max-width: 300px;
-  font-size: 1rem;
-}
+    .kategori button {
+      background-color: #f02083;
+      color: white;
+      margin: 0.5rem;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
 
-button.calc-btn {
-  padding: 0.6rem 1.2rem;
-  background-color: var(--primary);
-  color: var(--text-light);
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
-  margin-top: 0.5rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
+    .kategori button:hover {
+      background-color: #c01a6c;
+    }
 
-button.calc-btn:hover {
-  background-color: var(--accent);
-}
+    .galeri {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
 
-/* Rekomendasi Makanan */
-.kategori button {
-  background-color: var(--secondary);
-  color: var(--primary);
-  border: none;
-  padding: 0.5rem 1rem;
-  margin: 0.25rem;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.2s ease-in-out;
-}
+    .gambar-item img {
+      max-width: 150px;
+      border-radius: 8px;
+    }
 
-.kategori button:hover {
-  background-color: var(--accent);
-  color: white;
-}
+    .footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #1b1f23;
+      color: #aaa;
+    }
 
-.galeri {
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 1rem;
-  gap: 1rem;
-}
+    a {
+      color: #f02083;
+    }
+  </style>
+</head>
+<body class="fade-in">
+  <header class="header">
+    <div class="container">
+      <h1 class="logo">G-zi</h1>
+      <nav class="nav">
+        <a href="#imt">IMT</a>
+        <a href="#bbi">BB Ideal</a>
+        <a href="#rekomendasi">Rekomendasi</a>
+        <a href="#informasi">Informasi</a>
+        <a href="#kontak">Kontak</a>
+      </nav>
+    </div>
+  </header>
 
-.gambar-item {
-  width: 150px;
-  text-align: center;
-}
+  <main class="main container">
+    <section id="imt" class="section">
+      <h2>Perhitungan Indeks Massa Tubuh</h2>
+      <div class="form-section">
+        <input type="number" id="berat" placeholder="Berat badan (kg)" />
+        <input type="number" id="tinggi" placeholder="Tinggi badan (cm)" />
+        <button class="calc-btn" onclick="hitungIMT()">Hitung IMT</button>
+        <p id="hasilIMT"></p>
+      </div>
+    </section>
 
-.gambar-item img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
+    <section id="bbi" class="section">
+      <h2>Perhitungan Berat Badan Ideal</h2>
+      <div class="form-section">
+        <input type="number" id="tinggiBBI" placeholder="Tinggi badan (cm)" />
+        <button class="calc-btn" onclick="hitungBBI()">Hitung BB Ideal</button>
+        <p id="hasilBBI"></p>
+      </div>
+    </section>
 
-.gambar-item p {
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
-}
+    <section id="rekomendasi" class="section">
+      <h2>Rekomendasi Makanan</h2>
+      <div class="kategori">
+        <button onclick="tampilkanGambar('anak')">Anak</button>
+        <button onclick="tampilkanGambar('remaja')">Remaja</button>
+        <button onclick="tampilkanGambar('dewasa')">Dewasa</button>
+        <button onclick="tampilkanGambar('lansia')">Lansia</button>
+        <button onclick="tampilkanGambar('hamil')">Ibu Hamil</button>
+      </div>
+      <div class="galeri" id="galeriGambar"></div>
+    </section>
 
-/* Footer */
-.footer {
-  background-color: var(--primary);
-  color: var(--text-light);
-  text-align: center;
-  padding: 1rem;
-  margin-top: 2rem;
-}
+    <section id="informasi" class="section">
+      <h2>Informasi Gizi</h2>
+      <p>Berita dan penemuan terkait gizi akan ditambahkan di sini.</p>
+    </section>
+
+    <section id="kontak" class="section">
+      <h2>Kontak</h2>
+      <p>Email: <a href="mailto:01012001.fiqri@gmail.com">01012001.fiqri@gmail.com</a></p>
+      <p>Instagram: <a href="https://instagram.com/username">@username</a></p>
+      <p>LinkedIn: <a href="https://linkedin.com/in/username">linkedin.com/in/username</a></p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 G-zi. Semua hak dilindungi.</p>
+  </footer>
+
+  <script>
+    function hitungIMT() {
+      const berat = parseFloat(document.getElementById("berat").value);
+      const tinggi = parseFloat(document.getElementById("tinggi").value) / 100;
+      const hasil = berat / (tinggi * tinggi);
+      document.getElementById("hasilIMT").textContent = `IMT Anda adalah ${hasil.toFixed(2)}`;
+    }
+
+    function hitungBBI() {
+      const tinggi = parseFloat(document.getElementById("tinggiBBI").value);
+      const hasil = (tinggi - 100) - (0.1 * (tinggi - 100));
+      document.getElementById("hasilBBI").textContent = `Berat badan ideal Anda adalah ${hasil.toFixed(1)} kg`;
+    }
+
+    const gambarData = {
+      anak: [
+        { src: "img/anak1.jpg", alt: "Makanan Anak 1" },
+        { src: "img/anak2.jpg", alt: "Makanan Anak 2" }
+      ],
+      remaja: [
+        { src: "img/remaja1.jpg", alt: "Makanan Remaja 1" },
+        { src: "img/remaja2.jpg", alt: "Makanan Remaja 2" }
+      ],
+      dewasa: [
+        { src: "img/dewasa1.jpg", alt: "Makanan Dewasa 1" },
+        { src: "img/dewasa2.jpg", alt: "Makanan Dewasa 2" }
+      ],
+      lansia: [
+        { src: "img/lansia1.jpg", alt: "Makanan Lansia 1" },
+        { src: "img/lansia2.jpg", alt: "Makanan Lansia 2" }
+      ],
+      hamil: [
+        { src: "img/hamil1.jpg", alt: "Makanan Ibu Hamil 1" },
+        { src: "img/hamil2.jpg", alt: "Makanan Ibu Hamil 2" }
+      ]
+    };
+
+    function tampilkanGambar(kategori) {
+      const galeri = document.getElementById("galeriGambar");
+      galeri.innerHTML = "";
+      gambarData[kategori].forEach(item => {
+        const div = document.createElement("div");
+        div.classList.add("gambar-item");
+
+        const img = document.createElement("img");
+        img.src = item.src;
+        img.alt = item.alt;
+
+        const caption = document.createElement("p");
+        caption.textContent = item.alt;
+
+        div.appendChild(img);
+        div.appendChild(caption);
+        galeri.appendChild(div);
+      });
+    }
+  </script>
+</body>
+</html>

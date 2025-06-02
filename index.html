@@ -5,78 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>G-Zi</title>
   <style>
-    <style>
-  .fade-in {
-    opacity: 0;
-    animation: fadeIn 1s ease-in-out forwards;
-  }
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 1s ease-in-out forwards;
+    }
 
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  .form-section {
-    background-color: #e6f4ea;
-    padding: 2rem;
-    border-radius: 10px;
-    margin-bottom: 2rem;
-  }
-
-  input[type="number"] {
-    padding: 0.5rem;
-    margin: 0.5rem 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 100%;
-    max-width: 300px;
-  }
-
-  button.calc-btn {
-    padding: 0.5rem 1rem;
-    background-color: #0e3f1f;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-
-  button.calc-btn:hover {
-    background-color: #14883b;
-  }
-
-  .profil-section {
-    background-color: #fe7415;
-    padding: 2rem;
-    margin-top: 2rem;
-  }
-
-  .profil-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.5rem;
-  }
-
-  .profil-foto {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #00b73e;
-  }
-
-  .profil-text h3 {
-    margin: 0;
-    font-size: 1.2rem;
-    color: #20252A;
-  }
-
-  .profil-text p {
-    margin: 0.3rem 0 0;
-    color: #333;
-  }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
 
     body {
       margin: 0;
@@ -133,15 +70,40 @@
       color: #00b73e;
     }
 
-    .footer-bar {
-      width: 100%;
-      height: 100px;
-      background-size: cover;
-      background-position: center;
+    .profil-section {
+      background-color: #fe7415;
+      padding: 2rem;
+    }
+
+    .profil-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .profil-foto {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #00b73e;
+    }
+
+    .profil-text h3 {
+      margin: 0;
+      font-size: 1.2rem;
+      color: #20252A;
+    }
+
+    .profil-text p {
+      margin: 0.3rem 0 0;
+      color: #333;
     }
   </style>
 </head>
-<body>
+<body class="fade-in">
   <header>
     <div class="logo-text">G-Zi</div>
     <nav>
@@ -160,9 +122,8 @@
     <p>Sebuah platform informasi dan edukasi gizi terpercaya untuk Anda.</p>
   </main>
 
-    <footer class="footer">
-       </section>
-
+  <!-- FOOTER PROFIL DI PALING BAWAH -->
+  <footer>
     <section class="profil-section">
       <div class="profil-container">
         <img src="assets/img/fiqri.jpg" alt="Foto Pembuat" class="profil-foto" />
@@ -172,4 +133,6 @@
         </div>
       </div>
     </section>
+  </footer>
+</body>
 </html>

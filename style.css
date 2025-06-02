@@ -1,154 +1,175 @@
-/* Reset */
-body, h1, h2, p, a, button {
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-/* Warna utama mirip Vindes */
-:root {
-  --primary: #1E3A34;       /* hijau gelap */
-  --secondary: #A1C4B8;     /* hijau muda pastel */
-  --light: #f6f6f6;
-  --text-dark: #1a1a1a;
-  --text-light: #ffffff;
-  --accent: #4CAF50;
-}
-
+/* ===== Reset Dasar ===== */
 body {
-  background-color: var(--light);
-  color: var(--text-dark);
-  line-height: 1.6;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #F8D90F;
+  color: #20252A;
 }
 
-/* Header */
+/* ===== Header & Navigasi ===== */
 .header {
-  background-color: var(--primary);
-  padding: 1rem 0;
-  color: var(--text-light);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-.container {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #FE7415;
+  color: white;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .logo {
   font-size: 1.8rem;
   font-weight: bold;
-  color: var(--text-light);
+  color: white;
 }
 
-/* Navigation */
 .nav {
-  margin-top: 0.5rem;
+  display: flex;
+  gap: 1.5rem;
 }
 
 .nav a {
-  color: var(--secondary);
-  margin-right: 1rem;
+  color: white;
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
+  transition: color 0.3s;
 }
 
 .nav a:hover {
-  text-decoration: underline;
+  color: #00b73e;
 }
 
-/* Section */
+/* ===== Container Umum ===== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* ===== Section ===== */
 .section {
-  padding: 2rem 1rem;
-  border-bottom: 1px solid #ddd;
+  margin-bottom: 3rem;
 }
 
 .section h2 {
-  margin-bottom: 1rem;
   font-size: 1.5rem;
-  color: var(--primary);
+  color: #20252A;
 }
 
-/* Form Section */
+/* ===== Formulir Perhitungan ===== */
 .form-section {
-  background-color: #eef7f4;
-  padding: 1.5rem;
+  background-color: #fff;
+  padding: 2rem;
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  margin-top: 1rem;
 }
 
 input[type="number"] {
   padding: 0.6rem;
-  margin: 0.5rem 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  margin-bottom: 1rem;
   width: 100%;
   max-width: 300px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
   font-size: 1rem;
 }
 
 button.calc-btn {
-  padding: 0.6rem 1.2rem;
-  background-color: var(--primary);
-  color: var(--text-light);
+  background-color: #00b73e;
+  color: white;
   border: none;
-  border-radius: 5px;
-  font-size: 1rem;
-  margin-top: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 button.calc-btn:hover {
-  background-color: var(--accent);
+  background-color: #029631;
 }
 
-/* Rekomendasi Makanan */
+/* ===== Galeri Gambar Rekomendasi ===== */
+.kategori {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
 .kategori button {
-  background-color: var(--secondary);
-  color: var(--primary);
+  background-color: #FE7415;
+  color: white;
   border: none;
   padding: 0.5rem 1rem;
-  margin: 0.25rem;
-  border-radius: 5px;
+  border-radius: 6px;
+  font-weight: bold;
   cursor: pointer;
-  transition: 0.2s ease-in-out;
+  transition: background-color 0.3s;
 }
 
 .kategori button:hover {
-  background-color: var(--accent);
-  color: white;
+  background-color: #dd5f0f;
 }
 
 .galeri {
   display: flex;
-  flex-wrap: wrap;
-  margin-top: 1rem;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .gambar-item {
-  width: 150px;
+  flex: 1 1 200px;
   text-align: center;
 }
 
 .gambar-item img {
   width: 100%;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  max-width: 250px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-.gambar-item p {
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
+/* ===== Profil Bar ===== */
+.profil-section {
+  background-color: #f4f4f4;
+  padding: 2rem;
+  margin-top: 2rem;
 }
 
-/* Footer */
+.profil-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.profil-foto {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #00b73e;
+}
+
+.profil-text h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #20252A;
+}
+
+.profil-text p {
+  margin: 0.3rem 0 0;
+  color: #333;
+}
+
+/* ===== Footer ===== */
 .footer {
-  background-color: var(--primary);
-  color: var(--text-light);
+  background-color: #20252A;
+  color: white;
   text-align: center;
   padding: 1rem;
-  margin-top: 2rem;
 }

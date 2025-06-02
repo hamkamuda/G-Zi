@@ -7,11 +7,10 @@
   <link rel="stylesheet" href="style.css" />
   <style>
     body {
-      background-color: #20252A;
-      color: #ffffff;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
-      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+      color: #00b73e;
     }
 
     .fade-in {
@@ -24,55 +23,71 @@
       to { opacity: 1; }
     }
 
-    .header {
-      background-color: #f02083;
-      padding: 1rem;
+    header.header {
+      background: linear-gradient(90deg, #F8D90F, #FE7415);
+      color: #00b73e;
+      padding: 1rem 2rem;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
 
-    .logo {
+    .header .logo {
       font-size: 1.5rem;
       font-weight: bold;
-      color: white;
+      margin: 0;
+    }
+
+    .nav {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex: 1;
     }
 
     .nav a {
-      color: white;
       text-decoration: none;
-      margin: 0 1rem;
+      color: #00b73e;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    .nav a:hover {
+      color: #fff;
+    }
+
+    .header .logo-img {
+      width: 40px;
+      height: 40px;
     }
 
     .main.container {
       padding: 2rem;
-      max-width: 1000px;
-      margin: auto;
-    }
-
-    .section h2 {
-      color: #f02083;
     }
 
     .form-section {
-      background-color: #2c2f36;
+      background-color: #fff8e5;
       padding: 2rem;
       border-radius: 10px;
       margin-bottom: 2rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
     input[type="number"] {
       padding: 0.5rem;
-      margin: 0.5rem 0.5rem 0.5rem 0;
+      margin: 0.5rem 0;
       border: 1px solid #ccc;
       border-radius: 5px;
       width: 100%;
-      max-width: 250px;
+      max-width: 300px;
     }
 
     button.calc-btn {
       padding: 0.5rem 1rem;
-      background-color: #f02083;
+      background-color: #FE7415;
       color: white;
       border: none;
       border-radius: 5px;
@@ -81,21 +96,27 @@
     }
 
     button.calc-btn:hover {
-      background-color: #c01a6c;
+      background-color: #F8D90F;
+      color: #20252A;
+    }
+
+    .section h2 {
+      color: #FE7415;
     }
 
     .kategori button {
-      background-color: #f02083;
-      color: white;
+      background-color: #F8D90F;
+      color: #20252A;
+      border: none;
       margin: 0.5rem;
       padding: 0.5rem 1rem;
-      border: none;
       border-radius: 5px;
       cursor: pointer;
     }
 
     .kategori button:hover {
-      background-color: #c01a6c;
+      background-color: #FE7415;
+      color: #fff;
     }
 
     .galeri {
@@ -106,34 +127,30 @@
     }
 
     .gambar-item img {
-      max-width: 150px;
-      border-radius: 8px;
+      width: 150px;
+      height: auto;
+      border-radius: 5px;
     }
 
-    .footer {
+    footer.footer {
+      background-color: #F8D90F;
       text-align: center;
       padding: 1rem;
-      background-color: #1b1f23;
-      color: #aaa;
-    }
-
-    a {
-      color: #f02083;
+      color: #20252A;
     }
   </style>
 </head>
 <body class="fade-in">
   <header class="header">
-    <div class="container">
-      <h1 class="logo">G-zi</h1>
-      <nav class="nav">
-        <a href="#imt">IMT</a>
-        <a href="#bbi">BB Ideal</a>
-        <a href="#rekomendasi">Rekomendasi</a>
-        <a href="#informasi">Informasi</a>
-        <a href="#kontak">Kontak</a>
-      </nav>
-    </div>
+    <h1 class="logo">G-zi</h1>
+    <nav class="nav">
+      <a href="#imt">IMT</a>
+      <a href="#bbi">BB Ideal</a>
+      <a href="#rekomendasi">Rekomendasi</a>
+      <a href="#informasi">Informasi</a>
+      <a href="#kontak">Kontak</a>
+    </nav>
+    <img src="img/logo.png" alt="Logo" class="logo-img">
   </header>
 
   <main class="main container">

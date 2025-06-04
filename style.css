@@ -181,6 +181,56 @@ button.calc-btn:hover {
   color: #333;
 }
 
+/* ===== IMT ===== */
+.imt-section {
+  background-color: #e6f4ea;
+  padding: 2rem;
+  margin: 2rem;
+  border-radius: 10px;
+}
+
+.input-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.input-row input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 200px;
+}
+
+.hitung-hasil-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.calc-btn {
+  padding: 0.6rem 1.2rem;
+  background-color: #0e3f1f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.calc-btn:hover {
+  background-color: #14883b;
+}
+
+.hasil-container {
+  background-color: #fdfdfd;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  min-width: 280px;
+}
+
+
 /* ===== Footer ===== */
 .footer {
   background-color: #20252A;

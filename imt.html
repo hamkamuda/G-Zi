@@ -3,83 +3,202 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Perhitungan IMT</title>
+  <title>Perhitungan IMT - G-Zi</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f8d90f;
+      color: #00b73e;
+    }
+
+    header {
+      background-color: #fe7415;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo-text {
+      font-size: 24px;
+      font-weight: bold;
+      color: #00b73e;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #00b73e;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: white;
+    }
+
+    .imt-section {
+      padding: 40px 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .form-row {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    input[type="number"] {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 150px;
+    }
+
+    .imt-result-container {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 20px;
+    }
+
+    .btn-hitung {
+      padding: 10px 20px;
+      background-color: #0e3f1f;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .result-box {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      color: #333;
+      min-width: 250px;
+    }
+
+    footer {
+      background-color: #fe7415;
+      padding: 20px;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .footer-left,
+    .footer-right {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .footer-left {
+      text-align: left;
+    }
+
+    .footer-right {
+      text-align: right;
+    }
+
+    <style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1;
+  }
+
+  footer {
+    background-color: #FE7415;
+  }
+
+  </style>
 </head>
 <body>
-
   <header>
     <div class="logo-text">G-Zi</div>
     <nav>
       <a href="index.html">Beranda</a>
       <a href="imt.html">Skrining</a>
+      <a href="imt.html">Kebutuhan Kalori</a>
+      <a href="#">Informasi Gizi</a>
+      <a href="#">Artikel</a>
     </nav>
   </header>
 
-  <!-- Konten IMT -->
   <section class="imt-section">
-    <section class="imt-section">
-  <h2>Perhitungan IMT & Berat Badan Ideal</h2>
-  <div class="form-container">
-    <div class="input-row">
+    <h2>Perhitungan IMT dan Berat Badan Ideal</h2>
+    <div class="form-row">
       <input type="number" id="usia" placeholder="Usia (tahun)" />
-      <input type="number" id="berat" placeholder="Berat Badan (kg)" />
-      <input type="number" id="tinggi" placeholder="Tinggi Badan (cm)" />
+      <input type="number" id="berat" placeholder="Berat (kg)" />
+      <input type="number" id="tinggi" placeholder="Tinggi (cm)" />
     </div>
-    <div class="hitung-hasil-row">
-      <button class="calc-btn" onclick="hitungIMT()">Hitung IMT</button>
-      <div class="hasil-container" id="hasil"></div>
+    <div class="imt-result-container">
+      <button class="btn-hitung" onclick="hitungIMT()">Hitung IMT</button>
+      <div class="result-box" id="hasilBox">
+        <p><strong>Berat Badan Ideal:</strong> -</p>
+        <p><strong>IMT:</strong> -</p>
+        <p><strong>Kategori:</strong> -</p>
+      </div>
     </div>
-  </div>
-</section>
-
   </section>
 
+  <footer>
+    <div class="footer-left">
+      <p><strong>Referensi:</strong><br>Rumus Broca dan Kategori IMT menurut Kemenkes RI</p>
+    </div>
+    <div class="footer-right">
+      <p>Ikuti kami di: Instagram @gzi.id | Email: info@gzi.id</p>
+    </div>
+  </footer>
+
   <script>
-  function hitungIMT() {
-    const usia = parseInt(document.getElementById('usia').value);
-    const berat = parseFloat(document.getElementById('berat').value);
-    const tinggi = parseFloat(document.getElementById('tinggi').value);
+    function hitungIMT() {
+      const usia = parseInt(document.getElementById('usia').value);
+      const berat = parseFloat(document.getElementById('berat').value);
+      const tinggiCm = parseFloat(document.getElementById('tinggi').value);
 
-    if (!usia || !berat || !tinggi) {
-      document.getElementById('hasil').innerHTML = "<p>Silakan lengkapi semua data terlebih dahulu.</p>";
-      return;
+      if (isNaN(berat) || isNaN(tinggiCm)) {
+        alert("Mohon isi data dengan benar.");
+        return;
+      }
+
+      const tinggiM = tinggiCm / 100;
+      const broca = (tinggiCm - 100) - (0.1 * (tinggiCm - 100));
+      const imt = berat / (tinggiM * tinggiM);
+
+      let kategori = "";
+      if (imt < 17) kategori = "Kurus";
+      else if (imt >= 17 && imt <= 25) kategori = "Normal";
+      else if (imt > 25 && imt <= 27) kategori = "Kelebihan Berat Badan";
+      else if (imt > 27 && imt <= 30) kategori = "Obesitas Kelas I";
+      else if (imt > 30 && imt <= 35) kategori = "Obesitas Kelas II";
+      else if (imt > 35) kategori = "Obesitas Kelas III";
+
+      document.getElementById('hasilBox').innerHTML = `
+        <p><strong>Berat Badan Ideal:</strong> ${broca.toFixed(1)} kg</p>
+        <p><strong>IMT:</strong> ${imt.toFixed(1)}</p>
+        <p><strong>Kategori:</strong> ${kategori}</p>
+      `;
     }
-
-    // Broca Ideal Weight
-    const tinggiTanpa100 = tinggi - 100;
-    const brocca = tinggiTanpa100 - (0.1 * tinggiTanpa100);
-
-    // IMT
-    const tinggiMeter = tinggi / 100;
-    const imt = berat / (tinggiMeter * tinggiMeter);
-
-    // Kategori IMT
-    let kategori = '';
-    if (imt < 17) {
-      kategori = "Kurus";
-    } else if (imt >= 17 && imt < 25) {
-      kategori = "Normal";
-    } else if (imt >= 25 && imt < 27) {
-      kategori = "Kelebihan Berat Badan";
-    } else if (imt >= 27 && imt < 30) {
-      kategori = "Obesitas Kelas I";
-    } else if (imt >= 30 && imt < 35) {
-      kategori = "Obesitas Kelas II";
-    } else {
-      kategori = "Obesitas Kelas III";
-    }
-
-    // Tampilkan hasil
-    document.getElementById('hasil').innerHTML = `
-      <p><strong>Usia:</strong> ${usia} tahun</p>
-      <p><strong>Berat Badan Ideal:</strong> ${brocca.toFixed(1)} kg</p>
-      <p><strong>Indeks Massa Tubuh (IMT):</strong> ${imt.toFixed(1)}</p>
-      <p><strong>Kategori:</strong> ${kategori}</p>
-    `;
-  }
-</script>
-
-  <script src="script.js"></script>
+  </script>
 </body>
 </html>

@@ -6,21 +6,6 @@ html, body {
   flex-direction: column;
 }
 
-@keyframes fadeSlideUp {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.result-box.show {
-  animation: fadeSlideUp 0.6s ease-out;
-}
-
 
 main {
   flex: 1;
@@ -244,6 +229,86 @@ button.calc-btn:hover {
   border-radius: 8px;
   border: 1px solid #ccc;
   min-width: 280px;
+}
+
+@keyframes fadeSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.result-box.show {
+  animation: fadeSlideUp 0.6s ease-out;
+}
+
+.result-box {
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  color: #333;
+  margin-top: 40px;
+  max-width: 600px;
+  width: 100%;
+  animation: fadeSlideUp 0.6s ease-out;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  line-height: 1.6;
+}
+
+.result-box::before {
+  content: '';
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 150px;
+  height: 150px;
+  background: #fe7415;
+  border-radius: 50%;
+  opacity: 0.2;
+  z-index: 0;
+}
+
+.result-box h3 {
+  font-size: 22px;
+  color: #fe7415;
+  margin-bottom: 20px;
+  z-index: 1;
+  position: relative;
+}
+
+.result-box p {
+  margin: 8px 0;
+  font-size: 16px;
+  z-index: 1;
+  position: relative;
+}
+
+.result-box p strong {
+  color: #0e3f1f;
+}
+
+.result-box .highlight {
+  font-size: 20px;
+  color: #00b73e;
+  font-weight: bold;
+}
+
+@keyframes fadeSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 

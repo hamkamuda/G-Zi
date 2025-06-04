@@ -15,22 +15,31 @@
       min-height: 100vh;
     }
 
-    header, footer {
-      background-color: #fe7415;
-      color: white;
-      padding: 10px 20px;
-    }
-
     header {
+      background-color: #fe7415;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 10px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo-text {
+      font-size: 24px;
+      font-weight: bold;
+      color: #00b73e;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
     }
 
     nav a {
-      color: #00b73e;
-      margin-left: 15px;
       text-decoration: none;
+      color: #00b73e;
       font-weight: bold;
     }
 
@@ -45,75 +54,78 @@
       margin: auto;
     }
 
-    .form-section {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-
-    .form-section h2 {
+    h2 {
       text-align: center;
-      margin-bottom: 20px;
-      color: #0e3f1f;
+      margin-bottom: 30px;
     }
 
     .form-group {
-      display: flex;
-      flex-direction: column;
       margin-bottom: 15px;
     }
 
     label {
+      display: block;
       margin-bottom: 5px;
       font-weight: bold;
     }
 
     input, select {
+      width: 100%;
       padding: 10px;
-      border: 1px solid #ccc;
       border-radius: 5px;
+      border: 1px solid #ccc;
     }
 
-    .btn-hitung {
+    .btn-submit {
       background-color: #0e3f1f;
       color: white;
-      padding: 12px;
+      padding: 12px 20px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      width: 100%;
-      font-size: 16px;
+      margin-top: 20px;
     }
 
     .result-box {
-      margin-top: 30px;
       background: white;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      color: #333;
+      margin-top: 30px;
       text-align: center;
     }
 
-    .result-box h3 {
-      color: #0e3f1f;
-      margin-bottom: 10px;
-    }
-
     .btn-download {
-      margin-top: 20px;
-      background-color: #fe7415;
+      margin-top: 15px;
+      background-color: #00b73e;
       color: white;
-      padding: 10px 20px;
       border: none;
+      padding: 10px 15px;
       border-radius: 5px;
       cursor: pointer;
     }
 
     footer {
+      background-color: #fe7415;
+      color: white;
+      padding: 20px;
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
+    }
+
+    .footer-left,
+    .footer-right {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .footer-left {
+      text-align: left;
+    }
+
+    .footer-right {
+      text-align: right;
     }
   </style>
 </head>
@@ -130,103 +142,118 @@
   </header>
 
   <main>
-    <section class="form-section">
-      <h2>Perhitungan Kebutuhan Kalori</h2>
+    <h2>Perhitungan Kebutuhan Kalori</h2>
+    <form id="kaloriForm">
       <div class="form-group">
         <label for="nama">Nama (Opsional)</label>
-        <input type="text" id="nama">
+        <input type="text" id="nama" name="nama">
       </div>
       <div class="form-group">
         <label for="gender">Jenis Kelamin</label>
-        <select id="gender">
+        <select id="gender" required>
+          <option value="">-- Pilih Jenis Kelamin --</option>
           <option value="male">Laki-laki</option>
           <option value="female">Perempuan</option>
         </select>
       </div>
       <div class="form-group">
-        <label for="usia">Usia (Tahun)</label>
-        <input type="number" id="usia">
+        <label for="usia">Usia (tahun)</label>
+        <input type="number" id="usia" required>
       </div>
       <div class="form-group">
         <label for="berat">Berat Badan (kg)</label>
-        <input type="number" id="berat">
+        <input type="number" id="berat" required>
       </div>
       <div class="form-group">
         <label for="tinggi">Tinggi Badan (cm)</label>
-        <input type="number" id="tinggi">
+        <input type="number" id="tinggi" required>
       </div>
       <div class="form-group">
-        <label for="aktivitas">Aktivitas Fisik</label>
-        <select id="aktivitas">
-          <option value="1.5">Aktivitas Ringan</option>
-          <option value="1.8">Aktivitas Sedang</option>
-          <option value="2.2">Aktivitas Berat</option>
+        <label for="aktifitas">Aktifitas Fisik</label>
+        <select id="aktifitas" required>
+          <option value="">-- Pilih Aktifitas Fisik --</option>
+          <option value="1.5">Aktifitas Ringan</option>
+          <option value="1.8">Aktifitas Sedang</option>
+          <option value="2.2">Aktifitas Berat</option>
         </select>
       </div>
-      <button class="btn-hitung" onclick="hitungKalori()">Hitung Kebutuhan Kalori</button>
-
-      <div class="result-box" id="hasilBox" style="display:none;">
-        <h3>Hasil Perhitungan</h3>
-        <p id="hasilDetail"></p>
-        <button class="btn-download" onclick="downloadHasil()">Unduh Hasil</button>
+      <div class="form-group">
+        <label for="kondisi">Kondisi Kesehatan</label>
+        <select id="kondisi" required>
+          <option value="">-- Pilih Kondisi --</option>
+          <option value="sehat">Sehat</option>
+          <option value="sakit">Sakit</option>
+        </select>
       </div>
-    </section>
+      <div class="form-group" id="penyakitGroup" style="display:none;">
+        <label for="penyakit">Jenis Penyakit</label>
+        <select id="penyakit">
+          <option value="">-- Pilih Penyakit --</option>
+          <option value="diabetes">Diabetes Melitus</option>
+          <option value="jantung">Jantung</option>
+          <option value="hati">Hati</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-submit">Hitung</button>
+    </form>
+
+    <div class="result-box" id="hasil" style="display:none;"></div>
+    <button class="btn-download" id="downloadBtn" style="display:none;">Unduh Hasil</button>
   </main>
 
   <footer>
     <div class="footer-left">
-      <p><strong>Referensi:</strong><br>Mifflin-St Jeor Equation</p>
+      <p><strong>Referensi:</strong><br>Mifflin St Jeor & Aktivitas Fisik</p>
     </div>
     <div class="footer-right">
       <p>Instagram @gzi.id | Email: info@gzi.id</p>
     </div>
   </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <script>
-    function hitungKalori() {
-      const nama = document.getElementById('nama').value;
-      const gender = document.getElementById('gender').value;
-      const usia = parseFloat(document.getElementById('usia').value);
-      const berat = parseFloat(document.getElementById('berat').value);
-      const tinggi = parseFloat(document.getElementById('tinggi').value);
-      const aktivitas = parseFloat(document.getElementById('aktivitas').value);
+    document.getElementById("kondisi").addEventListener("change", function() {
+      const penyakitGroup = document.getElementById("penyakitGroup");
+      penyakitGroup.style.display = this.value === "sakit" ? "block" : "none";
+    });
 
-      if (isNaN(usia) || isNaN(berat) || isNaN(tinggi)) {
-        alert("Harap isi semua kolom dengan benar.");
-        return;
-      }
+    document.getElementById("kaloriForm").addEventListener("submit", function(e) {
+      e.preventDefault();
 
-      let bmr;
+      const nama = document.getElementById("nama").value;
+      const gender = document.getElementById("gender").value;
+      const usia = parseInt(document.getElementById("usia").value);
+      const berat = parseFloat(document.getElementById("berat").value);
+      const tinggi = parseFloat(document.getElementById("tinggi").value);
+      const aktifitas = parseFloat(document.getElementById("aktifitas").value);
+
+      let bmr = 0;
       if (gender === "male") {
         bmr = (10 * berat) + (6.25 * tinggi) - (5 * usia) + 5;
       } else {
         bmr = (10 * berat) + (6.25 * tinggi) - (5 * usia) - 161;
       }
 
-      const tee = bmr * aktivitas;
-
-      const hasilText = `
-        ${nama ? `<strong>Nama:</strong> ${nama}<br>` : ''}
-        <strong>Jenis Kelamin:</strong> ${gender === "male" ? "Laki-laki" : "Perempuan"}<br>
-        <strong>Usia:</strong> ${usia} tahun<br>
-        <strong>Berat Badan:</strong> ${berat} kg<br>
-        <strong>Tinggi Badan:</strong> ${tinggi} cm<br>
-        <strong>Kebutuhan Kalori:</strong> ${tee.toFixed(1)} kkal
+      const tee = bmr * aktifitas;
+      const hasil = document.getElementById("hasil");
+      hasil.innerHTML = `
+        <h3>Hasil Perhitungan</h3>
+        ${nama ? `<p><strong>Nama:</strong> ${nama}</p>` : ""}
+        <p><strong>BMR:</strong> ${bmr.toFixed(1)} kkal</p>
+        <p><strong>Total Energy Expenditure (TEE):</strong> <strong>${tee.toFixed(1)} kkal</strong></p>
       `;
+      hasil.style.display = "block";
+      document.getElementById("downloadBtn").style.display = "inline-block";
+    });
 
-      document.getElementById("hasilDetail").innerHTML = hasilText;
-      document.getElementById("hasilBox").style.display = "block";
-    }
-
-    function downloadHasil() {
-      html2canvas(document.getElementById("hasilBox")).then(canvas => {
+    document.getElementById("downloadBtn").addEventListener("click", function() {
+      html2canvas(document.getElementById("hasil")).then(canvas => {
         const link = document.createElement("a");
         link.download = "hasil_kebutuhan_kalori.png";
         link.href = canvas.toDataURL();
         link.click();
       });
-    }
+    });
   </script>
 </body>
 </html>

@@ -171,34 +171,58 @@
   </footer>
 
   <script>
-    function hitungIMT() {
-      const usia = parseInt(document.getElementById('usia').value);
-      const berat = parseFloat(document.getElementById('berat').value);
-      const tinggiCm = parseFloat(document.getElementById('tinggi').value);
+function hitungIMT() {
+  const usia = parseInt(document.getElementById('usia').value);
+  const berat = parseFloat(document.getElementById('berat').value);
+  const tinggi = parseFloat(document.getElementById('tinggi').value);
 
-      if (isNaN(berat) || isNaN(tinggiCm)) {
-        alert("Mohon isi data dengan benar.");
-        return;
-      }
+  if (isNaN(usia) || isNaN(berat) || isNaN(tinggi)) {
+    alert("Harap isi semua kolom dengan benar.");
+    return;
+  }
 
-      const tinggiM = tinggiCm / 100;
-      const broca = (tinggiCm - 100) - (0.1 * (tinggiCm - 100));
-      const imt = berat / (tinggiM * tinggiM);
+  const tinggiMeter = tinggi / 100;
 
-      let kategori = "";
-      if (imt < 17) kategori = "Kurus";
-      else if (imt >= 17 && imt <= 25) kategori = "Normal";
-      else if (imt > 25 && imt <= 27) kategori = "Kelebihan Berat Badan";
-      else if (imt > 27 && imt <= 30) kategori = "Obesitas Kelas I";
-      else if (imt > 30 && imt <= 35) kategori = "Obesitas Kelas II";
-      else if (imt > 35) kategori = "Obesitas Kelas III";
+  // Rumus Broca
+  let bbIdeal = tinggi - 100 - (0.1 * (tinggi - 100));
+  let imt = berat / (tinggiMeter * tinggiMeter);
 
-      document.getElementById('hasilBox').innerHTML = `
-        <p><strong>Berat Badan Ideal:</strong> ${broca.toFixed(1)} kg</p>
-        <p><strong>IMT:</strong> ${imt.toFixed(1)}</p>
-        <p><strong>Kategori:</strong> ${kategori}</p>
-      `;
+  // Pembulatan logika: jika desimal > 0.5 maka pembulatan ke atas
+  function customRound(value) {
+    const decimal = value - Math.floor(value);
+    if (decimal > 0.5) {
+      return Math.ceil(value);
+    } else {
+      return Math.floor(value);
     }
+  }
+
+  bbIdeal = customRound(bbIdeal);
+  imt = customRound(imt);
+
+  let kategori = "";
+
+  if (imt < 17.0) {
+    kategori = "Kurus";
+  } else if (imt >= 17.0 && imt <= 25.0) {
+    kategori = "Normal";
+  } else if (imt > 25.0 && imt <= 27.0) {
+    kategori = "Kelebihan Berat Badan";
+  } else if (imt > 27.0 && imt <= 30.0) {
+    kategori = "Obesitas Kelas I";
+  } else if (imt > 30.0 && imt <= 35.0) {
+    kategori = "Obesitas Kelas II";
+  } else {
+    kategori = "Obesitas Kelas III";
+  }
+
+  document.getElementById('hasil').innerHTML = `
+    <p><strong>Berat Badan Ideal:</strong> ${bbIdeal} kg</p>
+    <p><strong>IMT:</strong> ${imt}</p>
+    <p><strong>Kategori:</strong> ${kategori}</p>
+  `;
+}
+
   </script>
 </body>
 </html>

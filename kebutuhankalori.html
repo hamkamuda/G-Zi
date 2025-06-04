@@ -129,6 +129,19 @@
     }
   </style>
 </head>
+  
+  .hasil-box {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  color: #333;
+  text-align: left;
+  max-width: 500px;
+  width: 100%;
+}
+
 <body>
   <header>
     <div class="logo-text">G-Zi</div>
@@ -239,9 +252,12 @@
       hasil.innerHTML = `
         <h3>Hasil Perhitungan</h3>
         ${nama ? `<p><strong>Nama:</strong> ${nama}</p>` : ""}
-        <p><strong>BMR:</strong> ${bmr.toFixed(1)} kkal</p>
-        <p><strong>Total Energy Expenditure (TEE):</strong> <strong>${tee.toFixed(1)} kkal</strong></p>
-      `;
+        <p><strong>Jenis Kelamin:</strong> ${jenisKelamin}</p>
+        <p><strong>Usia:</strong> ${usia} tahun</p>
+        <p><strong>Berat Badan:</strong> ${berat} kg</p>
+        <p><strong>Tinggi Badan:</strong> ${tinggi} cm</p>
+        <p><strong>Kebutuhan Energi:</strong> <strong>${tee.toFixed(1)} kkal</strong></p>
+`;
       hasil.style.display = "block";
       document.getElementById("downloadBtn").style.display = "inline-block";
     });

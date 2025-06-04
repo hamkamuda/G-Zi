@@ -12,13 +12,27 @@
     <div class="logo-text">G-Zi</div>
     <nav>
       <a href="index.html">Beranda</a>
-      <a href="imt.html">Perhitungan IMT</a>
+      <a href="imt.html">Skrining</a>
     </nav>
   </header>
 
   <!-- Konten IMT -->
   <section class="imt-section">
-    <!-- (kode HTML perhitungan IMT dari jawaban sebelumnya) -->
+    <section class="imt-section">
+  <h2>Perhitungan IMT & Berat Badan Ideal</h2>
+  <div class="form-container">
+    <div class="input-row">
+      <input type="number" id="usia" placeholder="Usia (tahun)" />
+      <input type="number" id="berat" placeholder="Berat Badan (kg)" />
+      <input type="number" id="tinggi" placeholder="Tinggi Badan (cm)" />
+    </div>
+    <div class="hitung-hasil-row">
+      <button class="calc-btn" onclick="hitungIMT()">Hitung IMT</button>
+      <div class="hasil-container" id="hasil"></div>
+    </div>
+  </div>
+</section>
+
   </section>
 
   <script>

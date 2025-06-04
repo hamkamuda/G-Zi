@@ -252,15 +252,15 @@
       const tee = bmr * aktifitas;
       const hasil = document.getElementById("hasil");
 hasil.innerHTML = `
-  <h3 style="color: #fe7415;">Hasil Perhitungan Kalori</h3>
+  <h3>Hasil Perhitungan Kebutuhan Kalori</h3>
   ${nama ? `<p><strong>Nama:</strong> ${nama}</p>` : ""}
   <p><strong>Jenis Kelamin:</strong> ${gender === "male" ? "Laki-laki" : "Perempuan"}</p>
   <p><strong>Usia:</strong> ${usia} tahun</p>
   <p><strong>Berat Badan:</strong> ${berat} kg</p>
   <p><strong>Tinggi Badan:</strong> ${tinggi} cm</p>
-  <p><strong>BMR:</strong> ${bmr.toFixed(1)} kkal</p>
-  <p><strong>Total Energy Expenditure (TEE):</strong> <strong style="color: #00b73e;">${tee.toFixed(1)} kkal</strong></p>
+  <p><strong>Kebutuhan Kalori:</strong> <span class="highlight">${tee.toFixed(1)} kkal</span></p>
 `;
+
 
 hasil.style.display = "block";
 hasil.classList.add("show");
@@ -269,13 +269,14 @@ document.getElementById("downloadBtn").style.display = "inline-block";
     });
 
     document.getElementById("downloadBtn").addEventListener("click", function() {
-      html2canvas(document.getElementById("hasil")).then(canvas => {
-        const link = document.createElement("a");
-        link.download = "hasil_kebutuhan_kalori.png";
-        link.href = canvas.toDataURL();
-        link.click();
-      });
-    });
+  html2canvas(document.getElementById("hasil")).then(canvas => {
+    const link = document.createElement("a");
+    link.download = "hasil_kebutuhan_kalori.png";
+    link.href = canvas.toDataURL();
+    link.click();
+  });
+});
+
   </script>
 </body>
 </html>

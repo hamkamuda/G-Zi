@@ -6,11 +6,15 @@
   <title>Perhitungan IMT - G-Zi</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    body {
+    html, body {
       margin: 0;
+      padding: 0;
+      height: 100%;
       font-family: Arial, sans-serif;
       background-color: #f8d90f;
       color: #00b73e;
+      display: flex;
+      flex-direction: column;
     }
 
     header {
@@ -45,6 +49,10 @@
       color: white;
     }
 
+    main {
+      flex: 1;
+    }
+
     .imt-section {
       padding: 40px 20px;
       max-width: 900px;
@@ -70,6 +78,7 @@
       display: flex;
       justify-content: center;
       gap: 2rem;
+      flex-wrap: wrap;
       margin-top: 20px;
     }
 
@@ -80,6 +89,7 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      height: 50px;
     }
 
     .result-box {
@@ -88,15 +98,15 @@
       border-radius: 10px;
       color: #333;
       min-width: 250px;
+      height: fit-content;
     }
 
     footer {
       background-color: #fe7415;
-      padding: 20px;
       color: white;
+      padding: 20px;
       display: flex;
       justify-content: space-between;
-      align-items: center;
       flex-wrap: wrap;
     }
 
@@ -113,23 +123,6 @@
     .footer-right {
       text-align: right;
     }
-
-    <style>
-  html, body {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-  }
-
-  main {
-    flex: 1;
-  }
-
-  footer {
-    background-color: #FE7415;
-  }
-
   </style>
 </head>
 <body>
@@ -144,22 +137,24 @@
     </nav>
   </header>
 
-  <section class="imt-section">
-    <h2>Perhitungan IMT dan Berat Badan Ideal</h2>
-    <div class="form-row">
-      <input type="number" id="usia" placeholder="Usia (tahun)" />
-      <input type="number" id="berat" placeholder="Berat (kg)" />
-      <input type="number" id="tinggi" placeholder="Tinggi (cm)" />
-    </div>
-    <div class="imt-result-container">
-      <button class="btn-hitung" onclick="hitungIMT()">Hitung IMT</button>
-      <div class="result-box" id="hasilBox">
-        <p><strong>Berat Badan Ideal:</strong> -</p>
-        <p><strong>IMT:</strong> -</p>
-        <p><strong>Kategori:</strong> -</p>
+  <main>
+    <section class="imt-section">
+      <h2>Perhitungan IMT dan Berat Badan Ideal</h2>
+      <div class="form-row">
+        <input type="number" id="usia" placeholder="Usia (tahun)" />
+        <input type="number" id="berat" placeholder="Berat (kg)" />
+        <input type="number" id="tinggi" placeholder="Tinggi (cm)" />
       </div>
-    </div>
-  </section>
+      <div class="imt-result-container">
+        <button class="btn-hitung" onclick="hitungIMT()">Hitung IMT</button>
+        <div class="result-box" id="hasilBox">
+          <p><strong>Berat Badan Ideal:</strong> -</p>
+          <p><strong>IMT:</strong> -</p>
+          <p><strong>Kategori:</strong> -</p>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <footer>
     <div class="footer-left">
@@ -171,58 +166,51 @@
   </footer>
 
   <script>
-function hitungIMT() {
-  const usia = parseInt(document.getElementById('usia').value);
-  const berat = parseFloat(document.getElementById('berat').value);
-  const tinggi = parseFloat(document.getElementById('tinggi').value);
+    function hitungIMT() {
+      const usia = parseInt(document.getElementById('usia').value);
+      const berat = parseFloat(document.getElementById('berat').value);
+      const tinggi = parseFloat(document.getElementById('tinggi').value);
 
-  if (isNaN(usia) || isNaN(berat) || isNaN(tinggi)) {
-    alert("Harap isi semua kolom dengan benar.");
-    return;
-  }
+      if (isNaN(usia) || isNaN(berat) || isNaN(tinggi)) {
+        alert("Harap isi semua kolom dengan benar.");
+        return;
+      }
 
-  const tinggiMeter = tinggi / 100;
+      const tinggiMeter = tinggi / 100;
 
-  // Rumus Broca
-  let bbIdeal = tinggi - 100 - (0.1 * (tinggi - 100));
-  let imt = berat / (tinggiMeter * tinggiMeter);
+      // Rumus Broca
+      let bbIdeal = tinggi - 100 - (0.1 * (tinggi - 100));
+      let imt = berat / (tinggiMeter * tinggiMeter);
 
-  // Pembulatan logika: jika desimal > 0.5 maka pembulatan ke atas
-  function customRound(value) {
-    const decimal = value - Math.floor(value);
-    if (decimal > 0.5) {
-      return Math.ceil(value);
-    } else {
-      return Math.floor(value);
+      function customRound(value) {
+        const decimal = value - Math.floor(value);
+        return decimal > 0.5 ? Math.ceil(value) : Math.floor(value);
+      }
+
+      bbIdeal = customRound(bbIdeal);
+      imt = customRound(imt);
+
+      let kategori = "";
+      if (imt < 17.0) {
+        kategori = "Kurus";
+      } else if (imt <= 25.0) {
+        kategori = "Normal";
+      } else if (imt <= 27.0) {
+        kategori = "Kelebihan Berat Badan";
+      } else if (imt <= 30.0) {
+        kategori = "Obesitas Kelas I";
+      } else if (imt <= 35.0) {
+        kategori = "Obesitas Kelas II";
+      } else {
+        kategori = "Obesitas Kelas III";
+      }
+
+      document.getElementById('hasilBox').innerHTML = `
+        <p><strong>Berat Badan Ideal:</strong> ${bbIdeal} kg</p>
+        <p><strong>IMT:</strong> ${imt}</p>
+        <p><strong>Kategori:</strong> ${kategori}</p>
+      `;
     }
-  }
-
-  bbIdeal = customRound(bbIdeal);
-  imt = customRound(imt);
-
-  let kategori = "";
-
-  if (imt < 17.0) {
-    kategori = "Kurus";
-  } else if (imt >= 17.0 && imt <= 25.0) {
-    kategori = "Normal";
-  } else if (imt > 25.0 && imt <= 27.0) {
-    kategori = "Kelebihan Berat Badan";
-  } else if (imt > 27.0 && imt <= 30.0) {
-    kategori = "Obesitas Kelas I";
-  } else if (imt > 30.0 && imt <= 35.0) {
-    kategori = "Obesitas Kelas II";
-  } else {
-    kategori = "Obesitas Kelas III";
-  }
-
-  document.getElementById('hasil').innerHTML = `
-    <p><strong>Berat Badan Ideal:</strong> ${bbIdeal} kg</p>
-    <p><strong>IMT:</strong> ${imt}</p>
-    <p><strong>Kategori:</strong> ${kategori}</p>
-  `;
-}
-
   </script>
 </body>
 </html>

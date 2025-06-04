@@ -21,7 +21,51 @@
     <!-- (kode HTML perhitungan IMT dari jawaban sebelumnya) -->
   </section>
 
-  <!-- Tambahkan script JS-nya -->
+  <script>
+  function hitungIMT() {
+    const usia = parseInt(document.getElementById('usia').value);
+    const berat = parseFloat(document.getElementById('berat').value);
+    const tinggi = parseFloat(document.getElementById('tinggi').value);
+
+    if (!usia || !berat || !tinggi) {
+      document.getElementById('hasil').innerHTML = "<p>Silakan lengkapi semua data terlebih dahulu.</p>";
+      return;
+    }
+
+    // Broca Ideal Weight
+    const tinggiTanpa100 = tinggi - 100;
+    const brocca = tinggiTanpa100 - (0.1 * tinggiTanpa100);
+
+    // IMT
+    const tinggiMeter = tinggi / 100;
+    const imt = berat / (tinggiMeter * tinggiMeter);
+
+    // Kategori IMT
+    let kategori = '';
+    if (imt < 17) {
+      kategori = "Kurus";
+    } else if (imt >= 17 && imt < 25) {
+      kategori = "Normal";
+    } else if (imt >= 25 && imt < 27) {
+      kategori = "Kelebihan Berat Badan";
+    } else if (imt >= 27 && imt < 30) {
+      kategori = "Obesitas Kelas I";
+    } else if (imt >= 30 && imt < 35) {
+      kategori = "Obesitas Kelas II";
+    } else {
+      kategori = "Obesitas Kelas III";
+    }
+
+    // Tampilkan hasil
+    document.getElementById('hasil').innerHTML = `
+      <p><strong>Usia:</strong> ${usia} tahun</p>
+      <p><strong>Berat Badan Ideal:</strong> ${brocca.toFixed(1)} kg</p>
+      <p><strong>Indeks Massa Tubuh (IMT):</strong> ${imt.toFixed(1)}</p>
+      <p><strong>Kategori:</strong> ${kategori}</p>
+    `;
+  }
+</script>
+
   <script src="script.js"></script>
 </body>
 </html>

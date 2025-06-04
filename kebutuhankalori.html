@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kebutuhan Kalori - G-Zi</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      background-color: #f8d90f;
+      color: #00b73e;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background-color: #fe7415;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo-text {
+      font-size: 24px;
+      font-weight: bold;
+      color: #00b73e;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #00b73e;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: white;
+    }
+
+    main {
+      flex: 1;
+      padding: 40px 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input, select {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 100%;
+    }
+
+    .btn-hitung {
+      padding: 10px 20px;
+      background-color: #0e3f1f;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    .result-box {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      color: #333;
+      text-align: center;
+    }
+
+    footer {
+      background-color: #fe7415;
+      color: white;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .footer-left, .footer-right {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .footer-left {
+      text-align: left;
+    }
+
+    .footer-right {
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-text">G-Zi</div>
+    <nav>
+      <a href="index.html">Beranda</a>
+      <a href="imt.html">Skrining</a>
+      <a href="kebutuhan-kalori.html">Kebutuhan Kalori</a>
+      <a href="#">Informasi Gizi</a>
+      <a href="#">Artikel</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2 style="text-align:center;">Perhitungan Kebutuhan Kalori</h2>
+    <div class="form-group">
+      <label for="nama">Nama (opsional)</label>
+      <input type="text" id="nama" placeholder="Masukkan Nama Anda">
+
+      <label for="gender">Jenis Kelamin</label>
+      <select id="gender">
+        <option value="">Pilih</option>
+        <option value="male">Laki-laki</option>
+        <option value="female">Perempuan</option>
+      </select>
+
+      <label for="usia">Usia (tahun)</label>
+      <input type="number" id="usia" placeholder="Contoh: 25">
+
+      <label for="berat">Berat Badan (kg)</label>
+      <input type="number" id="berat" placeholder="Contoh: 60">
+
+      <label for="tinggi">Tinggi Badan (cm)</label>
+      <input type="number" id="tinggi" placeholder="Contoh: 170">
+
+      <label for="aktivitas">Aktivitas Fisik</label>
+      <select id="aktivitas">
+        <option value="">Pilih</option>
+        <option value="1.5">Aktivitas Ringan</option>
+        <option value="1.8">Aktivitas Sedang</option>
+        <option value="2.2">Aktivitas Berat</option>
+      </select>
+
+      <button class="btn-hitung" onclick="hitungKalori()">Hitung Kebutuhan Kalori</button>
+    </div>
+
+    <div class="result-box" id="hasil"></div>
+  </main>
+
+  <footer>
+    <div class="footer-left">
+      <p><strong>Referensi:</strong><br>Rumus Mifflin St Jeor</p>
+    </div>
+    <div class="footer-right">
+      <p>Ikuti kami di: Instagram @gzi.id | Email: info@gzi.id</p>
+    </div>
+  </footer>
+
+  <script>
+    function hitungKalori() {
+      const nama = document.getElementById('nama').value;
+      const gender = document.getElementById('gender').value;
+      const usia = parseInt(document.getElementById('usia').value);
+      const berat = parseFloat(document.getElementById('berat').value);
+      const tinggi = parseFloat(document.getElementById('tinggi').value);
+      const aktivitas = parseFloat(document.getElementById('aktivitas').value);
+
+      if (!gender || isNaN(usia) || isNaN(berat) || isNaN(tinggi) || isNaN(aktivitas)) {
+        alert("Harap isi semua data dengan benar.");
+        return;
+      }
+
+      let bmr;
+      if (gender === 'male') {
+        bmr = 10 * berat + 6.25 * tinggi - 5 * usia + 5;
+      } else {
+        bmr = 10 * berat + 6.25 * tinggi - 5 * usia - 161;
+      }
+
+      const tee = bmr * aktivitas;
+
+      let hasil = `<h3>Hasil Perhitungan</h3>`;
+      if (nama) hasil += `<p><strong>Nama:</strong> ${nama}</p>`;
+      hasil += `
+        <p><strong>Jenis Kelamin:</strong> ${gender === 'male' ? 'Laki-laki' : 'Perempuan'}</p>
+        <p><strong>Usia:</strong> ${usia} tahun</p>
+        <p><strong>Berat Badan:</strong> ${berat} kg</p>
+        <p><strong>Tinggi Badan:</strong> ${tinggi} cm</p>
+        <p><strong>Aktivitas Fisik:</strong> ${aktivitas}x</p>
+        <p><strong>Total Energy Expenditure (TEE):</strong> ${tee.toFixed(1)} kkal/hari</p>
+      `;
+
+      document.getElementById('hasil').innerHTML = hasil;
+    }
+  </script>
+</body>
+</html>

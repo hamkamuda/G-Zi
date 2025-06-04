@@ -183,9 +183,9 @@
       let imt = berat / (tinggiMeter * tinggiMeter);
 
       function customRound(value) {
-        const decimal = value - Math.floor(value);
-        return decimal > 0.5 ? Math.ceil(value) : Math.floor(value);
-      }
+  return Math.round(value * 10) / 10;
+}
+
 
       bbIdeal = customRound(bbIdeal);
       imt = customRound(imt);

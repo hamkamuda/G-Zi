@@ -236,7 +236,7 @@
       const tee = bmr * aktifitas;
 
       const hasil = document.getElementById("hasil");
-      hasil.innerHTML = 
+      hasil.innerHTML = {
         <h3>Hasil Perhitungan</h3>
         <p><strong>Nama:</strong> ${nama}</p> 
         <p><strong>Jenis Kelamin:</strong> ${gender === "male" ? "Laki-laki" : "Perempuan"}</p>
@@ -247,6 +247,7 @@
       hasil.style.display = "block";
       document.getElementById("downloadBtn").style.display = "block";
     });
+    }
 
     document.getElementById("downloadBtn").addEventListener("click", function() {
       html2canvas(document.getElementById("hasil")).then(canvas => {

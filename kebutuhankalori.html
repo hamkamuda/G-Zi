@@ -282,14 +282,15 @@
       const hasilBox = document.getElementById("hasil");
       const hasilIsi = document.getElementById("hasilIsi");
 
-      hasilIsi.innerHTML = `
-        ${nama ? <p><strong>Nama:</strong> ${nama}</p> : ""}
-        <p><strong>Jenis Kelamin:</strong> ${gender === "male" ? "Laki-laki" : "Perempuan"}</p>
-        <p><strong>Usia:</strong> ${usia} tahun</p>
-        <p><strong>Berat Badan:</strong> ${berat} kg</p>
-        <p><strong>Tinggi Badan:</strong> ${tinggi} cm</p>
-        <p><strong>Kebutuhan Kalori:</strong> <span style="color:#00b73e; font-weight:bold;">${tee.toFixed(1)} kkal</span></p>
-      `;
+      hasil.innerHTML = `
+  <h3>Hasil Perhitungan Kebutuhan Kalori</h3>
+  ${nama ? <p><strong>Nama:</strong> ${nama}</p> : ""}
+  <p><strong>Jenis Kelamin:</strong> ${gender === "male" ? "Laki-laki" : "Perempuan"}</p>
+  <p><strong>Usia:</strong> ${usia} tahun</p>
+  <p><strong>Berat Badan:</strong> ${berat} kg</p>
+  <p><strong>Tinggi Badan:</strong> ${tinggi} cm</p>
+  <p><strong>Kebutuhan Kalori:</strong> <span class="highlight">${tee.toFixed(1)} kkal</span></p>
+`;
 
       hasilBox.style.display = "block";
     });

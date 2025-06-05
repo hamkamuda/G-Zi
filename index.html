@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>G-Zi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
   <style>
     .fade-in {
       opacity: 0;
@@ -17,25 +18,26 @@
 
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: 'Nunito', sans-serif;
       background-color: #F8D90F;
       color: #00b73e;
+      background-image: url('https://www.transparenttextures.com/patterns/food.png');
     }
 
-  html, body {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-  }
+    html, body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+    }
 
-  main {
-    flex: 1;
-  }
+    main {
+      flex: 1;
+    }
 
-  footer {
-    background-color: #FE7415;
-  }
+    footer {
+      background-color: #FE7415;
+    }
 
     header {
       background-color: #FE7415;
@@ -46,6 +48,7 @@
       position: sticky;
       top: 0;
       z-index: 1000;
+      border-bottom: 4px solid #f8d90f;
     }
 
     .logo-text {
@@ -77,12 +80,31 @@
     .hero {
       text-align: center;
       padding: 100px 20px 60px;
+      background: linear-gradient(135deg, #f8d90f, #fffde7);
+      position: relative;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 80px;
+      height: 80px;
+      background: url('https://cdn-icons-png.flaticon.com/512/415/415733.png') no-repeat center/contain;
+      opacity: 0.2;
     }
 
     .hero h1 {
       font-size: 48px;
       margin: 0;
       color: #00b73e;
+    }
+
+    .hero p {
+      font-size: 20px;
+      margin-top: 10px;
+      color: #333;
     }
 
     .profil-section {
@@ -114,7 +136,26 @@
 
     .profil-text p {
       margin: 0.3rem 0 0;
-      color: #333;
+      color: #fff;
+    }
+
+    /* Buah tombol */
+    .btn-fruit {
+      display: inline-block;
+      background-color: #fe7415;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 20px;
+    }
+
+    .btn-fruit:hover {
+      background-color: #00b73e;
+      transform: scale(1.05);
     }
   </style>
 </head>
@@ -133,8 +174,10 @@
   </header>
 
   <main class="hero">
+    <img src="https://cdn-icons-png.flaticon.com/512/415/415733.png" alt="buah" width="80" />
     <h1>Selamat Datang di G-Zi!</h1>
     <p>Sebuah platform informasi dan edukasi gizi terpercaya untuk Anda.</p>
+    <button class="btn-fruit">Mulai Sekarang</button>
   </main>
 
   <!-- FOOTER PROFIL DI PALING BAWAH -->

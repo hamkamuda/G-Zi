@@ -2,45 +2,46 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kebutuhan Kalori - G-Zi</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: Arial, sans-serif;
       background-color: #f8d90f;
       color: #00b73e;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
     header {
       background-color: #fe7415;
-      padding: 15px 30px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 10px 20px;
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 1000;
     }
 
     .logo-text {
-      font-size: 22px;
+      font-size: 24px;
       font-weight: bold;
       color: #00b73e;
     }
 
     nav {
       display: flex;
-      gap: 18px;
+      gap: 20px;
     }
 
     nav a {
-      color: #00b73e;
       text-decoration: none;
-      font-weight: 600;
+      color: #00b73e;
+      font-weight: bold;
     }
 
     nav a:hover {
@@ -48,19 +49,22 @@
     }
 
     main {
+      display: flex;
+      flex-direction: row;
       flex: 1;
-      max-width: 600px;
-      margin: 40px auto;
-      background: #fff9c4;
-      padding: 50px 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      padding: 40px 20px;
+      gap: 30px;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
     }
 
-    h2 {
-      text-align: center;
-      margin-bottom: 25px;
-      color: #0e3f1f;
+    .form-box {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 15px;
+      padding: 30px;
+      width: 400px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
     .form-group {
@@ -69,8 +73,8 @@
 
     label {
       display: block;
-      font-weight: 600;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
+      font-weight: bold;
     }
 
     input, select {
@@ -78,63 +82,88 @@
       padding: 10px;
       border-radius: 5px;
       border: 1px solid #ccc;
-      box-sizing: border-box
       font-size: 14px;
     }
 
     .btn-submit {
-      width: 100%;
-      padding: 12px;
       background-color: #0e3f1f;
       color: white;
+      padding: 12px 20px;
       border: none;
-      border-radius: 6px;
-      font-weight: bold;
+      border-radius: 5px;
       cursor: pointer;
-      margin-top: 20px;
+      width: 100%;
+      font-size: 16px;
+      margin-top: 15px;
     }
 
     .result-box {
-      background-color: white;
-      padding: 20px;
-      border-radius: 10px;
-      margin-top: 25px;
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
       color: #333;
+      width: 400px;
       text-align: left;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      display: none;
     }
 
     .btn-download {
-      display: block;
-      margin: 20px auto 0;
+      margin-top: 15px;
       background-color: #00b73e;
       color: white;
       border: none;
-      padding: 10px 16px;
-      border-radius: 6px;
+      padding: 10px 15px;
+      border-radius: 5px;
       cursor: pointer;
+      font-size: 14px;
+    }
+
+    .decor {
+      width: 100px;
+      position: absolute;
+      opacity: 0.8;
+      z-index: 0;
+    }
+
+    .fruit-left {
+      left: 10px;
+      top: 120px;
+    }
+
+    .fruit-right {
+      right: 10px;
+      bottom: 80px;
+      transform: rotate(15deg);
     }
 
     footer {
       background-color: #fe7415;
       color: white;
-      padding: 15px 25px;
+      padding: 20px;
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
-      font-size: 14px;
     }
 
-    @media (max-width: 600px) {
-      nav {
+    .footer-left,
+    .footer-right {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    @media (max-width: 900px) {
+      main {
         flex-direction: column;
-        align-items: flex-end;
-        gap: 10px;
+        align-items: center;
+      }
+
+      .form-box, .result-box {
+        width: 90%;
       }
     }
   </style>
 </head>
-
 <body>
   <header>
     <div class="logo-text">G-Zi</div>
@@ -147,79 +176,92 @@
     </nav>
   </header>
 
-  <main>
-    <h2>Perhitungan Kebutuhan Kalori</h2>
-    <form id="kaloriForm">
-      <div class="form-group">
-        <label for="nama">Nama</label>
-        <input type="text" id="nama" name="nama">
-      </div>
-      <div class="form-group">
-        <label for="gender">Jenis Kelamin</label>
-        <select id="gender" required>
-          <option value="">-- Pilih --</option>
-          <option value="male">Laki-laki</option>
-          <option value="female">Perempuan</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="usia">Usia (tahun)</label>
-        <input type="number" id="usia" required>
-      </div>
-      <div class="form-group">
-        <label for="berat">Berat Badan (kg)</label>
-        <input type="number" id="berat" required>
-      </div>
-      <div class="form-group">
-        <label for="tinggi">Tinggi Badan (cm)</label>
-        <input type="number" id="tinggi" required>
-      </div>
-      <div class="form-group">
-        <label for="aktifitas">Aktifitas Fisik</label>
-        <select id="aktifitas" required>
-          <option value="">-- Pilih --</option>
-          <option value="1.5">Ringan</option>
-          <option value="1.8">Sedang</option>
-          <option value="2.2">Berat</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="kondisi">Kondisi Kesehatan</label>
-        <select id="kondisi" required>
-          <option value="">-- Pilih --</option>
-          <option value="sehat">Sehat</option>
-          <option value="sakit">Sakit</option>
-        </select>
-      </div>
-      <div class="form-group" id="penyakitGroup" style="display:none;">
-        <label for="penyakit">Jenis Penyakit</label>
-        <select id="penyakit">
-          <option value="">-- Pilih --</option>
-          <option value="diabetes">Diabetes Melitus</option>
-          <option value="jantung">Jantung</option>
-          <option value="hati">Hati</option>
-        </select>
-      </div>
-      <button type="submit" class="btn-submit">Hitung Kalori</button>
-    </form>
+  <!-- Dekorasi buah -->
+  <img src="https://img.icons8.com/color/96/000000/apple.png" class="decor fruit-left" />
+  <img src="https://img.icons8.com/color/96/000000/broccoli.png" class="decor fruit-right" />
 
-    <div id="hasil" class="result-box" style="display:none;"></div>
-    <button class="btn-download" id="downloadBtn" style="display:none;">Unduh Hasil</button>
+  <main>
+    <div class="form-box">
+      <h2 style="text-align:center;">Hitung Kebutuhan Kalori</h2>
+      <form id="kaloriForm">
+        <div class="form-group">
+          <label for="nama">Nama (Opsional)</label>
+          <input type="text" id="nama" name="nama" />
+        </div>
+        <div class="form-group">
+          <label for="gender">Jenis Kelamin</label>
+          <select id="gender" required>
+            <option value="">-- Pilih Jenis Kelamin --</option>
+            <option value="male">Laki-laki</option>
+            <option value="female">Perempuan</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="usia">Usia (tahun)</label>
+          <input type="number" id="usia" required />
+        </div>
+        <div class="form-group">
+          <label for="berat">Berat Badan (kg)</label>
+          <input type="number" id="berat" required />
+        </div>
+        <div class="form-group">
+          <label for="tinggi">Tinggi Badan (cm)</label>
+          <input type="number" id="tinggi" required />
+        </div>
+        <div class="form-group">
+          <label for="aktifitas">Aktifitas Fisik</label>
+          <select id="aktifitas" required>
+            <option value="">-- Pilih Aktifitas Fisik --</option>
+            <option value="1.5">Aktifitas Ringan</option>
+            <option value="1.8">Aktifitas Sedang</option>
+            <option value="2.2">Aktifitas Berat</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="kondisi">Kondisi Kesehatan</label>
+          <select id="kondisi" required>
+            <option value="">-- Pilih Kondisi --</option>
+            <option value="sehat">Sehat</option>
+            <option value="sakit">Sakit</option>
+          </select>
+        </div>
+        <div class="form-group" id="penyakitGroup" style="display:none;">
+          <label for="penyakit">Jenis Penyakit</label>
+          <select id="penyakit">
+            <option value="">-- Pilih Penyakit --</option>
+            <option value="diabetes">Diabetes Melitus</option>
+            <option value="jantung">Jantung</option>
+            <option value="hati">Hati</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-submit">Hitung Kalori</button>
+      </form>
+    </div>
+
+    <div class="result-box" id="hasil">
+      <h3>Hasil Perhitungan Kalori</h3>
+      <div id="hasilIsi"></div>
+      <button class="btn-download" id="downloadBtn">Unduh Hasil</button>
+    </div>
   </main>
 
   <footer>
-    <div><strong>Referensi:</strong> Mifflin St Jeor & Aktivitas Fisik</div>
-    <div>Instagram @gzi.id | Email: info@gzi.id</div>
+    <div class="footer-left">
+      <p><strong>Referensi:</strong><br>Mifflin St Jeor & Aktivitas Fisik</p>
+    </div>
+    <div class="footer-right">
+      <p>Instagram @gzi.id | Email: info@gzi.id</p>
+    </div>
   </footer>
 
   <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <script>
-    document.getElementById("kondisi").addEventListener("change", function() {
-      const show = this.value === "sakit";
-      document.getElementById("penyakitGroup").style.display = show ? "block" : "none";
+    document.getElementById("kondisi").addEventListener("change", function () {
+      const penyakitGroup = document.getElementById("penyakitGroup");
+      penyakitGroup.style.display = this.value === "sakit" ? "block" : "none";
     });
 
-    document.getElementById("kaloriForm").addEventListener("submit", function(e) {
+    document.getElementById("kaloriForm").addEventListener("submit", function (e) {
       e.preventDefault();
 
       const nama = document.getElementById("nama").value;
@@ -229,27 +271,30 @@
       const tinggi = parseFloat(document.getElementById("tinggi").value);
       const aktifitas = parseFloat(document.getElementById("aktifitas").value);
 
-      let bmr = gender === "male"
-        ? (10 * berat) + (6.25 * tinggi) - (5 * usia) + 5
-        : (10 * berat) + (6.25 * tinggi) - (5 * usia) - 161;
+      let bmr = 0;
+      if (gender === "male") {
+        bmr = 10 * berat + 6.25 * tinggi - 5 * usia + 5;
+      } else {
+        bmr = 10 * berat + 6.25 * tinggi - 5 * usia - 161;
+      }
 
       const tee = bmr * aktifitas;
+      const hasilBox = document.getElementById("hasil");
+      const hasilIsi = document.getElementById("hasilIsi");
 
-      const hasil = document.getElementById("hasil");
-      hasil.innerHTML = 
-        <h3>Hasil Perhitungan</h3> {
-        <p><strong>Nama:</strong> ${nama}</p> 
+      hasilIsi.innerHTML = `
+        ${nama ? <p><strong>Nama:</strong> ${nama}</p> : ""}
         <p><strong>Jenis Kelamin:</strong> ${gender === "male" ? "Laki-laki" : "Perempuan"}</p>
         <p><strong>Usia:</strong> ${usia} tahun</p>
-        <p><strong>Berat:</strong> ${berat} kg | <strong>Tinggi:</strong> ${tinggi} cm</p>
-        <p><strong>Kebutuhan Kalori Harian:</strong> ${tee.toFixed(1)} kkal</p>
+        <p><strong>Berat Badan:</strong> ${berat} kg</p>
+        <p><strong>Tinggi Badan:</strong> ${tinggi} cm</p>
+        <p><strong>Kebutuhan Kalori:</strong> <span style="color:#00b73e; font-weight:bold;">${tee.toFixed(1)} kkal</span></p>
       `;
-      hasil.style.display = "block";
-      document.getElementById("downloadBtn").style.display = "block";
-    });
-    }
 
-    document.getElementById("downloadBtn").addEventListener("click", function() {
+      hasilBox.style.display = "block";
+    });
+
+    document.getElementById("downloadBtn").addEventListener("click", function () {
       html2canvas(document.getElementById("hasil")).then(canvas => {
         const link = document.createElement("a");
         link.download = "hasil_kebutuhan_kalori.png";

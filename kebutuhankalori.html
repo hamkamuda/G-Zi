@@ -76,8 +76,9 @@
     input, select {
       width: 100%;
       padding: 10px;
-      border-radius: 6px;
+      border-radius: 5px;
       border: 1px solid #ccc;
+      box-sizing: border-box
       font-size: 14px;
     }
 
@@ -150,8 +151,8 @@
     <h2>Perhitungan Kebutuhan Kalori</h2>
     <form id="kaloriForm">
       <div class="form-group">
-        <label for="nama">Nama (Opsional)</label>
-        <input type="text" id="nama">
+        <label for="nama">Nama</label>
+        <input type="text" id="nama" name="nama">
       </div>
       <div class="form-group">
         <label for="gender">Jenis Kelamin</label>
@@ -237,7 +238,7 @@
       const hasil = document.getElementById("hasil");
       hasil.innerHTML = `
         <h3>Hasil Perhitungan</h3>
-        <p><strong>Nama:</strong> ${nama}</p> : ""}
+        <p><strong>Nama:</strong> ${nama}</p> }
         <p><strong>Jenis Kelamin:</strong> ${gender === "male" ? "Laki-laki" : "Perempuan"}</p>
         <p><strong>Usia:</strong> ${usia} tahun</p>
         <p><strong>Berat:</strong> ${berat} kg | <strong>Tinggi:</strong> ${tinggi} cm</p>

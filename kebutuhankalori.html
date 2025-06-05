@@ -2,12 +2,12 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Kebutuhan Kalori - G-Zi</title>
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', sans-serif;
       background-color: #f8d90f;
       color: #00b73e;
       display: flex;
@@ -17,30 +17,30 @@
 
     header {
       background-color: #fe7415;
+      padding: 15px 30px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 20px;
       position: sticky;
       top: 0;
-      z-index: 1000;
+      z-index: 100;
     }
 
     .logo-text {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: bold;
       color: #00b73e;
     }
 
     nav {
       display: flex;
-      gap: 20px;
+      gap: 18px;
     }
 
     nav a {
-      text-decoration: none;
       color: #00b73e;
-      font-weight: bold;
+      text-decoration: none;
+      font-weight: 600;
     }
 
     nav a:hover {
@@ -49,14 +49,18 @@
 
     main {
       flex: 1;
-      padding: 40px 20px;
-      max-width: 900px;
-      margin: auto;
+      max-width: 600px;
+      margin: 40px auto;
+      background: #fff9c4;
+      padding: 30px 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
 
     h2 {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
+      color: #0e3f1f;
     }
 
     .form-group {
@@ -65,83 +69,69 @@
 
     label {
       display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
+      font-weight: 600;
+      margin-bottom: 6px;
     }
 
     input, select {
       width: 100%;
       padding: 10px;
-      border-radius: 5px;
+      border-radius: 6px;
       border: 1px solid #ccc;
+      font-size: 14px;
     }
 
     .btn-submit {
+      width: 100%;
+      padding: 12px;
       background-color: #0e3f1f;
       color: white;
-      padding: 12px 20px;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
+      font-weight: bold;
       cursor: pointer;
       margin-top: 20px;
     }
 
     .result-box {
-      background: white;
+      background-color: white;
       padding: 20px;
       border-radius: 10px;
+      margin-top: 25px;
       color: #333;
-      margin-top: 30px;
-      text-align: center;
+      text-align: left;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
 
     .btn-download {
-      margin-top: 15px;
+      display: block;
+      margin: 20px auto 0;
       background-color: #00b73e;
       color: white;
       border: none;
-      padding: 10px 15px;
-      border-radius: 5px;
+      padding: 10px 16px;
+      border-radius: 6px;
       cursor: pointer;
     }
 
     footer {
       background-color: #fe7415;
       color: white;
-      padding: 20px;
+      padding: 15px 25px;
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
+      font-size: 14px;
     }
 
-    .footer-left,
-    .footer-right {
-      flex: 1;
-      min-width: 200px;
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 10px;
+      }
     }
-
-    .footer-left {
-      text-align: left;
-    }
-
-    .footer-right {
-      text-align: right;
-    }
-
-		.hasil-box {
-		  background-color: #ffffff;
-		  border-radius: 10px;
-		  padding: 20px;
-			margin-top: 20px;
-  		box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  		color: #333;
-  		text-align: left;
-  		max-width: 500px;
-  		width: 100%;
-		}
-
   </style>
-  
 </head>
 
 <body>
@@ -161,12 +151,12 @@
     <form id="kaloriForm">
       <div class="form-group">
         <label for="nama">Nama (Opsional)</label>
-        <input type="text" id="nama" name="nama">
+        <input type="text" id="nama">
       </div>
       <div class="form-group">
         <label for="gender">Jenis Kelamin</label>
         <select id="gender" required>
-          <option value="">-- Pilih Jenis Kelamin --</option>
+          <option value="">-- Pilih --</option>
           <option value="male">Laki-laki</option>
           <option value="female">Perempuan</option>
         </select>
@@ -186,16 +176,16 @@
       <div class="form-group">
         <label for="aktifitas">Aktifitas Fisik</label>
         <select id="aktifitas" required>
-          <option value="">-- Pilih Aktifitas Fisik --</option>
-          <option value="1.5">Aktifitas Ringan</option>
-          <option value="1.8">Aktifitas Sedang</option>
-          <option value="2.2">Aktifitas Berat</option>
+          <option value="">-- Pilih --</option>
+          <option value="1.5">Ringan</option>
+          <option value="1.8">Sedang</option>
+          <option value="2.2">Berat</option>
         </select>
       </div>
       <div class="form-group">
         <label for="kondisi">Kondisi Kesehatan</label>
         <select id="kondisi" required>
-          <option value="">-- Pilih Kondisi --</option>
+          <option value="">-- Pilih --</option>
           <option value="sehat">Sehat</option>
           <option value="sakit">Sakit</option>
         </select>
@@ -203,33 +193,29 @@
       <div class="form-group" id="penyakitGroup" style="display:none;">
         <label for="penyakit">Jenis Penyakit</label>
         <select id="penyakit">
-          <option value="">-- Pilih Penyakit --</option>
+          <option value="">-- Pilih --</option>
           <option value="diabetes">Diabetes Melitus</option>
           <option value="jantung">Jantung</option>
           <option value="hati">Hati</option>
         </select>
       </div>
-      <button type="submit" class="btn-submit">Hitung</button>
+      <button type="submit" class="btn-submit">Hitung Kalori</button>
     </form>
 
-    <div class="result-box" id="hasil" style="display:none;"></div>
+    <div id="hasil" class="result-box" style="display:none;"></div>
     <button class="btn-download" id="downloadBtn" style="display:none;">Unduh Hasil</button>
   </main>
 
   <footer>
-    <div class="footer-left">
-      <p><strong>Referensi:</strong><br>Mifflin St Jeor & Aktivitas Fisik</p>
-    </div>
-    <div class="footer-right">
-      <p>Instagram @gzi.id | Email: info@gzi.id</p>
-    </div>
+    <div><strong>Referensi:</strong> Mifflin St Jeor & Aktivitas Fisik</div>
+    <div>Instagram @gzi.id | Email: info@gzi.id</div>
   </footer>
 
   <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <script>
     document.getElementById("kondisi").addEventListener("change", function() {
-      const penyakitGroup = document.getElementById("penyakitGroup");
-      penyakitGroup.style.display = this.value === "sakit" ? "block" : "none";
+      const show = this.value === "sakit";
+      document.getElementById("penyakitGroup").style.display = show ? "block" : "none";
     });
 
     document.getElementById("kaloriForm").addEventListener("submit", function(e) {
@@ -242,41 +228,33 @@
       const tinggi = parseFloat(document.getElementById("tinggi").value);
       const aktifitas = parseFloat(document.getElementById("aktifitas").value);
 
-      let bmr = 0;
-      if (gender === "male") {
-        bmr = (10 * berat) + (6.25 * tinggi) - (5 * usia) + 5;
-      } else {
-        bmr = (10 * berat) + (6.25 * tinggi) - (5 * usia) - 161;
-      }
+      let bmr = gender === "male"
+        ? (10 * berat) + (6.25 * tinggi) - (5 * usia) + 5
+        : (10 * berat) + (6.25 * tinggi) - (5 * usia) - 161;
 
       const tee = bmr * aktifitas;
+
       const hasil = document.getElementById("hasil");
-hasil.innerHTML = `
-  <h3>Hasil Perhitungan Kebutuhan Kalori</h3>
-  ${nama ? `<p><strong>Nama:</strong> ${nama}</p>` : ""}
-  <p><strong>Jenis Kelamin:</strong> ${gender === "male" ? "Laki-laki" : "Perempuan"}</p>
-  <p><strong>Usia:</strong> ${usia} tahun</p>
-  <p><strong>Berat Badan:</strong> ${berat} kg</p>
-  <p><strong>Tinggi Badan:</strong> ${tinggi} cm</p>
-  <p><strong>Kebutuhan Kalori:</strong> <span class="highlight">${tee.toFixed(1)} kkal</span></p>
-`;
-
-
-hasil.style.display = "block";
-hasil.classList.add("show");
-document.getElementById("downloadBtn").style.display = "inline-block";
-
+      hasil.innerHTML = `
+        <h3>Hasil Perhitungan</h3>
+        ${nama ? <p><strong>Nama:</strong> ${nama}</p> : ""}
+        <p><strong>Jenis Kelamin:</strong> ${gender === "male" ? "Laki-laki" : "Perempuan"}</p>
+        <p><strong>Usia:</strong> ${usia} tahun</p>
+        <p><strong>Berat:</strong> ${berat} kg | <strong>Tinggi:</strong> ${tinggi} cm</p>
+        <p><strong>Kebutuhan Kalori Harian:</strong> ${tee.toFixed(1)} kkal</p>
+      `;
+      hasil.style.display = "block";
+      document.getElementById("downloadBtn").style.display = "block";
     });
 
     document.getElementById("downloadBtn").addEventListener("click", function() {
-  html2canvas(document.getElementById("hasil")).then(canvas => {
-    const link = document.createElement("a");
-    link.download = "hasil_kebutuhan_kalori.png";
-    link.href = canvas.toDataURL();
-    link.click();
-  });
-});
-
+      html2canvas(document.getElementById("hasil")).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "hasil_kebutuhan_kalori.png";
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    });
   </script>
 </body>
 </html>

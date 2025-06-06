@@ -240,14 +240,14 @@
       const elemen = document.getElementById("hasilF2");
       const tambahan = document.createElement("div");
       tambahan.innerHTML = `
-  <hr>
-  <p style="text-align:center; font-size:12px;">
-    <strong>G-Zi | Laporan Asupan Gizi</strong><br>
-    Dicetak: ${new Date().toLocaleString()}<br>
-    Sumber: TKPI Kemenkes RI 2020<br><br>
-    Terima kasih telah menggunakan website ini 🙏🍎🥦
-  </p>
-`;
+      <hr>
+      <p style="text-align:center; font-size:12px;">
+        <strong>G-Zi | Laporan Asupan Gizi</strong>
+        <br>Dicetak: ${new Date().toLocaleString()}
+        <br>Sumber: TKPI Kemenkes RI 2020<br>
+        <br>Terima kasih telah menggunakan website ini 🙏🍎🥦
+      </p>
+    `;
 
       html2pdf().from(elemen).set({
         margin: 10,

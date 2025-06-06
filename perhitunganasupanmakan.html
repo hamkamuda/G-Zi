@@ -131,7 +131,7 @@
       <a href="index.html">Beranda</a>
       <a href="imt.html">Skrining</a>
       <a href="kebutuhankalori.html">Kebutuhan Kalori</a>
-      <a href="perhitunganasupanmakan.html">Asupan Makan</a>
+      <a href="asupanmakan.html">Asupan Makan</a>
       <a href="#">Artikel Gizi</a>
     </nav>
   </header>
@@ -156,20 +156,25 @@
     </section>
 
     <section class="section">
-      <h3>2. Total Kalori per Waktu Makan</h3>
+      <h3>2. Total Asupan Makanan per Jam & Tanggal</h3>
       <div class="grid-2">
         <div class="input-wrapper">
           <div class="form-column">
             <label for="inputCari">Nama Bahan Makanan</label>
             <input type="text" id="inputCari" oninput="cariPilihanKalori()">
             <ul class="result-list" id="pilihanKalori"></ul>
+
             <label for="beratKalori">Berat (gram)</label>
             <input type="number" id="beratKalori">
+
             <label for="tanggal">Tanggal</label>
             <input type="date" id="tanggal">
+
             <label for="jam">Jam</label>
             <input type="time" id="jam">
+
             <button onclick="tambahMakananKeList()">Tambahkan</button>
+            <button onclick="unduhPDF()">Unduh PDF</button>
           </div>
         </div>
         <div class="output-wrapper">
@@ -178,9 +183,12 @@
       </div>
     </section>
   </main>
+
   <footer>
     &copy; 2025 G-Zi | Referensi: Kemenkes RI, TKPI 2020
   </footer>
+
   <script src="asupanmakan.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </body>
 </html>

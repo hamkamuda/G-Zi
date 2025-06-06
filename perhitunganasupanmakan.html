@@ -12,17 +12,18 @@
     }
     body {
       margin: 0;
-      background: linear-gradient(to right, #f8d90f, #fff6c5);
+      background: linear-gradient(to right, #d4ff9d, #fffabe);
       color: #004d1a;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
     }
     header, footer {
-      background-color: #fe7415;
-      color: white;
-      padding: 20px;
-      text-align: center;
+      background-color: #ffb347;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
     nav {
       margin-top: 10px;
@@ -190,24 +191,25 @@
 
     function tampilkanOpsiBahan() {
       const input = document.getElementById("bahanF1").value.toLowerCase();
+      const berat = parseFloat(document.getElementById("beratF1").value) || 100;
       const hasil = DaftarBahanMakanan.filter(item => item["Nama Bahan"].toLowerCase().includes(input));
       const list = document.getElementById("opsiBahan");
-      list.innerHTML = hasil.map(h => `<li onclick="pilihBahan('${h["Nama Bahan"].replace(/'/g, "\'")}', ${document.getElementById('beratF1').value || 100})">${h["Nama Bahan"]}</li>`).join("");
+      list.innerHTML = hasil.map(h => `<li onclick="pilihBahan('${h["Nama Bahan"].replace(/'/g, "\'")}', ${berat})">${h["Nama Bahan"]}</li>`).join("");
     }
 
     function pilihBahan(nama, berat) {
       const hasil = DaftarBahanMakanan.find(item => item["Nama Bahan"] === nama);
       const f = berat / 100;
-      document.getElementById("hasilF1").innerHTML = `
-        <h4>${nama} (${berat} gram)</h4>
-        <ul>
-          <li>Energi: ${(parseFloat(hasil.ENERGI) * f).toFixed(1)} kkal</li>
-          <li>Protein: ${(parseFloat(hasil.PROTEIN) * f).toFixed(1)} g</li>
-          <li>Lemak: ${(parseFloat(hasil.LEMAK) * f).toFixed(1)} g</li>
-          <li>Karbohidrat: ${(parseFloat(hasil.KARBOHIDRAT) * f).toFixed(1)} g</li>
-          <li>Serat: ${(parseFloat(hasil.SERAT) * f).toFixed(1)} g</li>
-          <li>Natrium: ${(parseFloat(hasil.NATRIUM) * f).toFixed(1)} mg</li>
-        </ul>`;
+      let detail = `<h4>${nama} (${berat} gram)</h4><ul>`;
+      for (const key in hasil) {
+        if (key !== "Nama Bahan") {
+          const satuan = hasil[key];
+          const nilai = (parseFloat(satuan) * f).toFixed(2);
+          detail += `<li>${key}: ${nilai}</li>`;
+        }
+      }
+      detail += '</ul>';
+      document.getElementById("hasilF1").innerHTML = detail;
       document.getElementById("opsiBahan").innerHTML = "";
     }
 
@@ -231,7 +233,7 @@
 
       if (!bahan || isNaN(berat)) return alert("Data tidak valid atau belum dipilih.");
 
-      const energi = parseFloat(bahan.ENERGI) * (berat / 100);
+      const energi = parseFloat(bahan["ENERGI"] || 0) * (berat / 100);
       daftarMakanan.push({ nama, berat, energi, waktu });
       tampilkanTabelKalori();
     }

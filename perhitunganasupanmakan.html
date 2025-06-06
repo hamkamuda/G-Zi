@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Asupan Makan - G-Zi</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     * {
       box-sizing: border-box;
@@ -96,6 +95,9 @@
     .result-list li:hover {
       background-color: #d8fcd8;
     }
+    #hasilF1 ul {
+      columns: 2;
+    }
     .grid-2 {
       display: flex;
       gap: 40px;
@@ -132,6 +134,7 @@
   </header>
   <main>
     <h2>Perhitungan Asupan Makan</h2>
+
     <section class="section">
       <h3>1. Cek Gizi Bahan Makanan</h3>
       <div class="form-row">
@@ -151,43 +154,43 @@
 
     <section class="section">
       <h3>2. Total Kalori per Waktu Makan</h3>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="inputCari">Nama Bahan Makanan</label>
-          <input type="text" id="inputCari" oninput="cariPilihanKalori()">
-          <ul class="result-list" id="pilihanKalori"></ul>
+      <div class="grid-2">
+        <div class="input-wrapper">
+          <div class="form-column">
+            <label for="inputCari">Nama Bahan Makanan</label>
+            <input type="text" id="inputCari" oninput="cariPilihanKalori()">
+            <ul class="result-list" id="pilihanKalori"></ul>
+            <label for="beratKalori">Berat (gram)</label>
+            <input type="number" id="beratKalori">
+            <label for="tanggal">Tanggal Makan</label>
+            <input type="date" id="tanggal">
+            <label for="jam">Jam Makan</label>
+            <input type="time" id="jam">
+            <button onclick="tambahMakananKeList()">Tambahkan</button>
+            <button onclick="unduhPDF()">Unduh Hasil PDF</button>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="beratKalori">Berat (gram)</label>
-          <input type="number" id="beratKalori">
-        </div>
-        <div class="form-group">
-          <label for="tanggal">Tanggal</label>
-          <input type="date" id="tanggal">
-        </div>
-        <div class="form-group">
-          <label for="jam">Jam</label>
-          <input type="time" id="jam">
+        <div class="output-wrapper">
+          <div id="hasilF2" class="table-data"></div>
         </div>
       </div>
-      <button onclick="tambahMakananKeList()">Tambahkan</button>
-      <div id="hasilF2" class="table-data"></div>
-      
-      <button onclick="unduhPDF()">Unduh Hasil PDF</button>
     </section>
   </main>
   <footer>
     &copy; 2025 G-Zi | Referensi: Kemenkes RI, TKPI 2020
   </footer>
-  <script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
     let DaftarBahanMakanan = [];
-    let daftarMakanan = [];
 
-    fetch("DaftarBahanMakanan.json")
-      .then(res => res.json())
-      .then(data => DaftarBahanMakanan = data);
+  fetch("DaftarBahanMakanan.json")
+    .then(response => response.json())
+    .then(data => {
+      DaftarBahanMakanan = data;
+      console.log("Data makanan dimuat:", DaftarBahanMakanan);
+    })
+    .catch(error => console.error("Gagal memuat data:", error));
 
     function tampilkanOpsiBahan() {
       const input = document.getElementById("bahanF1").value.toLowerCase();

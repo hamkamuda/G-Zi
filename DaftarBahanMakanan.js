@@ -1,7 +1,7 @@
 window.DaftarBahanMakanan = [
     {
         "Nama Bahan": "Beras giling, mentah",
-        "ENERGI": "357",
+        "ENERGI": 357,
         "PROTEIN": "8.4",
         "LEMAK": "1.7",
         "KARBOHIDRAT": "77.1",

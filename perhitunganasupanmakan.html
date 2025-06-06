@@ -246,7 +246,7 @@
   // Tambahkan judul & garis atas
   const judul = document.createElement("div");
   judul.innerHTML = `
-    <h2 style="text-align:center; color:#00b73e;">Laporan Asupan Gizi</h2>
+    <h2 style="text-align:center; color:#00b73e;">🍏 G-Zi - Laporan Asupan Gizi 🍊</h2>
     <hr style="border: 1px solid #ffa94d; margin-bottom: 20px;">
   `;
   pembungkus.appendChild(judul);
@@ -258,7 +258,7 @@
     <hr style="margin-top: 30px;">
     <p style="text-align:center; font-size:12px;">
       <strong>G-Zi | Laporan Asupan Gizi</strong><br>
-      Dicetak: ${new Date().toLocaleString()}<br>
+      Dicetak: ${new Date(item.waktu).toLocaleString("id-ID")}<br>
       Sumber: TKPI Kemenkes RI 2020<br><br>
       Terima kasih telah menggunakan website ini 🙏🍎🥦
     </p>
@@ -291,7 +291,7 @@
   // Unduh PDF
   html2pdf().from(pembungkus).set({
     margin: 10,
-    filename: `Laporan_Asupan_Gizi_${new Date().toLocaleDateString()}.pdf`,
+    filename: `GZi_AsupanGizi_${new Date(item.waktu).toLocaleString("id-ID")}.pdf`,
     image: { type: 'jpeg', quality: 0.98 },
     html2canvas: { scale: 3 },
     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }

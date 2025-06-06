@@ -203,12 +203,17 @@
     function pilihBahan(nama, berat) {
       const hasil = DaftarBahanMakanan.find(item => item["Nama Bahan"] === nama);
       const f = berat / 100;
+      const satuan = {
+        "Air (ml)": "ml", "Energi (Kkal)": "kkal", "Protein (g)": "g", "Lemak (g)": "g", "Karbohidrat (g)": "g", "Serat (g)": "g", "Abu (g)": "g",
+        "Kalsium (mg)": "mg", "Fosfor (mg)": "mg", "Besi (mg)": "mg", "Natrium (mg)": "mg", "Kalium (mg)": "mg",
+        "Tembaga (mg)": "mg", "Seng (mg)": "mg", "Retinol (mcg)": "mcg", "B-Kar (mcg)": "mcg", "Kar-Total (mcg)": "mcg",
+        "Thiamin (mg)": "mg", "Riboflavin (mg)": "mg", "Niasin (mg)": "mg", "Vit-C (mg)": "mg", "Berat Dapat Dimakan (%)": "%"
+      };
       let detail = `<h4>${nama} (${berat} gram)</h4><ul>`;
       for (const key in hasil) {
         if (key !== "Nama Bahan") {
-          const satuan = hasil[key];
-          const nilai = (parseFloat(satuan) * f).toFixed(2);
-          detail += `<li>${key}: ${nilai} ${key === 'ENERGI' ? 'kkal' : key === 'AIR' ? 'ml' : key === 'NATRIUM' || key === 'KALIUM' || key === 'KALSIUM' || key === 'FOSFOR' || key === 'VIT-C' ? 'mg' : 'g'}</li>`;
+          const nilai = (parseFloat(hasil[key]) * f).toFixed(2);
+          detail += `<li>${key}: ${nilai} ${satuan[key] || ''}</li>`;
         }
       }
       detail += '</ul>';
@@ -235,11 +240,11 @@
       const bahan = DaftarBahanMakanan.find(item => item["Nama Bahan"] === nama);
       if (!bahan || isNaN(berat)) return alert("Data tidak valid atau belum dipilih.");
       const faktor = berat / 100;
-      const energi = parseFloat(bahan["ENERGI (Kkal)"] || 0) * faktor;
-      const protein = parseFloat(bahan["PROTEIN (gram)"] || 0) * faktor;
-      const lemak = parseFloat(bahan["LEMAK (gram)"] || 0) * faktor;
-      const karbo = parseFloat(bahan["KH (gram)"] || 0) * faktor;
-      daftarMakanan.push({ nama, berat, energi, protein, lemak, kh, waktu });
+      const energi = parseFloat(bahan["Energi (Kkal)"] || 0) * faktor;
+      const protein = parseFloat(bahan["Protein (g)"] || 0) * faktor;
+      const lemak = parseFloat(bahan["Lemak (g)"] || 0) * faktor;
+      const karbo = parseFloat(bahan["Karbohidrat (g)"] || 0) * faktor;
+      daftarMakanan.push({ nama, berat, energi, protein, lemak, karbo, waktu });
       tampilkanTabelKalori();
     }
 

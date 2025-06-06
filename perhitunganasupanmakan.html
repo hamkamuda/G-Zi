@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perhitungan Asupan Makan - G-Zi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      margin: 0;
+      background: #f4fff0;
+      color: #004d1a;
+    }
+    header, footer {
+      background-color: #ffb347;
+      color: #004d1a;
+      padding: 20px 40px;
+      text-align: center;
+    }
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #004d1a;
+      font-weight: bold;
+    }
+    nav a:hover {
+      color: white;
+    }
+    main {
+      padding: 30px;
+    }
+    h2 {
+      text-align: center;
+    }
+    .section {
+      margin: 40px 0;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    label, select, input {
+      display: block;
+      margin: 10px 0;
+    }
+    .form-row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .form-group {
+      flex: 1;
+      min-width: 200px;
+    }
+    button {
+      background-color: #00b73e;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #009933;
+    }
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #e0f9db;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">G-Zi</div>
+    <nav>
+      <a href="index.html">Beranda</a>
+      <a href="imt.html">Skrining</a>
+      <a href="kebutuhankalori.html">Kebutuhan Kalori</a>
+      <a href="asupanmakan.html">Asupan Makan</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Perhitungan Asupan Makan</h2>
+
+    <!-- Fitur 1 -->
+    <section class="section" id="fitur1">
+      <h3>1. Cari Data Bahan Makanan</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="bahanF1">Nama Bahan Makanan</label>
+          <input type="text" id="bahanF1" placeholder="contoh: Beras giling">
+        </div>
+        <div class="form-group">
+          <label for="beratF1">Berat (gram)</label>
+          <input type="number" id="beratF1" placeholder="contoh: 100">
+        </div>
+      </div>
+      <button onclick="cariBahanF1()">Lihat Kandungan Gizi</button>
+      <div id="hasilF1"></div>
+    </section>
+
+    <!-- Fitur 2 -->
+    <section class="section" id="fitur2">
+      <h3>2. Hitung Total Kalori per Waktu Makan</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="waktu">Waktu Makan</label>
+          <select id="waktu">
+            <option value="Pagi">Pagi</option>
+            <option value="Siang">Siang</option>
+            <option value="Malam">Malam</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="karbo">Sumber Karbohidrat</label>
+          <input type="text" id="karbo">
+          <input type="number" id="karboBerat" placeholder="Berat (gram)">
+        </div>
+        <div class="form-group">
+          <label for="proteinNabati">Protein Nabati</label>
+          <input type="text" id="proteinNabati">
+          <input type="number" id="proteinNabatiBerat" placeholder="Berat (gram)">
+        </div>
+        <div class="form-group">
+          <label for="proteinHewani">Protein Hewani</label>
+          <input type="text" id="proteinHewani">
+          <input type="number" id="proteinHewaniBerat" placeholder="Berat (gram)">
+        </div>
+        <div class="form-group">
+          <label for="sayur">Sayuran</label>
+          <input type="text" id="sayur">
+          <input type="number" id="sayurBerat" placeholder="Berat (gram)">
+        </div>
+        <div class="form-group">
+          <label for="buah">Buah-buahan</label>
+          <input type="text" id="buah">
+          <input type="number" id="buahBerat" placeholder="Berat (gram)">
+        </div>
+      </div>
+      <button onclick="hitungKaloriWaktuMakan()">Hitung Total Kalori</button>
+      <div id="hasilF2"></div>
+    </section>
+
+    <!-- Fitur 3 Placeholder -->
+    <section class="section" id="fitur3">
+      <h3>3. Perhitungan Lanjutan (Segera Hadir)</h3>
+      <p>Fitur ini akan ditambahkan setelah penjelasan lebih lanjut.</p>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 G-Zi | Referensi: Kemenkes RI, TKPI 2020
+  </footer>
+
+  <script>
+    const dataMakanan = window.DaftarBahanMakanan || []; // pastikan DaftarBahanMakanan dimuat
+
+    function cariBahanF1() {
+      const nama = document.getElementById("bahanF1").value.toLowerCase();
+      const berat = parseFloat(document.getElementById("beratF1").value);
+      const hasil = dataMakanan.find(item => item["Nama Bahan"].toLowerCase().includes(nama));
+      const container = document.getElementById("hasilF1");
+
+      if (!hasil) {
+        container.innerHTML = `<p style='color:red;'>Data tidak ditemukan</p>`;
+        return;
+      }
+
+      const faktor = berat / 100;
+      container.innerHTML = `
+        <h4>Hasil Gizi (${berat} gram)</h4>
+        <ul>
+          <li>Energi: ${(hasil.ENERGI * faktor).toFixed(1)} kkal</li>
+          <li>Protein: ${(hasil.PROTEIN * faktor).toFixed(1)} g</li>
+          <li>Lemak: ${(hasil.LEMAK * faktor).toFixed(1)} g</li>
+          <li>Karbohidrat: ${(hasil.KARBOHIDRAT * faktor).toFixed(1)} g</li>
+          <li>Serat: ${(hasil.SERAT * faktor).toFixed(1)} g</li>
+          <li>Natrium: ${(hasil.NATRIUM * faktor).toFixed(1)} mg</li>
+        </ul>
+      `;
+    }
+
+    function cariGizi(nama, berat) {
+      const bahan = dataMakanan.find(item => item["Nama Bahan"].toLowerCase().includes(nama.toLowerCase()));
+      if (!bahan || !berat) return 0;
+      const faktor = berat / 100;
+      return bahan.ENERGI * faktor;
+    }
+
+    function hitungKaloriWaktuMakan() {
+      const waktu = document.getElementById("waktu").value;
+      const totalKalori =
+        cariGizi(document.getElementById("karbo").value, document.getElementById("karboBerat").value) +
+        cariGizi(document.getElementById("proteinNabati").value, document.getElementById("proteinNabatiBerat").value) +
+        cariGizi(document.getElementById("proteinHewani").value, document.getElementById("proteinHewaniBerat").value) +
+        cariGizi(document.getElementById("sayur").value, document.getElementById("sayurBerat").value) +
+        cariGizi(document.getElementById("buah").value, document.getElementById("buahBerat").value);
+
+      document.getElementById("hasilF2").innerHTML = `<p>Total Energi saat makan <strong>${waktu}</strong>: <strong>${totalKalori.toFixed(1)} kkal</strong></p>`;
+    }
+  </script>
+
+  <!-- Pastikan file DaftarBahanMakanan.js dimuat sebelum halaman ini-->
+  <script src="DaftarBahanMakanan.json"></script>
+</body>
+</html>

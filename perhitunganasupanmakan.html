@@ -238,30 +238,64 @@
     
     function unduhPDF() {
   const elemen = document.getElementById("hasilF2");
+
+  // Buat salinan elemen untuk dimodifikasi tanpa mengganggu tampilan
+  const salinan = elemen.cloneNode(true);
+  const pembungkus = document.createElement("div");
+
+  // Tambahkan judul & garis atas
+  const judul = document.createElement("div");
+  judul.innerHTML = `
+    <h2 style="text-align:center; color:#00b73e;">Laporan Asupan Gizi</h2>
+    <hr style="border: 1px solid #ffa94d; margin-bottom: 20px;">
+  `;
+  pembungkus.appendChild(judul);
+  pembungkus.appendChild(salinan);
+
+  // Tambahkan catatan kaki
   const tambahan = document.createElement("div");
-  tambahan.innerHTML = ` 
-    <hr>
-    <p style="text-align:center; font-size:13px;">
+  tambahan.innerHTML = `
+    <hr style="margin-top: 30px;">
+    <p style="text-align:center; font-size:12px;">
       <strong>G-Zi | Laporan Asupan Gizi</strong><br>
       Dicetak: ${new Date().toLocaleString()}<br>
       Sumber: TKPI Kemenkes RI 2020<br><br>
       Terima kasih telah menggunakan website ini 🙏🍎🥦
     </p>
   `;
-  elemen.appendChild(tambahan);
+  pembungkus.appendChild(tambahan);
 
-  html2pdf().from(elemen).set({
-  margin: 10,
-  filename: `Laporan_Asupan_Gizi_${new Date().toLocaleDateString()}.pdf`,
-  image: { type: 'jpeg', quality: 0.98 },
-  html2canvas: {
-    scale: 3,              // 🔍 meningkatkan resolusi 3x
-    useCORS: true,         // jika ada gambar/logo dari domain lain
-    allowTaint: false
-  },
-  jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-}).save();
+  // Terapkan style tambahan agar tabel lebih menarik
+  const style = document.createElement("style");
+  style.textContent = `
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    th {
+      background-color: #eaffed;
+      color: #004d1a;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 6px 10px;
+      text-align: left;
+    }
+    h2 {
+      margin-bottom: 10px;
+    }
+  `;
+  pembungkus.appendChild(style);
 
+  // Unduh PDF
+  html2pdf().from(pembungkus).set({
+    margin: 10,
+    filename: `Laporan_Asupan_Gizi_${new Date().toLocaleDateString()}.pdf`,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 3 },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  }).save();
 
   tambahan.remove(); // supaya tidak menggandakan tampilan
 }

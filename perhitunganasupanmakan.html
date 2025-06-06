@@ -203,6 +203,7 @@
       const waktu = document.getElementById("waktuMakan").value;
       const bahan = DaftarBahanMakanan.find(i => i["Nama Bahan"] === nama);
       if (!bahan || isNaN(berat)) return alert("Lengkapi data bahan dan berat.");
+      if (!waktu) return alert("Silakan isi waktu makan (tanggal dan jam).");
 
       const f = berat / 100;
       daftarMakanan.push({
@@ -214,6 +215,9 @@
       });
 
       tampilkanTabelKalori();
+      document.getElementById("inputCari").value = "";
+      document.getElementById("beratKalori").value = "";
+      document.getElementById("waktuMakan").value = "";
     }
 
     function tampilkanTabelKalori() {
@@ -231,24 +235,19 @@
       html += `<tr style="font-weight:bold"><td colspan="3">Total</td><td>${total.energi.toFixed(1)} kkal</td><td>${total.protein.toFixed(1)} g</td><td>${total.lemak.toFixed(1)} g</td><td>${total.karbo.toFixed(1)} g</td></tr></tbody></table>`;
       document.getElementById("hasilF2").innerHTML = html;
     }
-    document.getElementById("inputCari").value = "";
-    document.getElementById("beratKalori").value = "";
-    document.getElementById("waktuMakan").value = "";
-
-
+    
     function unduhPDF() {
       const elemen = document.getElementById("hasilF2");
       const tambahan = document.createElement("div");
-      tambahan.innerHTML = `<br><p style="text-align:center; font-size:12px;">Terima kasih telah menggunakan <strong>G-Zi</strong> | Dicetak: ${new Date().toLocaleString()}<br>Sumber: TKPI Kemenkes RI 2020</p>`;
-      elemen.appendChild(tambahan)
-        <hr>
+      tambahan.innerHTML = `
+  <hr>
   <p style="text-align:center; font-size:12px;">
     <strong>G-Zi | Laporan Asupan Gizi</strong><br>
     Dicetak: ${new Date().toLocaleString()}<br>
     Sumber: TKPI Kemenkes RI 2020<br><br>
     Terima kasih telah menggunakan website ini 🙏🍎🥦
   </p>
-`;;
+`;
 
       html2pdf().from(elemen).set({
         margin: 10,
@@ -260,8 +259,6 @@
 
       tambahan.remove();
     }
-
-    if (!waktu) return alert("Silakan isi waktu makan (tanggal dan jam).");
 
   </script>
 </body>

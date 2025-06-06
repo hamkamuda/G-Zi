@@ -171,9 +171,13 @@
   <script>
     let DaftarBahanMakanan = [];
 
-    fetch("DaftarBahanMakanan.json")
-      .then(res => res.json())
-      .then(data => DaftarBahanMakanan = data);
+  fetch("DaftarBahanMakanan.json")
+    .then(response => response.json())
+    .then(data => {
+      DaftarBahanMakanan = data;
+      console.log("Data makanan dimuat:", DaftarBahanMakanan);
+    })
+    .catch(error => console.error("Gagal memuat data:", error));
 
     function cariBahanF1() {
       const nama = document.getElementById("bahanF1").value.toLowerCase();

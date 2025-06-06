@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Asupan Makan - G-Zi</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
     * {
       box-sizing: border-box;
@@ -19,7 +20,7 @@
       min-height: 100vh;
     }
     header, footer {
-      background-color: #ffb347;
+      background-color: #ffa94d;
       padding: 20px 40px;
       display: flex;
       justify-content: space-between;
@@ -50,18 +51,8 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       margin-bottom: 40px;
     }
-    .form-row, .form-column {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
+    .form-group, .form-row {
       margin-bottom: 20px;
-    }
-    .form-column {
-      flex-direction: column;
-    }
-    .form-group {
-      flex: 1;
-      min-width: 220px;
     }
     input, select {
       width: 100%;
@@ -81,11 +72,6 @@
     button:hover {
       background-color: #009933;
     }
-    .result-list {
-      list-style: none;
-      padding: 0;
-      margin-top: 5px;
-    }
     .result-list li {
       cursor: pointer;
       padding: 5px;
@@ -95,9 +81,6 @@
     .result-list li:hover {
       background-color: #d8fcd8;
     }
-    #hasilF1 ul {
-      columns: 2;
-    }
     .grid-2 {
       display: flex;
       gap: 40px;
@@ -105,12 +88,11 @@
     }
     .input-wrapper, .output-wrapper {
       flex: 1;
-      min-width: 320px;
+      min-width: 300px;
     }
     .table-data table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 10px;
     }
     .table-data th, .table-data td {
       border: 1px solid #ccc;
@@ -132,43 +114,31 @@
       <a href="asupanmakan.html">Asupan Makan</a>
     </nav>
   </header>
+
   <main>
     <h2>Perhitungan Asupan Makan</h2>
 
     <section class="section">
       <h3>1. Cek Gizi Bahan Makanan</h3>
       <div class="form-row">
-        <div class="form-group">
-          <label for="bahanF1">Nama Bahan Makanan</label>
-          <input type="text" id="bahanF1" placeholder="Contoh: Beras">
-          <ul class="result-list" id="opsiBahan"></ul>
-        </div>
-        <div class="form-group">
-          <label for="beratF1">Berat (gram)</label>
-          <input type="number" id="beratF1" placeholder="Contoh: 100">
-        </div>
+        <input type="text" id="bahanF1" placeholder="Contoh: Beras">
+        <input type="number" id="beratF1" placeholder="Berat (gram)">
       </div>
       <button onclick="tampilkanOpsiBahan()">Cari</button>
+      <ul class="result-list" id="opsiBahan"></ul>
       <div id="hasilF1"></div>
     </section>
 
     <section class="section">
-      <h3>2. Total Kalori per Waktu Makan</h3>
+      <h3>2. Hitung Total Asupan Gizi</h3>
       <div class="grid-2">
         <div class="input-wrapper">
-          <div class="form-column">
-            <label for="inputCari">Nama Bahan Makanan</label>
-            <input type="text" id="inputCari" oninput="cariPilihanKalori()">
-            <ul class="result-list" id="pilihanKalori"></ul>
-            <label for="beratKalori">Berat (gram)</label>
-            <input type="number" id="beratKalori">
-            <label for="tanggal">Tanggal Makan</label>
-            <input type="date" id="tanggal">
-            <label for="jam">Jam Makan</label>
-            <input type="time" id="jam">
-            <button onclick="tambahMakananKeList()">Tambahkan</button>
-            <button onclick="unduhPDF()">Unduh Hasil PDF</button>
-          </div>
+          <input type="text" id="inputCari" oninput="cariPilihanKalori()" placeholder="Nama Bahan Makanan">
+          <ul class="result-list" id="pilihanKalori"></ul>
+          <input type="number" id="beratKalori" placeholder="Berat (gram)">
+          <input type="datetime-local" id="waktuMakan">
+          <button onclick="tambahMakananKeList()">Tambahkan</button>
+          <button onclick="unduhPDF()">Unduh Hasil PDF</button>
         </div>
         <div class="output-wrapper">
           <div id="hasilF2" class="table-data"></div>
@@ -176,21 +146,18 @@
       </div>
     </section>
   </main>
+
   <footer>
-    &copy; 2025 G-Zi | Referensi: Kemenkes RI, TKPI 2020
+    &copy; 2025 G-Zi | Data: Kemenkes RI TKPI 2020
   </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
     let DaftarBahanMakanan = [];
+    let daftarMakanan = [];
 
-  fetch("DaftarBahanMakanan.json")
-    .then(response => response.json())
-    .then(data => {
-      DaftarBahanMakanan = data;
-      console.log("Data makanan dimuat:", DaftarBahanMakanan);
-    })
-    .catch(error => console.error("Gagal memuat data:", error));
+    fetch("DaftarBahanMakanan.json")
+      .then(res => res.json())
+      .then(data => DaftarBahanMakanan = data);
 
     function tampilkanOpsiBahan() {
       const input = document.getElementById("bahanF1").value.toLowerCase();
@@ -201,25 +168,28 @@
     }
 
     function pilihBahan(nama, berat) {
-      const hasil = DaftarBahanMakanan.find(item => item["Nama Bahan"] === nama);
+      const bahan = DaftarBahanMakanan.find(i => i["Nama Bahan"] === nama);
       const f = berat / 100;
-      let detail = `<h4>${nama} (${berat} gram)</h4><ul>`;
-      for (const key in hasil) {
+      let satuan = {
+        "Energi (Kkal)": "kkal", "Protein (g)": "g", "Lemak (g)": "g", "Karbohidrat (g)": "g",
+        "Serat (g)": "g", "Kalsium (mg)": "mg", "Fosfor (mg)": "mg", "Besi (mg)": "mg"
+      };
+      let html = `<h4>${nama} (${berat} gram)</h4><ul>`;
+      for (let key in bahan) {
         if (key !== "Nama Bahan") {
-          const nilai = (parseFloat(hasil[key]) * f).toFixed(2);
-          detail += `<li>${key}: ${nilai}</li>`;
+          const val = (parseFloat(bahan[key]) || 0) * f;
+          html += `<li>${key}: ${val.toFixed(2)} ${satuan[key] || ''}</li>`;
         }
       }
-      detail += '</ul>';
-      document.getElementById("hasilF1").innerHTML = detail;
+      html += '</ul>';
+      document.getElementById("hasilF1").innerHTML = html;
       document.getElementById("opsiBahan").innerHTML = "";
     }
 
     function cariPilihanKalori() {
       const input = document.getElementById("inputCari").value.toLowerCase();
       const hasil = DaftarBahanMakanan.filter(item => item["Nama Bahan"].toLowerCase().includes(input));
-      const list = document.getElementById("pilihanKalori");
-      list.innerHTML = hasil.map(h => `<li onclick="setMakananInput('${h["Nama Bahan"].replace(/'/g, "\'")}')">${h["Nama Bahan"]}</li>`).join("");
+      document.getElementById("pilihanKalori").innerHTML = hasil.map(h => `<li onclick="setMakananInput('${h["Nama Bahan"].replace(/'/g, "\'")}')">${h["Nama Bahan"]}</li>`).join("");
     }
 
     function setMakananInput(nama) {
@@ -230,60 +200,53 @@
     function tambahMakananKeList() {
       const nama = document.getElementById("inputCari").value;
       const berat = parseFloat(document.getElementById("beratKalori").value);
-      const tanggal = document.getElementById("tanggal").value;
-      const jam = document.getElementById("jam").value;
-      const bahan = DaftarBahanMakanan.find(item => item["Nama Bahan"] === nama);
-      if (!bahan || isNaN(berat)) return alert("Data tidak valid atau belum dipilih.");
-      const faktor = berat / 100;
+      const waktu = document.getElementById("waktuMakan").value;
+      const bahan = DaftarBahanMakanan.find(i => i["Nama Bahan"] === nama);
+      if (!bahan || isNaN(berat)) return alert("Lengkapi data bahan dan berat.");
 
-      const data = {
-        nama, berat, tanggal, jam,
-        energi: (parseFloat(bahan["Energi (Kkal)"]) || 0) * faktor,
-        protein: (parseFloat(bahan["Protein (g)"]) || 0) * faktor,
-        lemak: (parseFloat(bahan["Lemak (g)"]) || 0) * faktor,
-        karbo: (parseFloat(bahan["Karbohidrat (g)"]) || 0) * faktor
-      };
+      const f = berat / 100;
+      daftarMakanan.push({
+        nama, waktu, berat,
+        energi: (parseFloat(bahan["Energi (Kkal)"]) || 0) * f,
+        protein: (parseFloat(bahan["Protein (g)"]) || 0) * f,
+        lemak: (parseFloat(bahan["Lemak (g)"]) || 0) * f,
+        karbo: (parseFloat(bahan["Karbohidrat (g)"]) || 0) * f
+      });
 
-      daftarMakanan.push(data);
       tampilkanTabelKalori();
     }
 
     function tampilkanTabelKalori() {
-      let html = `<table><tr><th>Nama</th><th>Berat (g)</th><th>Tanggal</th><th>Jam</th><th>Energi (kkal)</th><th>Protein (g)</th><th>Lemak (g)</th><th>Karbo (g)</th></tr>`;
+      let html = `<table><thead><tr><th>Nama</th><th>Waktu</th><th>Berat</th><th>Energi</th><th>Protein</th><th>Lemak</th><th>Karbo</th></tr></thead><tbody>`;
       let total = { energi: 0, protein: 0, lemak: 0, karbo: 0 };
+
       daftarMakanan.forEach(item => {
-        html += `<tr><td>${item.nama}</td><td>${item.berat}</td><td>${item.tanggal}</td><td>${item.jam}</td><td>${item.energi.toFixed(1)}</td><td>${item.protein.toFixed(1)}</td><td>${item.lemak.toFixed(1)}</td><td>${item.karbo.toFixed(1)}</td></tr>`;
+        html += `<tr><td>${item.nama}</td><td>${item.waktu}</td><td>${item.berat} g</td><td>${item.energi.toFixed(1)} kkal</td><td>${item.protein.toFixed(1)} g</td><td>${item.lemak.toFixed(1)} g</td><td>${item.karbo.toFixed(1)} g</td></tr>`;
         total.energi += item.energi;
         total.protein += item.protein;
         total.lemak += item.lemak;
         total.karbo += item.karbo;
       });
-      html += `<tr><th colspan="4">Total</th><th>${total.energi.toFixed(1)}</th><th>${total.protein.toFixed(1)}</th><th>${total.lemak.toFixed(1)}</th><th>${total.karbo.toFixed(1)}</th></tr></table>`;
+
+      html += `<tr style="font-weight:bold"><td colspan="3">Total</td><td>${total.energi.toFixed(1)} kkal</td><td>${total.protein.toFixed(1)} g</td><td>${total.lemak.toFixed(1)} g</td><td>${total.karbo.toFixed(1)} g</td></tr></tbody></table>`;
       document.getElementById("hasilF2").innerHTML = html;
     }
 
     function unduhPDF() {
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-      doc.setFontSize(14);
-      doc.text("Laporan Asupan Makanan", 14, 20);
+      const elemen = document.getElementById("hasilF2");
+      const tambahan = document.createElement("div");
+      tambahan.innerHTML = `<br><p style="text-align:center; font-size:12px;">Terima kasih telah menggunakan <strong>G-Zi</strong> | Dicetak: ${new Date().toLocaleString()}<br>Sumber: TKPI Kemenkes RI 2020</p>`;
+      elemen.appendChild(tambahan);
 
-      let y = 30;
-      daftarMakanan.forEach((item, index) => {
-        doc.setFontSize(11);
-        doc.text(`- ${item.nama} (${item.berat} g) [${item.tanggal} ${item.jam}]`, 14, y);
-        doc.text(`Energi: ${item.energi.toFixed(1)} kkal, Protein: ${item.protein.toFixed(1)} g, Lemak: ${item.lemak.toFixed(1)} g, Karbohidrat: ${item.karbo.toFixed(1)} g`, 14, y + 6);
-        y += 14;
-        if (y > 270) {
-          doc.addPage();
-          y = 20;
-        }
-      });
+      html2pdf().from(elemen).set({
+        margin: 10,
+        filename: `Laporan_Asupan_Gizi_${new Date().toLocaleDateString()}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      }).save();
 
-      const date = new Date();
-      doc.text(`\nTerima kasih telah menggunakan G-Zi.`, 14, y + 10);
-      doc.text(`Tanggal Cetak: ${date.toLocaleString()}`, 14, y + 16);
-      doc.save("Asupan_Makanan_GZi.pdf");
+      tambahan.remove();
     }
   </script>
 </body>

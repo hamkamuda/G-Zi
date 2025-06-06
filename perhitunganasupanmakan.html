@@ -237,28 +237,35 @@
     }
     
     function unduhPDF() {
-      const elemen = document.getElementById("hasilF2");
-      const tambahan = document.createElement("div");
-      tambahan.innerHTML = `
-      <hr>
-      <p style="text-align:center; font-size:12px;">
-        <strong>G-Zi | Laporan Asupan Gizi</strong>
-        <br>Dicetak: ${new Date().toLocaleString()}
-        <br>Sumber: TKPI Kemenkes RI 2020<br>
-        <br>Terima kasih telah menggunakan website ini 🙏🍎🥦
-      </p>
-    `;
+  const elemen = document.getElementById("hasilF2");
+  const tambahan = document.createElement("div");
+  tambahan.innerHTML = ` 
+    <hr>
+    <p style="text-align:center; font-size:12px;">
+      <strong>G-Zi | Laporan Asupan Gizi</strong><br>
+      Dicetak: ${new Date().toLocaleString()}<br>
+      Sumber: TKPI Kemenkes RI 2020<br><br>
+      Terima kasih telah menggunakan website ini 🙏🍎🥦
+    </p>
+  `;
+  elemen.appendChild(tambahan);
 
-      html2pdf().from(elemen).set({
-        margin: 10,
-        filename: `Laporan_Asupan_Gizi_${new Date().toLocaleDateString()}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-      }).save();
+  html2pdf().from(elemen).set({
+  margin: 10,
+  filename: `Laporan_Asupan_Gizi_${new Date().toLocaleDateString()}.pdf`,
+  image: { type: 'jpeg', quality: 0.98 },
+  html2canvas: {
+    scale: 3,              // 🔍 meningkatkan resolusi 3x
+    useCORS: true,         // jika ada gambar/logo dari domain lain
+    allowTaint: false
+  },
+  jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+}).save();
 
-      tambahan.remove();
-    }
+
+  tambahan.remove(); // supaya tidak menggandakan tampilan
+}
+
 
   </script>
 </body>

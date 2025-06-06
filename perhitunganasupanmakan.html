@@ -167,21 +167,18 @@
 
   <script>
    let DaftarBahanMakanan = [];
+    let daftarMakanan = [];
 
-  fetch("DaftarBahanMakanan.json")
-    .then(response => response.json())
-    .then(data => {
-      DaftarBahanMakanan = data;
-      console.log("Data makanan dimuat:", DaftarBahanMakanan);
-    })
-    .catch(error => console.error("Gagal memuat data:", error));
+    fetch("DaftarBahanMakanan.json")
+      .then(res => res.json())
+      .then(data => DaftarBahanMakanan = data);
 
     function tampilkanOpsiBahan() {
       const input = document.getElementById("bahanF1").value.toLowerCase();
       const berat = parseFloat(document.getElementById("beratF1").value) || 100;
       const hasil = DaftarBahanMakanan.filter(item => item["Nama Bahan"].toLowerCase().includes(input));
       const list = document.getElementById("opsiBahan");
-      list.innerHTML = hasil.map(h => `<li onclick="pilihBahan('${h["Nama Bahan"].replace(/'/g, "\'")}', ${berat})">${h["Nama Bahan"]}</li>`).join("");
+      list.innerHTML = hasil.map(h => `<li onclick="pilihBahan('${h["Nama Bahan"].replace(/'/g, "\\'")}', ${berat})">${h["Nama Bahan"]}</li>`).join("");
     }
 
     function pilihBahan(nama, berat) {
@@ -206,7 +203,7 @@
     function cariPilihanKalori() {
       const input = document.getElementById("inputCari").value.toLowerCase();
       const hasil = DaftarBahanMakanan.filter(item => item["Nama Bahan"].toLowerCase().includes(input));
-      document.getElementById("pilihanKalori").innerHTML = hasil.map(h => `<li onclick="setMakananInput('${h["Nama Bahan"].replace(/'/g, "\'")}')">${h["Nama Bahan"]}</li>`).join("");
+      document.getElementById("pilihanKalori").innerHTML = hasil.map(h => `<li onclick="setMakananInput('${h["Nama Bahan"].replace(/'/g, "\\'")}')">${h["Nama Bahan"]}</li>`).join("");
     }
 
     function setMakananInput(nama) {
@@ -267,20 +264,23 @@
       pembungkus.appendChild(salinan);
 
       const tambahan = document.createElement("div");
-      tambahan.innerHTML = `
-        <hr style="margin-top: 30px;">
-        <p style="text-align:center; font-size:12px;">
-          <strong>G-Zi | Laporan Asupan Gizi</strong><br>
-          Dicetak: ${new Date().toLocaleString("id-ID")}<br>
-          Sumber: TKPI Kemenkes RI 2020<br><br>
-          Terima kasih telah menggunakan website ini 🙏🍎🥦
-        </p>
-      `;
+      const tanggalSekarang = new Date().toLocaleString("id-ID");
+
+tambahan.innerHTML = `
+  <hr style="margin-top: 30px;">
+  <p style="text-align:center; font-size:12px;">
+    <strong>G-Zi | Laporan Asupan Gizi</strong><br>
+    Dicetak: ${tanggalSekarang}<br>
+    Sumber: TKPI Kemenkes RI 2020<br><br>
+    Terima kasih telah menggunakan website ini 🙏🍎🥦
+  </p>
+`;
+
       pembungkus.appendChild(tambahan);
 
       html2pdf().from(pembungkus).set({
         margin: 10,
-        filename: `GZi_AsupanGizi_${new Date().toISOString().slice(0,10)}.pdf`,
+        filename: `GZi_AsupanGizi_${tanggalSekarang.replace(/[/: ]/g, '_')}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 3 },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }

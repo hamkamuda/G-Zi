@@ -90,6 +90,30 @@
       padding: 15px;
       border-radius: 10px;
     }
+    .result-list {
+      list-style: none;
+      padding: 0;
+    }
+    .result-list li {
+      cursor: pointer;
+      padding: 5px;
+      border-bottom: 1px solid #ccc;
+    }
+    .result-list li:hover {
+      background-color: #f0fff2;
+    }
+    .table-data {
+      margin-top: 15px;
+    }
+    .table-data table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .table-data th, .table-data td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
   </style>
 </head>
 <body>
@@ -111,20 +135,30 @@
       <div class="form-row">
         <div class="form-group">
           <label for="bahanF1">Nama Bahan Makanan</label>
-          <input type="text" id="bahanF1" placeholder="Contoh: Beras giling">
+          <input type="text" id="bahanF1" placeholder="Contoh: Beras">
+          <ul class="result-list" id="opsiBahan"></ul>
         </div>
         <div class="form-group">
           <label for="beratF1">Berat (gram)</label>
           <input type="number" id="beratF1" placeholder="Contoh: 100">
         </div>
       </div>
-      <button onclick="cariBahanF1()">Lihat Gizi</button>
+      <button onclick="tampilkanOpsiBahan()">Cari</button>
       <div id="hasilF1"></div>
     </section>
 
     <section class="section">
       <h3>2. Total Kalori per Waktu Makan</h3>
       <div class="form-row">
+        <div class="form-group">
+          <label for="inputCari">Nama Bahan Makanan</label>
+          <input type="text" id="inputCari" oninput="cariPilihanKalori()" placeholder="Ketik nama makanan...">
+          <ul class="result-list" id="pilihanKalori"></ul>
+        </div>
+        <div class="form-group">
+          <label for="beratKalori">Berat (gram)</label>
+          <input type="number" id="beratKalori">
+        </div>
         <div class="form-group">
           <label for="waktu">Waktu Makan</label>
           <select id="waktu">
@@ -133,34 +167,9 @@
             <option value="Malam">Malam</option>
           </select>
         </div>
-        <div class="form-group">
-          <label for="karbo">Karbohidrat</label>
-          <input type="text" id="karbo">
-          <input type="number" id="karboBerat" placeholder="Berat (gram)">
-        </div>
-        <div class="form-group">
-          <label for="proteinNabati">Protein Nabati</label>
-          <input type="text" id="proteinNabati">
-          <input type="number" id="proteinNabatiBerat" placeholder="Berat (gram)">
-        </div>
-        <div class="form-group">
-          <label for="proteinHewani">Protein Hewani</label>
-          <input type="text" id="proteinHewani">
-          <input type="number" id="proteinHewaniBerat" placeholder="Berat (gram)">
-        </div>
-        <div class="form-group">
-          <label for="sayur">Sayuran</label>
-          <input type="text" id="sayur">
-          <input type="number" id="sayurBerat" placeholder="Berat (gram)">
-        </div>
-        <div class="form-group">
-          <label for="buah">Buah-buahan</label>
-          <input type="text" id="buah">
-          <input type="number" id="buahBerat" placeholder="Berat (gram)">
-        </div>
       </div>
-      <button onclick="hitungKaloriWaktuMakan()">Hitung Total Kalori</button>
-      <div id="hasilF2"></div>
+      <button onclick="tambahMakananKeList()">Tambahkan</button>
+      <div id="hasilF2" class="table-data"></div>
     </section>
   </main>
 
@@ -179,20 +188,18 @@
     })
     .catch(error => console.error("Gagal memuat data:", error));
 
-    function cariBahanF1() {
-      const nama = document.getElementById("bahanF1").value.toLowerCase();
-      const berat = parseFloat(document.getElementById("beratF1").value);
-      const hasil = DaftarBahanMakanan.find(item => item["Nama Bahan"].toLowerCase().includes(nama));
-      const container = document.getElementById("hasilF1");
+    function tampilkanOpsiBahan() {
+      const input = document.getElementById("bahanF1").value.toLowerCase();
+      const hasil = DaftarBahanMakanan.filter(item => item["Nama Bahan"].toLowerCase().includes(input));
+      const list = document.getElementById("opsiBahan");
+      list.innerHTML = hasil.map(h => `<li onclick="pilihBahan('${h["Nama Bahan"].replace(/'/g, "\'")}', ${document.getElementById('beratF1').value || 100})">${h["Nama Bahan"]}</li>`).join("");
+    }
 
-      if (!hasil) {
-        container.innerHTML = `<p style='color:red;'>Data tidak ditemukan.</p>`;
-        return;
-      }
-
+    function pilihBahan(nama, berat) {
+      const hasil = DaftarBahanMakanan.find(item => item["Nama Bahan"] === nama);
       const f = berat / 100;
-      container.innerHTML = `
-        <p><strong>${hasil["Nama Bahan"]}</strong> (${berat} gram)</p>
+      document.getElementById("hasilF1").innerHTML = `
+        <h4>${nama} (${berat} gram)</h4>
         <ul>
           <li>Energi: ${(parseFloat(hasil.ENERGI) * f).toFixed(1)} kkal</li>
           <li>Protein: ${(parseFloat(hasil.PROTEIN) * f).toFixed(1)} g</li>
@@ -200,27 +207,53 @@
           <li>Karbohidrat: ${(parseFloat(hasil.KARBOHIDRAT) * f).toFixed(1)} g</li>
           <li>Serat: ${(parseFloat(hasil.SERAT) * f).toFixed(1)} g</li>
           <li>Natrium: ${(parseFloat(hasil.NATRIUM) * f).toFixed(1)} mg</li>
-        </ul>
-      `;
+        </ul>`;
+      document.getElementById("opsiBahan").innerHTML = "";
     }
 
-    function cariGizi(nama, berat) {
-      const bahan = DaftarBahanMakanan.find(item => item["Nama Bahan"].toLowerCase().includes(nama.toLowerCase()));
-      if (!bahan || !berat) return 0;
-      const faktor = berat / 100;
-      return parseFloat(bahan.ENERGI) * faktor;
+    function cariPilihanKalori() {
+      const input = document.getElementById("inputCari").value.toLowerCase();
+      const hasil = DaftarBahanMakanan.filter(item => item["Nama Bahan"].toLowerCase().includes(input));
+      const list = document.getElementById("pilihanKalori");
+      list.innerHTML = hasil.map(h => `<li onclick="setMakananInput('${h["Nama Bahan"].replace(/'/g, "\'")}')">${h["Nama Bahan"]}</li>`).join("");
     }
 
-    function hitungKaloriWaktuMakan() {
+    function setMakananInput(nama) {
+      document.getElementById("inputCari").value = nama;
+      document.getElementById("pilihanKalori").innerHTML = "";
+    }
+
+    function tambahMakananKeList() {
+      const nama = document.getElementById("inputCari").value;
+      const berat = parseFloat(document.getElementById("beratKalori").value);
       const waktu = document.getElementById("waktu").value;
-      const total =
-        cariGizi(document.getElementById("karbo").value, document.getElementById("karboBerat").value) +
-        cariGizi(document.getElementById("proteinNabati").value, document.getElementById("proteinNabatiBerat").value) +
-        cariGizi(document.getElementById("proteinHewani").value, document.getElementById("proteinHewaniBerat").value) +
-        cariGizi(document.getElementById("sayur").value, document.getElementById("sayurBerat").value) +
-        cariGizi(document.getElementById("buah").value, document.getElementById("buahBerat").value);
+      const bahan = DaftarBahanMakanan.find(item => item["Nama Bahan"] === nama);
 
-      document.getElementById("hasilF2").innerHTML = `<p>Total Energi saat makan <strong>${waktu}</strong>: <strong>${total.toFixed(1)} kkal</strong></p>`;
+      if (!bahan || isNaN(berat)) return alert("Data tidak valid atau belum dipilih.");
+
+      const energi = parseFloat(bahan.ENERGI) * (berat / 100);
+      daftarMakanan.push({ nama, berat, energi, waktu });
+      tampilkanTabelKalori();
+    }
+
+    function tampilkanTabelKalori() {
+      const grup = {};
+      daftarMakanan.forEach(item => {
+        if (!grup[item.waktu]) grup[item.waktu] = [];
+        grup[item.waktu].push(item);
+      });
+
+      let html = "";
+      for (const waktu in grup) {
+        let total = 0;
+        html += `<h4>${waktu}</h4><table><tr><th>Nama</th><th>Berat (g)</th><th>Kalori (kkal)</th></tr>`;
+        grup[waktu].forEach(i => {
+          html += `<tr><td>${i.nama}</td><td>${i.berat}</td><td>${i.energi.toFixed(1)}</td></tr>`;
+          total += i.energi;
+        });
+        html += `<tr><td colspan='2'><strong>Total</strong></td><td><strong>${total.toFixed(1)} kkal</strong></td></tr></table>`;
+      }
+      document.getElementById("hasilF2").innerHTML = html;
     }
   </script>
 </body>

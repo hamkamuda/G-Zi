@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Perhitungan Asupan Makan - G-Zi</title>
+  <title>Asupan Makan - G-Zi</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * {
@@ -12,80 +12,89 @@
     }
     body {
       margin: 0;
-      background: #f4fff0;
+      background: linear-gradient(to right, #f8d90f, #fff6c5);
       color: #004d1a;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
     header, footer {
-      background-color: #ffb347;
-      color: #004d1a;
-      padding: 20px 40px;
+      background-color: #fe7415;
+      color: white;
+      padding: 20px;
       text-align: center;
     }
+    nav {
+      margin-top: 10px;
+    }
     nav a {
-      margin: 0 10px;
+      margin: 0 15px;
       text-decoration: none;
-      color: #004d1a;
+      color: white;
       font-weight: bold;
     }
     nav a:hover {
-      color: white;
+      color: #004d1a;
     }
     main {
+      flex: 1;
       padding: 30px;
+      max-width: 1000px;
+      margin: auto;
     }
-    h2 {
+    h2, h3 {
       text-align: center;
+      margin-bottom: 20px;
     }
     .section {
-      margin: 40px 0;
-      padding: 20px;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    }
-    label, select, input {
-      display: block;
-      margin: 10px 0;
+      background: #fff;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin-bottom: 40px;
     }
     .form-row {
       display: flex;
-      gap: 20px;
       flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 20px;
     }
     .form-group {
       flex: 1;
-      min-width: 200px;
+      min-width: 220px;
+    }
+    label, input, select {
+      display: block;
+      width: 100%;
+    }
+    input, select {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
     }
     button {
       background-color: #00b73e;
       color: white;
+      padding: 12px 24px;
       border: none;
-      padding: 10px 20px;
       border-radius: 8px;
       cursor: pointer;
-      margin-top: 10px;
+      transition: background-color 0.3s ease;
     }
     button:hover {
       background-color: #009933;
     }
-    table {
-      width: 100%;
+    #hasilF1, #hasilF2 {
       margin-top: 20px;
-      border-collapse: collapse;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 10px;
-      text-align: left;
-    }
-    th {
-      background-color: #e0f9db;
+      background: #eaffed;
+      padding: 15px;
+      border-radius: 10px;
     }
   </style>
 </head>
 <body>
   <header>
-    <div class="logo">G-Zi</div>
+    <h1>G-Zi</h1>
     <nav>
       <a href="index.html">Beranda</a>
       <a href="imt.html">Skrining</a>
@@ -97,26 +106,24 @@
   <main>
     <h2>Perhitungan Asupan Makan</h2>
 
-    <!-- Fitur 1 -->
-    <section class="section" id="fitur1">
-      <h3>1. Cari Data Bahan Makanan</h3>
+    <section class="section">
+      <h3>1. Cek Gizi Bahan Makanan</h3>
       <div class="form-row">
         <div class="form-group">
           <label for="bahanF1">Nama Bahan Makanan</label>
-          <input type="text" id="bahanF1" placeholder="contoh: Beras giling">
+          <input type="text" id="bahanF1" placeholder="Contoh: Beras giling">
         </div>
         <div class="form-group">
           <label for="beratF1">Berat (gram)</label>
-          <input type="number" id="beratF1" placeholder="contoh: 100">
+          <input type="number" id="beratF1" placeholder="Contoh: 100">
         </div>
       </div>
-      <button onclick="cariBahanF1()">Lihat Kandungan Gizi</button>
+      <button onclick="cariBahanF1()">Lihat Gizi</button>
       <div id="hasilF1"></div>
     </section>
 
-    <!-- Fitur 2 -->
-    <section class="section" id="fitur2">
-      <h3>2. Hitung Total Kalori per Waktu Makan</h3>
+    <section class="section">
+      <h3>2. Total Kalori per Waktu Makan</h3>
       <div class="form-row">
         <div class="form-group">
           <label for="waktu">Waktu Makan</label>
@@ -127,7 +134,7 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="karbo">Sumber Karbohidrat</label>
+          <label for="karbo">Karbohidrat</label>
           <input type="text" id="karbo">
           <input type="number" id="karboBerat" placeholder="Berat (gram)">
         </div>
@@ -155,12 +162,6 @@
       <button onclick="hitungKaloriWaktuMakan()">Hitung Total Kalori</button>
       <div id="hasilF2"></div>
     </section>
-
-    <!-- Fitur 3 Placeholder -->
-    <section class="section" id="fitur3">
-      <h3>3. Perhitungan Lanjutan (Segera Hadir)</h3>
-      <p>Fitur ini akan ditambahkan setelah penjelasan lebih lanjut.</p>
-    </section>
   </main>
 
   <footer>
@@ -168,54 +169,55 @@
   </footer>
 
   <script>
-    const dataMakanan = window.DaftarBahanMakanan || []; // pastikan DaftarBahanMakanan dimuat
+    let DaftarBahanMakanan = [];
+
+    fetch("DaftarBahanMakanan.json")
+      .then(res => res.json())
+      .then(data => DaftarBahanMakanan = data);
 
     function cariBahanF1() {
       const nama = document.getElementById("bahanF1").value.toLowerCase();
       const berat = parseFloat(document.getElementById("beratF1").value);
-      const hasil = dataMakanan.find(item => item["Nama Bahan"].toLowerCase().includes(nama));
+      const hasil = DaftarBahanMakanan.find(item => item["Nama Bahan"].toLowerCase().includes(nama));
       const container = document.getElementById("hasilF1");
 
       if (!hasil) {
-        container.innerHTML = `<p style='color:red;'>Data tidak ditemukan</p>`;
+        container.innerHTML = `<p style='color:red;'>Data tidak ditemukan.</p>`;
         return;
       }
 
-      const faktor = berat / 100;
+      const f = berat / 100;
       container.innerHTML = `
-        <h4>Hasil Gizi (${berat} gram)</h4>
+        <p><strong>${hasil["Nama Bahan"]}</strong> (${berat} gram)</p>
         <ul>
-          <li>Energi: ${(hasil.ENERGI * faktor).toFixed(1)} kkal</li>
-          <li>Protein: ${(hasil.PROTEIN * faktor).toFixed(1)} g</li>
-          <li>Lemak: ${(hasil.LEMAK * faktor).toFixed(1)} g</li>
-          <li>Karbohidrat: ${(hasil.KARBOHIDRAT * faktor).toFixed(1)} g</li>
-          <li>Serat: ${(hasil.SERAT * faktor).toFixed(1)} g</li>
-          <li>Natrium: ${(hasil.NATRIUM * faktor).toFixed(1)} mg</li>
+          <li>Energi: ${(parseFloat(hasil.ENERGI) * f).toFixed(1)} kkal</li>
+          <li>Protein: ${(parseFloat(hasil.PROTEIN) * f).toFixed(1)} g</li>
+          <li>Lemak: ${(parseFloat(hasil.LEMAK) * f).toFixed(1)} g</li>
+          <li>Karbohidrat: ${(parseFloat(hasil.KARBOHIDRAT) * f).toFixed(1)} g</li>
+          <li>Serat: ${(parseFloat(hasil.SERAT) * f).toFixed(1)} g</li>
+          <li>Natrium: ${(parseFloat(hasil.NATRIUM) * f).toFixed(1)} mg</li>
         </ul>
       `;
     }
 
     function cariGizi(nama, berat) {
-      const bahan = dataMakanan.find(item => item["Nama Bahan"].toLowerCase().includes(nama.toLowerCase()));
+      const bahan = DaftarBahanMakanan.find(item => item["Nama Bahan"].toLowerCase().includes(nama.toLowerCase()));
       if (!bahan || !berat) return 0;
       const faktor = berat / 100;
-      return bahan.ENERGI * faktor;
+      return parseFloat(bahan.ENERGI) * faktor;
     }
 
     function hitungKaloriWaktuMakan() {
       const waktu = document.getElementById("waktu").value;
-      const totalKalori =
+      const total =
         cariGizi(document.getElementById("karbo").value, document.getElementById("karboBerat").value) +
         cariGizi(document.getElementById("proteinNabati").value, document.getElementById("proteinNabatiBerat").value) +
         cariGizi(document.getElementById("proteinHewani").value, document.getElementById("proteinHewaniBerat").value) +
         cariGizi(document.getElementById("sayur").value, document.getElementById("sayurBerat").value) +
         cariGizi(document.getElementById("buah").value, document.getElementById("buahBerat").value);
 
-      document.getElementById("hasilF2").innerHTML = `<p>Total Energi saat makan <strong>${waktu}</strong>: <strong>${totalKalori.toFixed(1)} kkal</strong></p>`;
+      document.getElementById("hasilF2").innerHTML = `<p>Total Energi saat makan <strong>${waktu}</strong>: <strong>${total.toFixed(1)} kkal</strong></p>`;
     }
   </script>
-
-  <!-- Pastikan file DaftarBahanMakanan.js dimuat sebelum halaman ini-->
-  <script src="DaftarBahanMakanan.js"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-[
+window.DaftarBahanMakanan = [
     {
         "Nama Bahan": "Beras giling, mentah",
         "ENERGI": "357",

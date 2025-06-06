@@ -235,11 +235,11 @@
       const bahan = DaftarBahanMakanan.find(item => item["Nama Bahan"] === nama);
       if (!bahan || isNaN(berat)) return alert("Data tidak valid atau belum dipilih.");
       const faktor = berat / 100;
-      const energi = parseFloat(bahan["ENERGI"] || 0) * faktor;
-      const protein = parseFloat(bahan["PROTEIN"] || 0) * faktor;
-      const lemak = parseFloat(bahan["LEMAK"] || 0) * faktor;
-      const karbo = parseFloat(bahan["KARBOHIDRAT"] || 0) * faktor;
-      daftarMakanan.push({ nama, berat, energi, protein, lemak, karbo, waktu });
+      const energi = parseFloat(bahan["ENERGI (Kkal)"] || 0) * faktor;
+      const protein = parseFloat(bahan["PROTEIN (gram)"] || 0) * faktor;
+      const lemak = parseFloat(bahan["LEMAK (gram)"] || 0) * faktor;
+      const karbo = parseFloat(bahan["KH (gram)"] || 0) * faktor;
+      daftarMakanan.push({ nama, berat, energi, protein, lemak, kh, waktu });
       tampilkanTabelKalori();
     }
 

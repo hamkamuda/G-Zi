@@ -25,9 +25,6 @@
       justify-content: space-between;
       align-items: center;
     }
-    nav {
-      margin-top: 10px;
-    }
     nav a {
       margin: 0 15px;
       text-decoration: none;
@@ -40,12 +37,11 @@
     main {
       flex: 1;
       padding: 30px;
-      max-width: 1000px;
+      max-width: 1100px;
       margin: auto;
     }
     h2, h3 {
       text-align: center;
-      margin-bottom: 20px;
     }
     .section {
       background: #fff;
@@ -54,21 +50,21 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       margin-bottom: 40px;
     }
-    .form-row {
+    .form-row, .form-column {
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
       margin-bottom: 20px;
     }
+    .form-column {
+      flex-direction: column;
+    }
     .form-group {
       flex: 1;
       min-width: 220px;
     }
-    label, input, select {
-      display: block;
-      width: 100%;
-    }
     input, select {
+      width: 100%;
       padding: 10px;
       border: 1px solid #ccc;
       border-radius: 8px;
@@ -85,35 +81,46 @@
     button:hover {
       background-color: #009933;
     }
-    #hasilF1, #hasilF2 {
-      margin-top: 20px;
-      background: #eaffed;
-      padding: 15px;
-      border-radius: 10px;
-    }
     .result-list {
       list-style: none;
       padding: 0;
+      margin-top: 5px;
     }
     .result-list li {
       cursor: pointer;
       padding: 5px;
+      background: #f2fff2;
       border-bottom: 1px solid #ccc;
     }
     .result-list li:hover {
-      background-color: #f0fff2;
+      background-color: #d8fcd8;
     }
-    .table-data {
-      margin-top: 15px;
+    #hasilF1 ul {
+      columns: 2;
+      -webkit-columns: 2;
+      -moz-columns: 2;
+    }
+    .grid-2 {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .input-wrapper, .output-wrapper {
+      flex: 1;
+      min-width: 320px;
     }
     .table-data table {
       width: 100%;
       border-collapse: collapse;
+      margin-top: 10px;
     }
     .table-data th, .table-data td {
-      padding: 10px;
       border: 1px solid #ccc;
+      padding: 8px;
       text-align: left;
+    }
+    .table-data th {
+      background-color: #eaffed;
     }
   </style>
 </head>
@@ -127,7 +134,6 @@
       <a href="asupanmakan.html">Asupan Makan</a>
     </nav>
   </header>
-
   <main>
     <h2>Perhitungan Asupan Makan</h2>
 
@@ -150,27 +156,27 @@
 
     <section class="section">
       <h3>2. Total Kalori per Waktu Makan</h3>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="inputCari">Nama Bahan Makanan</label>
-          <input type="text" id="inputCari" oninput="cariPilihanKalori()" placeholder="Ketik nama makanan...">
-          <ul class="result-list" id="pilihanKalori"></ul>
+      <div class="grid-2">
+        <div class="input-wrapper">
+          <div class="form-column">
+            <label for="inputCari">Nama Bahan Makanan</label>
+            <input type="text" id="inputCari" oninput="cariPilihanKalori()">
+            <ul class="result-list" id="pilihanKalori"></ul>
+            <label for="beratKalori">Berat (gram)</label>
+            <input type="number" id="beratKalori">
+            <label for="waktu">Waktu Makan</label>
+            <select id="waktu">
+              <option value="Pagi">Pagi</option>
+              <option value="Siang">Siang</option>
+              <option value="Malam">Malam</option>
+            </select>
+            <button onclick="tambahMakananKeList()">Tambahkan</button>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="beratKalori">Berat (gram)</label>
-          <input type="number" id="beratKalori">
-        </div>
-        <div class="form-group">
-          <label for="waktu">Waktu Makan</label>
-          <select id="waktu">
-            <option value="Pagi">Pagi</option>
-            <option value="Siang">Siang</option>
-            <option value="Malam">Malam</option>
-          </select>
+        <div class="output-wrapper">
+          <div id="hasilF2" class="table-data"></div>
         </div>
       </div>
-      <button onclick="tambahMakananKeList()">Tambahkan</button>
-      <div id="hasilF2" class="table-data"></div>
     </section>
   </main>
 
@@ -180,14 +186,11 @@
 
   <script>
     let DaftarBahanMakanan = [];
+    let daftarMakanan = [];
 
-  fetch("DaftarBahanMakanan.json")
-    .then(response => response.json())
-    .then(data => {
-      DaftarBahanMakanan = data;
-      console.log("Data makanan dimuat:", DaftarBahanMakanan);
-    })
-    .catch(error => console.error("Gagal memuat data:", error));
+    fetch("DaftarBahanMakanan.json")
+      .then(res => res.json())
+      .then(data => DaftarBahanMakanan = data);
 
     function tampilkanOpsiBahan() {
       const input = document.getElementById("bahanF1").value.toLowerCase();
@@ -205,7 +208,7 @@
         if (key !== "Nama Bahan") {
           const satuan = hasil[key];
           const nilai = (parseFloat(satuan) * f).toFixed(2);
-          detail += `<li>${key}: ${nilai}</li>`;
+          detail += `<li>${key}: ${nilai} ${key === 'ENERGI' ? 'kkal' : key === 'AIR' ? 'ml' : key === 'NATRIUM' || key === 'KALIUM' || key === 'KALSIUM' || key === 'FOSFOR' || key === 'VIT-C' ? 'mg' : 'g'}</li>`;
         }
       }
       detail += '</ul>';
@@ -230,11 +233,13 @@
       const berat = parseFloat(document.getElementById("beratKalori").value);
       const waktu = document.getElementById("waktu").value;
       const bahan = DaftarBahanMakanan.find(item => item["Nama Bahan"] === nama);
-
       if (!bahan || isNaN(berat)) return alert("Data tidak valid atau belum dipilih.");
-
-      const energi = parseFloat(bahan["ENERGI"] || 0) * (berat / 100);
-      daftarMakanan.push({ nama, berat, energi, waktu });
+      const faktor = berat / 100;
+      const energi = parseFloat(bahan["ENERGI"] || 0) * faktor;
+      const protein = parseFloat(bahan["PROTEIN"] || 0) * faktor;
+      const lemak = parseFloat(bahan["LEMAK"] || 0) * faktor;
+      const karbo = parseFloat(bahan["KARBOHIDRAT"] || 0) * faktor;
+      daftarMakanan.push({ nama, berat, energi, protein, lemak, karbo, waktu });
       tampilkanTabelKalori();
     }
 
@@ -248,12 +253,12 @@
       let html = "";
       for (const waktu in grup) {
         let total = 0;
-        html += `<h4>${waktu}</h4><table><tr><th>Nama</th><th>Berat (g)</th><th>Kalori (kkal)</th></tr>`;
+        html += `<h4>${waktu}</h4><table><tr><th>Nama</th><th>Berat</th><th>Energi</th><th>Protein</th><th>Lemak</th><th>Karbohidrat</th></tr>`;
         grup[waktu].forEach(i => {
-          html += `<tr><td>${i.nama}</td><td>${i.berat}</td><td>${i.energi.toFixed(1)}</td></tr>`;
+          html += `<tr><td>${i.nama}</td><td>${i.berat} g</td><td>${i.energi.toFixed(1)} kkal</td><td>${i.protein.toFixed(1)} g</td><td>${i.lemak.toFixed(1)} g</td><td>${i.karbo.toFixed(1)} g</td></tr>`;
           total += i.energi;
         });
-        html += `<tr><td colspan='2'><strong>Total</strong></td><td><strong>${total.toFixed(1)} kkal</strong></td></tr></table>`;
+        html += `<tr><td colspan="5"><strong>Total Kalori</strong></td><td><strong>${total.toFixed(1)} kkal</strong></td></tr></table>`;
       }
       document.getElementById("hasilF2").innerHTML = html;
     }

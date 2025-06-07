@@ -13,17 +13,20 @@
     body {
       margin: 0;
       background: linear-gradient(to right, #d4ff9d, #fffabe);
+      position: relative;
+      z-index: 1;
       color: #004d1a;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
     }
     header {
-      background-color: #ffb347;
+      background-color: #ffa94d;
       padding: 20px 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      border-bottom: 3px solid #ffcc70;
     }
     .logo {
       font-weight: bold;
@@ -31,14 +34,27 @@
       color: #004d1a;
     }
     nav a {
-      margin-left: 20px;
+      margin: 0 15px;
       text-decoration: none;
-      color: #004d1a;
-      font-weight: 600;
+      color: white;
+      font-weight: bold;
+      transition: color 0.3s ease;
     }
     nav a:hover {
-      color: #fff;
+      color: #004d1a;
     }
+    .fruit-deco {
+      position: absolute;
+      width: 80px;
+      opacity: 0.2;
+      z-index: 0;
+    }
+
+    .fruit-deco.top-left { top: 80px; left: 20px; }
+    .fruit-deco.top-right { top: 80px; right: 20px; }
+    .fruit-deco.bottom-left { bottom: 80px; left: 20px; }
+    .fruit-deco.bottom-right { bottom: 80px; right: 20px; }
+    
     main {
       flex: 1;
       padding: 40px;
@@ -117,6 +133,12 @@
     </nav>
   </header>
 
+  <!-- Consistent fruit decoration on background -->
+<img src="https://cdn-icons-png.flaticon.com/512/135/135620.png" class="fruit-deco top-left" />
+<img src="https://cdn-icons-png.flaticon.com/512/135/135651.png" class="fruit-deco top-right" />
+<img src="https://cdn-icons-png.flaticon.com/512/135/135620.png" class="fruit-deco bottom-left" />
+<img src="https://cdn-icons-png.flaticon.com/512/135/135651.png" class="fruit-deco bottom-right" />
+  
   <main>
     <h2>Skrining Status Gizi</h2>
     <form id="imtForm">
@@ -142,7 +164,7 @@
   </main>
 
   <footer>
-    Referensi: Brocca | Kemenkes RI | Instagram: @gzi.id
+    2025 G-Zi | Referensi: Brocca | Kemenkes RI | Instagram: @gzi.id
     <br />
     <button class="btn-download" id="downloadBtn" style="display:none;">Unduh Hasil</button>
   </footer>

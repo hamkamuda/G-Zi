@@ -280,7 +280,7 @@
         filename: `GZi_AsupanGizi_${new Date().toLocaleDateString("id-ID")}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 3 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
       }).save();
     }
   </script>

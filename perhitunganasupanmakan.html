@@ -14,6 +14,8 @@
     body {
       margin: 0;
       background: linear-gradient(to right, #d4ff9d, #fffabe);
+      position: relative;
+      z-index: 1;
       color: #004d1a;
       display: flex;
       flex-direction: column;
@@ -27,6 +29,7 @@
       align-items: center;
       border-bottom: 3px solid #ffcc70;
     }
+  
     nav a {
       margin: 0 15px;
       text-decoration: none;
@@ -34,6 +37,7 @@
       font-weight: bold;
       transition: color 0.3s ease;
     }
+  
     nav a:hover {
       color: #004d1a;
     }
@@ -47,6 +51,17 @@
       text-align: center;
       font-weight: 600;
     }
+    .fruit-deco {
+      position: absolute;
+      width: 80px;
+      opacity: 0.2;
+      z-index: 0;
+    }
+  
+    .fruit-deco.top-left { top: 80px; left: 20px; }
+    .fruit-deco.top-right { top: 80px; right: 20px; }
+    .fruit-deco.bottom-left { bottom: 80px; left: 20px; }
+    .fruit-deco.bottom-right { bottom: 80px; right: 20px; }
     .section {
       background: #fff;
       padding: 30px;
@@ -145,6 +160,12 @@
     </nav>
   </header>
 
+  <!-- Consistent fruit decoration on background -->
+<img src="https://cdn-icons-png.flaticon.com/512/135/135620.png" class="fruit-deco top-left" />
+<img src="https://cdn-icons-png.flaticon.com/512/135/135651.png" class="fruit-deco top-right" />
+<img src="https://cdn-icons-png.flaticon.com/512/135/135620.png" class="fruit-deco bottom-left" />
+<img src="https://cdn-icons-png.flaticon.com/512/135/135651.png" class="fruit-deco bottom-right" />
+ 
   <main>
     <h2>🥗 Perhitungan Asupan Makan 🥦</h2>
 
@@ -178,7 +199,7 @@
   </main>
 
   <footer>
-    &copy; 2025 G-Zi | Data: Kemenkes RI TKPI 2020
+     © 2025 G-Zi | All rights reserved. | Make For You | Data: Kemenkes RI TKPI 2020 | Instagram: @gzi.id
   </footer>
 
   <script>

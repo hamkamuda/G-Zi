@@ -118,6 +118,19 @@
     .table-data tr:hover {
       background-color: #f0fff4;
     }
+    .table-data table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  word-wrap: break-word;
+  font-size: 12px;
+}
+.table-data th, .table-data td {
+  border: 1px solid #ccc;
+  padding: 6px;
+  text-align: left;
+}
+
   </style>
 </head>
 <body>
@@ -252,37 +265,71 @@
     }
 
     function unduhPDF() {
-      const elemen = document.getElementById("hasilF2");
-      const salinan = elemen.cloneNode(true);
-      const pembungkus = document.createElement("div");
-      const judul = document.createElement("div");
-      judul.innerHTML = `
-        <h2 style="text-align:center; color:#00b73e;">🍏 G-Zi - Laporan Asupan Gizi 🍊</h2>
-        <hr style="border: 1px solid #ffa94d; margin-bottom: 20px;">
-      `;
-      pembungkus.appendChild(judul);
-      pembungkus.appendChild(salinan);
+  const hasilF2 = document.getElementById("hasilF2");
 
-      const tambahan = document.createElement("div");
-      tambahan.innerHTML = `
-        <hr style="margin-top: 30px;">
-        <p style="text-align:center; font-size:12px;">
-          <strong>G-Zi | Laporan Asupan Gizi</strong><br>
-          Dicetak: ${new Date().toLocaleString("id-ID")}<br>
-          Sumber: TKPI Kemenkes RI 2020<br><br>
-          Terima kasih telah menggunakan website ini 🙏🍎🥦
-        </p>
-      `;
-      pembungkus.appendChild(tambahan);
+  if (!hasilF2.innerHTML.trim()) {
+    alert("Tidak ada data untuk dicetak.");
+    return;
+  }
 
-      html2pdf().from(pembungkus).set({
-        margin: 10,
-        filename: `GZi_AsupanGizi_${new Date().toLocaleDateString("id-ID")}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 3 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-      }).save();
+  const clone = hasilF2.cloneNode(true);
+  const wrapper = document.createElement("div");
+
+  const judul = document.createElement("div");
+  judul.innerHTML = `
+    <h2 style="text-align:center; color:#00b73e; font-size:18px;">🍏 G-Zi - Laporan Asupan Gizi 🍊</h2>
+    <hr style="border: 1px solid #ffa94d; margin-bottom: 15px;">
+  `;
+  wrapper.appendChild(judul);
+  wrapper.appendChild(clone);
+
+  const footer = document.createElement("div");
+  footer.innerHTML = `
+    <hr style="margin-top: 30px;">
+    <p style="text-align:center; font-size:11px; color:#555;">
+      <strong>G-Zi | Laporan Asupan Gizi</strong><br>
+      Dicetak: ${new Date().toLocaleString("id-ID")}<br>
+      Sumber: TKPI Kemenkes RI 2020<br><br>
+      Terima kasih telah menggunakan website ini 🙏🍎🥦
+    </p>
+  `;
+  wrapper.appendChild(footer);
+
+  // Gaya PDF (tabel compact dan tidak terlalu lebar)
+  const style = document.createElement("style");
+  style.textContent = `
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 10px;
+      table-layout: fixed;
+      word-wrap: break-word;
     }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 4px 6px;
+      text-align: left;
+    }
+    th {
+      background-color: #eaffed;
+      color: #004d1a;
+    }
+    h2 {
+      margin-bottom: 8px;
+    }
+  `;
+  wrapper.appendChild(style);
+
+  // Unduh sebagai PDF
+  html2pdf().from(wrapper).set({
+    margin: [10, 10, 10, 10],
+    filename: `GZi_AsupanGizi_${new Date().toLocaleDateString("id-ID")}.pdf`,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  }).save();
+}
+
   </script>
 </body>
 </html>

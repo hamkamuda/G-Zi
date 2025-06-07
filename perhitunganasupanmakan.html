@@ -25,7 +25,6 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
     }
     nav a {
       margin: 0 15px;
@@ -39,7 +38,7 @@
     main {
       flex: 1;
       padding: 30px;
-      max-width: 1200px;
+      max-width: 1100px;
       margin: auto;
     }
     h2, h3 {
@@ -54,12 +53,6 @@
     }
     .form-group, .form-row {
       margin-bottom: 20px;
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-    .form-row input {
-      flex: 1;
     }
     input, select {
       width: 100%;
@@ -75,6 +68,7 @@
       border-radius: 8px;
       cursor: pointer;
       transition: background-color 0.3s ease;
+      margin-right: 10px;
     }
     button:hover {
       background-color: #009933;
@@ -88,10 +82,6 @@
     .result-list li:hover {
       background-color: #d8fcd8;
     }
-    #hasilF1 ul {
-      column-count: 2;
-      column-gap: 40px;
-    }
     .grid-2 {
       display: flex;
       gap: 40px;
@@ -99,18 +89,16 @@
     }
     .input-wrapper, .output-wrapper {
       flex: 1;
-      min-width: 400px;
+      min-width: 300px;
     }
     .table-data table {
       width: 100%;
       border-collapse: collapse;
-      overflow-x: auto;
     }
     .table-data th, .table-data td {
       border: 1px solid #ccc;
       padding: 8px;
       text-align: left;
-      font-size: 14px;
     }
     .table-data th {
       background-color: #eaffed;
@@ -125,7 +113,6 @@
       <a href="imt.html">Skrining</a>
       <a href="kebutuhankalori.html">Kebutuhan Kalori</a>
       <a href="asupanmakan.html">Asupan Makan</a>
-      <a href="#">Artikel Gizi</a>
     </nav>
   </header>
 
@@ -166,7 +153,8 @@
   </footer>
 
   <script>
-   let DaftarBahanMakanan = [];
+    let DaftarBahanMakanan = [];
+    let daftarMakanan = [];
 
     fetch("DaftarBahanMakanan.json")
       .then(res => res.json())
@@ -215,8 +203,7 @@
       const berat = parseFloat(document.getElementById("beratKalori").value);
       const waktu = document.getElementById("waktuMakan").value;
       const bahan = DaftarBahanMakanan.find(i => i["Nama Bahan"] === nama);
-      if (!bahan || isNaN(berat)) return alert("Lengkapi data bahan dan berat.");
-      if (!waktu) return alert("Silakan isi waktu makan (tanggal dan jam).);
+      if (!bahan || isNaN(berat) || !waktu) return alert("Lengkapi data bahan, berat, dan waktu.");
 
       const f = berat / 100;
       daftarMakanan.push({
@@ -253,7 +240,6 @@
       const elemen = document.getElementById("hasilF2");
       const salinan = elemen.cloneNode(true);
       const pembungkus = document.createElement("div");
-
       const judul = document.createElement("div");
       judul.innerHTML = `
         <h2 style="text-align:center; color:#00b73e;">🍏 G-Zi - Laporan Asupan Gizi 🍊</h2>
@@ -263,23 +249,20 @@
       pembungkus.appendChild(salinan);
 
       const tambahan = document.createElement("div");
-      const tanggalSekarang = new Date().toLocaleString("id-ID");
-
-tambahan.innerHTML = `
-  <hr style="margin-top: 30px;">
-  <p style="text-align:center; font-size:12px;">
-    <strong>G-Zi | Laporan Asupan Gizi</strong><br>
-    Dicetak: ${tanggalSekarang}<br>
-    Sumber: TKPI Kemenkes RI 2020<br><br>
-    Terima kasih telah menggunakan website ini 🙏🍎🥦
-  </p>
-`;
-
+      tambahan.innerHTML = `
+        <hr style="margin-top: 30px;">
+        <p style="text-align:center; font-size:12px;">
+          <strong>G-Zi | Laporan Asupan Gizi</strong><br>
+          Dicetak: ${new Date().toLocaleString("id-ID")}<br>
+          Sumber: TKPI Kemenkes RI 2020<br><br>
+          Terima kasih telah menggunakan website ini 🙏🍎🥦
+        </p>
+      `;
       pembungkus.appendChild(tambahan);
 
       html2pdf().from(pembungkus).set({
         margin: 10,
-        filename: `GZi_AsupanGizi_${tanggalSekarang.replace(/[/: ]/g, '_')}.pdf`,
+        filename: `GZi_AsupanGizi_${new Date().toLocaleDateString("id-ID")}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 3 },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }

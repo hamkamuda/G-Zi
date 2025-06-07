@@ -162,9 +162,37 @@
   <img src="https://cdn-icons-png.flaticon.com/512/135/135620.png" class="fruit-deco bottom-left" />
   <img src="https://cdn-icons-png.flaticon.com/512/135/135651.png" class="fruit-deco bottom-right" />
 
+  More actions
   <main>
     <h2>🥗 Perhitungan Asupan Makan 🥦</h2>
-    <!-- Konten lainnya tetap -->
+
+    <section class="section">
+      <h3>1. Cek Gizi Bahan Makanan</h3>
+      <div class="form-row">
+        <input type="text" id="bahanF1" placeholder="Contoh: Beras">
+        <input type="number" id="beratF1" placeholder="Berat (gram)">
+      </div>
+      <button onclick="tampilkanOpsiBahan()">Cari</button>
+      <ul class="result-list" id="opsiBahan"></ul>
+      <div id="hasilF1"></div>
+    </section>
+
+    <section class="section">
+      <h3>2. Hitung Total Asupan Makan</h3>
+      <div class="grid-2">
+        <div class="input-wrapper">
+          <input type="text" id="inputCari" oninput="cariPilihanKalori()" placeholder="Nama Bahan Makanan">
+          <ul class="result-list" id="pilihanKalori"></ul>
+          <input type="number" id="beratKalori" placeholder="Berat (gram)">
+          <input type="datetime-local" id="waktuMakan">
+          <button onclick="tambahMakananKeList()">Tambahkan</button>
+          <button onclick="unduhPDF()">Unduh Hasil PDF</button>
+        </div>
+        <div class="output-wrapper">
+          <div id="hasilF2" class="table-data"></div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer>

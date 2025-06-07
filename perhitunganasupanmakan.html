@@ -42,13 +42,14 @@
       margin: auto;
     }
     h2, h3 {
+      font-weight: 600;
       text-align: center;
     }
     .section {
       background: #fff;
       padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-radius: 20px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
       margin-bottom: 40px;
     }
     .form-group, .form-row {
@@ -67,12 +68,17 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      button {
+      transition: all 0.3s ease;
+      transform: translateY(0);
       margin-right: 10px;
     }
+      
     button:hover {
       background-color: #009933;
+      transform: translateY(-2px);
     }
+    
     .result-list li {
       cursor: pointer;
       padding: 5px;

@@ -42,6 +42,16 @@
     nav a:hover {
       color: #004d1a;
     }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
+        main {
+      flex: 1; /* membuat main mengambil sisa ruang vertikal */
+    }
     .hero {
       flex: 1;
       display: flex;

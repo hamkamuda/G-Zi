@@ -19,14 +19,19 @@
     }
     header, footer {
       background-color: #ffa94d;
-      padding: 16px 30px;
+      padding: 20px 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-bottom: 3px solid #ffcc70;
     }
+    header h1 {
+      font-size: 28px;
+      font-weight: 600;
+      margin: 0;
+    }
     nav a {
-      margin: 0 12px;
+      margin: 0 15px;
       text-decoration: none;
       color: white;
       font-weight: bold;
@@ -46,6 +51,16 @@
     h2, h3 {
       text-align: center;
       font-weight: 600;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
+        main {
+      flex: 1; /* membuat main mengambil sisa ruang vertikal */
     }
     .section {
       background: #fff;
@@ -124,8 +139,8 @@
       opacity: 0.2;
       z-index: 0;
     }
-    .fruit-deco.top-left { top: 90px; left: 20px; }
-    .fruit-deco.top-right { top: 90px; right: 20px; }
+    .fruit-deco.top-left { top: 80px; left: 20px; }
+    .fruit-deco.top-right { top: 80px; right: 20px; }
     .fruit-deco.bottom-left { bottom: 80px; left: 20px; }
     .fruit-deco.bottom-right { bottom: 80px; right: 20px; }
   </style>
@@ -149,39 +164,15 @@
 
   <main>
     <h2>🥗 Perhitungan Asupan Makan 🥦</h2>
-
-    <section class="section">
-      <h3>1. Cek Gizi Bahan Makanan</h3>
-      <div class="form-row">
-        <input type="text" id="bahanF1" placeholder="Contoh: Beras">
-        <input type="number" id="beratF1" placeholder="Berat (gram)">
-      </div>
-      <button onclick="tampilkanOpsiBahan()">Cari</button>
-      <ul class="result-list" id="opsiBahan"></ul>
-      <div id="hasilF1"></div>
-    </section>
-
-    <section class="section">
-      <h3>2. Hitung Total Asupan Makan</h3>
-      <div class="grid-2">
-        <div class="input-wrapper">
-          <input type="text" id="inputCari" oninput="cariPilihanKalori()" placeholder="Nama Bahan Makanan">
-          <ul class="result-list" id="pilihanKalori"></ul>
-          <input type="number" id="beratKalori" placeholder="Berat (gram)">
-          <input type="datetime-local" id="waktuMakan">
-          <button onclick="tambahMakananKeList()">Tambahkan</button>
-          <button onclick="unduhPDF()">Unduh Hasil PDF</button>
-        </div>
-        <div class="output-wrapper">
-          <div id="hasilF2" class="table-data"></div>
-        </div>
-      </div>
-    </section>
+    <!-- Konten lainnya tetap -->
   </main>
 
   <footer>
      © 2025 G-Zi | All rights reserved. | Make For You | Data: Kemenkes RI TKPI 2020 | Instagram: @gzi.id
   </footer>
+</body>
+</html>
+
 
   <script>
     let DaftarBahanMakanan = [];

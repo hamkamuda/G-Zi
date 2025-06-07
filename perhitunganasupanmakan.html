@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Asupan Makan - G-Zi</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
     * {
@@ -25,12 +25,14 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      border-bottom: 3px solid #ffcc70;
     }
     nav a {
       margin: 0 15px;
       text-decoration: none;
       color: white;
       font-weight: bold;
+      transition: color 0.3s ease;
     }
     nav a:hover {
       color: #004d1a;
@@ -42,51 +44,54 @@
       margin: auto;
     }
     h2, h3 {
-      font-weight: 600;
       text-align: center;
+      font-weight: 600;
     }
     .section {
       background: #fff;
-      padding: 25px;
+      padding: 30px;
       border-radius: 20px;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
       margin-bottom: 40px;
     }
     .form-group, .form-row {
       margin-bottom: 20px;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
     }
     input, select {
-      width: 100%;
-      padding: 10px;
+      flex: 1;
+      padding: 12px;
       border: 1px solid #ccc;
-      border-radius: 8px;
+      border-radius: 10px;
     }
     button {
-      background-color: #00b73e;
+      background: linear-gradient(to right, #00b73e, #009933);
       color: white;
       padding: 12px 24px;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
-      button {
       transition: all 0.3s ease;
-      transform: translateY(0);
-      margin-right: 10px;
     }
-      
     button:hover {
-      background-color: #009933;
       transform: translateY(-2px);
     }
-    
     .result-list li {
       cursor: pointer;
-      padding: 5px;
+      padding: 8px 12px;
       background: #f2fff2;
       border-bottom: 1px solid #ccc;
     }
     .result-list li:hover {
       background-color: #d8fcd8;
+    }
+    #hasilF1 ul {
+      columns: 2;
+      -webkit-columns: 2;
+      -moz-columns: 2;
+      padding-left: 20px;
     }
     .grid-2 {
       display: flex;
@@ -95,25 +100,29 @@
     }
     .input-wrapper, .output-wrapper {
       flex: 1;
-      min-width: 300px;
+      min-width: 340px;
     }
     .table-data table {
       width: 100%;
       border-collapse: collapse;
+      margin-top: 10px;
     }
     .table-data th, .table-data td {
       border: 1px solid #ccc;
-      padding: 8px;
+      padding: 10px;
       text-align: left;
     }
     .table-data th {
       background-color: #eaffed;
     }
+    .table-data tr:hover {
+      background-color: #f0fff4;
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>G-Zi</h1>
+    <h1>🍏 G-Zi</h1>
     <nav>
       <a href="index.html">Beranda</a>
       <a href="imt.html">Skrining</a>
@@ -123,10 +132,10 @@
   </header>
 
   <main>
-    <h2>Perhitungan Asupan Makan</h2>
+    <h2>🥗 Perhitungan Asupan Makan 🥦</h2>
 
     <section class="section">
-      <h3>Kandungan Gizi Bahan Makanan</h3>
+      <h3>1. Cek Gizi Bahan Makanan</h3>
       <div class="form-row">
         <input type="text" id="bahanF1" placeholder="Contoh: Beras">
         <input type="number" id="beratF1" placeholder="Berat (gram)">
@@ -137,7 +146,7 @@
     </section>
 
     <section class="section">
-      <h3>Hitung Total Asupan Makan</h3>
+      <h3>2. Hitung Total Asupan Makan</h3>
       <div class="grid-2">
         <div class="input-wrapper">
           <input type="text" id="inputCari" oninput="cariPilihanKalori()" placeholder="Nama Bahan Makanan">

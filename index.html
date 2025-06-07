@@ -10,7 +10,6 @@
       box-sizing: border-box;
       font-family: 'Poppins', sans-serif;
     }
-
     body {
       margin: 0;
       background: linear-gradient(to right, #d4ff9d, #fffabe);
@@ -19,9 +18,8 @@
       flex-direction: column;
       min-height: 100vh;
       position: relative;
-      overflow-x: hidden;
+      z-index: 1;
     }
-
     header, footer {
       background-color: #ffa94d;
       padding: 20px 40px;
@@ -30,7 +28,10 @@
       align-items: center;
       border-bottom: 3px solid #ffcc70;
     }
-
+    header h1 {
+      font-size: 28px;
+      margin: 0;
+    }
     nav a {
       margin: 0 15px;
       text-decoration: none;
@@ -38,24 +39,9 @@
       font-weight: bold;
       transition: color 0.3s ease;
     }
-
     nav a:hover {
       color: #004d1a;
     }
-
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-    }
-    
-    main {
-      flex: 1; /* membuat main mengambil sisa ruang vertikal */
-    }
-
-
     .hero {
       flex: 1;
       display: flex;
@@ -65,18 +51,15 @@
       padding: 60px 20px;
       text-align: center;
     }
-
     .hero h1 {
       font-size: 48px;
       margin-bottom: 20px;
     }
-
     .hero p {
       font-size: 20px;
       max-width: 600px;
       margin-bottom: 40px;
     }
-
     .btn-start {
       padding: 15px 30px;
       background-color: #00b73e;
@@ -86,24 +69,20 @@
       font-size: 18px;
       cursor: pointer;
     }
-
     .btn-start:hover {
       background-color: #009933;
     }
-
     .fitur-section {
       display: none;
       padding: 40px;
       text-align: center;
     }
-
     .fitur-grid {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
       gap: 30px;
     }
-
     .fitur-box {
       background: #fff8e1;
       padding: 20px;
@@ -114,83 +93,75 @@
       color: #004d1a;
       transition: transform 0.2s ease;
     }
-
     .fitur-box:hover {
       transform: translateY(-5px);
       background: #faffd5;
     }
-
-    footer {
-      background-color: #ffa94d;
-      padding: 20px 40px;
-      text-align: center;
-      border-top: 3px solid #ffcc70;
-    }
-
     .fruit-deco {
       position: absolute;
       width: 80px;
-      opacity: 0.15;
+      opacity: 0.2;
       z-index: 0;
     }
-
-    .fruit-deco.top-left { top: 30px; left: 20px; }
-    .fruit-deco.top-right { top: 30px; right: 20px; }
-    .fruit-deco.bottom-left { bottom: 30px; left: 20px; }
-    .fruit-deco.bottom-right { bottom: 30px; right: 20px; }
+    .fruit-deco.top-left { top: 80px; left: 20px; }
+    .fruit-deco.top-right { top: 80px; right: 20px; }
+    .fruit-deco.bottom-left { bottom: 80px; left: 20px; }
+    .fruit-deco.bottom-right { bottom: 80px; right: 20px; }
+    footer {
+      text-align: center;
+    }
   </style>
 </head>
 <body>
-  <!-- Hiasan Buah -->
+  <header>
+    <h1>🍏 G-Zi</h1>
+    <nav>
+      <a href="index.html">Beranda</a>
+      <a href="imt.html">Skrining</a>
+      <a href="kebutuhankalori.html">Kebutuhan Kalori</a>
+      <a href="perhitunganasupanmakan.html">Perhitungan Asupan Makan</a>
+      <a href="#">Artikel</a>
+    </nav>
+  </header>
+
+  <!-- Dekorasi Buah -->
   <img src="https://cdn-icons-png.flaticon.com/512/135/135620.png" class="fruit-deco top-left" />
   <img src="https://cdn-icons-png.flaticon.com/512/135/135651.png" class="fruit-deco top-right" />
   <img src="https://cdn-icons-png.flaticon.com/512/135/135620.png" class="fruit-deco bottom-left" />
   <img src="https://cdn-icons-png.flaticon.com/512/135/135651.png" class="fruit-deco bottom-right" />
 
-  <!-- Header -->
-  <header>
-    <div class="logo">🍏 G-Zi</div>
-    <nav>
-      <a href="index.html">Beranda</a>
-      <a href="imt.html">Skrining</a>
-      <a href="kebutuhankalori.html">Kebutuhan Kalori</a>
-      <a href="perhitunganasupanmakan.html">Asupan Makan</a>
-      <a href="#">Artikel</a>
-    </nav>
-  </header>
-
   <main>
     <div class="hero">
-      <h1>Selamat Datang di G-Zi</h1>
-      <p>Platform digital untuk menghitung kebutuhan kalori, status gizi, dan mendapatkan informasi nutrisi terpercaya.</p>
+      <h1>🥗 Selamat Datang di G-Zi 🥦</h1>
+      <p>Platform digital untuk menghitung kebutuhan kalori, status gizi, dan mendapatkan informasi terkait gizi terpercaya.</p>
       <button class="btn-start" onclick="document.querySelector('.fitur-section').style.display='block'">Mulai Sekarang</button>
     </div>
 
     <section class="fitur-section">
       <h2>Fitur Unggulan</h2>
       <div class="fitur-grid">
-        <a class="fitur-box" href="kebutuhankalori.html">
-          <h3>Kebutuhan Kalori</h3>
-          <p>Hitung kebutuhan energi harian berdasarkan data tubuh dan aktivitas fisik.</p>
-        </a>
         <a class="fitur-box" href="imt.html">
           <h3>Skrining Gizi</h3>
           <p>Periksa status gizi Anda menggunakan IMT dan berat badan ideal.</p>
         </a>
-        <a class="fitur-box" href="perhitunganasupanmakan.html">
-          <h3>Asupan Makan</h3>
-          <p>Hitung kandungan zat gizi dari bahan makanan dan total konsumsi harian Anda.</p>
+         <a class="fitur-box" href="kebutuhankalori.html">
+          <h3>Kebutuhan Kalori</h3>
+          <p>Hitung kebutuhan energi harian berdasarkan data tubuh dan aktivitas fisik.</p>
         </a>
-        <a class="fitur-box" href="#">
-          <h3>Artikel</h3>
-          <p>Baca artikel edukatif seputar gizi dan pola hidup sehat.</p>
+        <a class="fitur-box" href="perhitunganasupanmakan.html">
+          <h3>Perhitungan Asupan Makan</h3>
+          <p>Menghitung Kandungan Zat Gizi pada Bahan Makanan dan Total Asupan Makan dalam Satu Porsi hingga Sehari.</p>
+        </a>
+        <a class="fitur-box" href="artikel.html">
+          <h3>Artikel Edukasi</h3>
+          <p>Baca artikel-artikel bergizi untuk gaya hidup sehat.</p>
         </a>
       </div>
     </section>
   </main>
 
   <footer>
-    &copy; 2025 G-Zi | Data: TKPI Kemenkes RI 2020 | Instagram: @gzi.id
+    &copy; 2025 G-Zi | All rights reserved. | Make For You | Instagram: @gzi.id
   </footer>
 </body>
 </html>

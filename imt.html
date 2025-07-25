@@ -1,6 +1,29 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAALBlEZuoqOMyjHXcpg-ToBM4uAazNXq8",
+    authDomain: "gzi-app.firebaseapp.com",
+    projectId: "gzi-app",
+    storageBucket: "gzi-app.firebasestorage.app",
+    messagingSenderId: "62939908860",
+    appId: "1:62939908860:web:5cc5fa90a9bdf2c7e92579",
+    measurementId: "G-4H05HRLEGZ"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth();
+
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      window.location.href = "login.html";
+    }
+  });
+</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Skrining Gizi - G-Zi</title>

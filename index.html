@@ -1,5 +1,32 @@
 <!DOCTYPE html>
 <html lang="id">
+  
+  <!-- Firebase App -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+
+<!-- Firebase Auth -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
+
+<!-- Firestore (Database) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
+
+<script>
+  const firebaseConfig = {
+     apiKey: "AIzaSyAALBlEZuoqOMyjHXcpg-ToBM4uAazNXq8",
+  authDomain: "gzi-app.firebaseapp.com",
+  projectId: "gzi-app",
+  storageBucket: "gzi-app.firebasestorage.app",
+  messagingSenderId: "62939908860",
+  appId: "1:62939908860:web:5cc5fa90a9bdf2c7e92579",
+  measurementId: "G-4H05HRLEGZ"
+};
+
+  // Inisialisasi Firebase
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+</script>
+  
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />

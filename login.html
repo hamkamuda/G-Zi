@@ -1,34 +1,40 @@
-<h2>Login / Daftar</h2>
-<input type="email" id="email" placeholder="Email" />
-<input type="password" id="password" placeholder="Password" />
-<button onclick="login()">Login</button>
-<button onclick="register()">Daftar</button>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import {
+    getAuth,
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-<script>
-  function login() {
+  const firebaseConfig = {
+  apiKey: "AIzaSyAALBlEZuoqOMyjHXcpg-ToBM4uAazNXq8",
+  authDomain: "gzi-app.firebaseapp.com",
+  projectId: "gzi-app",
+  storageBucket: "gzi-app.firebasestorage.app",
+  messagingSenderId: "62939908860",
+  appId: "1:62939908860:web:5cc5fa90a9bdf2c7e92579",
+  measurementId: "G-4H05HRLEGZ"
+};
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth();
+
+  // fungsi login
+  document.getElementById('login-btn').onclick = () => {
     const email = document.getElementById("email").value;
     const pass = document.getElementById("password").value;
-    auth.signInWithEmailAndPassword(email, pass)
-      .then((user) => {
-        alert("Login berhasil!");
-        window.location.href = "dashboard.html";
-      })
-      .catch((err) => alert(err.message));
-  }
+    signInWithEmailAndPassword(auth, email, pass)
+      .then(() => window.location.href = "index.html")
+      .catch(e => alert("Login gagal: " + e.message));
+  };
 
-  function register() {
+  // fungsi register
+  document.getElementById('register-btn').onclick = () => {
     const email = document.getElementById("email").value;
     const pass = document.getElementById("password").value;
-    auth.createUserWithEmailAndPassword(email, pass)
-      .then((user) => {
-        // Simpan user info di Firestore
-        db.collection("users").doc(user.user.uid).set({
-          email: email,
-          created: new Date()
-        });
-        alert("Registrasi berhasil!");
-        window.location.href = "dashboard.html";
-      })
-      .catch((err) => alert(err.message));
-  }
+    createUserWithEmailAndPassword(auth, email, pass)
+      .then(() => alert("Berhasil daftar! Silakan login."))
+      .catch(e => alert("Gagal daftar: " + e.message));
+  };
 </script>

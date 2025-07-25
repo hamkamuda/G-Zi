@@ -1,0 +1,34 @@
+<h2>Login / Daftar</h2>
+<input type="email" id="email" placeholder="Email" />
+<input type="password" id="password" placeholder="Password" />
+<button onclick="login()">Login</button>
+<button onclick="register()">Daftar</button>
+
+<script>
+  function login() {
+    const email = document.getElementById("email").value;
+    const pass = document.getElementById("password").value;
+    auth.signInWithEmailAndPassword(email, pass)
+      .then((user) => {
+        alert("Login berhasil!");
+        window.location.href = "dashboard.html";
+      })
+      .catch((err) => alert(err.message));
+  }
+
+  function register() {
+    const email = document.getElementById("email").value;
+    const pass = document.getElementById("password").value;
+    auth.createUserWithEmailAndPassword(email, pass)
+      .then((user) => {
+        // Simpan user info di Firestore
+        db.collection("users").doc(user.user.uid).set({
+          email: email,
+          created: new Date()
+        });
+        alert("Registrasi berhasil!");
+        window.location.href = "dashboard.html";
+      })
+      .catch((err) => alert(err.message));
+  }
+</script>

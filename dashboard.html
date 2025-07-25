@@ -1,0 +1,18 @@
+<h2>Halo, <span id="userEmail"></span>!</h2>
+<button onclick="logout()">Logout</button>
+
+<script>
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      document.getElementById("userEmail").textContent = user.email;
+    } else {
+      window.location.href = "login.html"; // Redirect ke login
+    }
+  });
+
+  function logout() {
+    auth.signOut().then(() => {
+      window.location.href = "login.html";
+    });
+  }
+</script>

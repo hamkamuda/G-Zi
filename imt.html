@@ -1,43 +1,16 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyAALBlEZuoqOMyjHXcpg-ToBM4uAazNXq8",
-    authDomain: "gzi-app.firebaseapp.com",
-    projectId: "gzi-app",
-    storageBucket: "gzi-app.firebasestorage.app",
-    messagingSenderId: "62939908860",
-    appId: "1:62939908860:web:5cc5fa90a9bdf2c7e92579",
-    measurementId: "G-4H05HRLEGZ"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth();
-
-  onAuthStateChanged(auth, (user) => {
-    if (!user) {
-      window.location.href = "login.html";
-    }
-  });
-</script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Skrining Gizi - G-Zi</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skrining IMT - G-Zi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
     body {
       margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
       background: linear-gradient(to right, #d4ff9d, #fffabe);
-      position: relative;
-      z-index: 1;
       color: #004d1a;
       display: flex;
       flex-direction: column;
@@ -51,10 +24,9 @@
       align-items: center;
       border-bottom: 3px solid #ffcc70;
     }
-    .logo {
-      font-weight: bold;
+    header h1 {
       font-size: 28px;
-      color: #004d1a;
+      margin: 0;
     }
     nav a {
       margin: 0 15px;
@@ -66,87 +38,67 @@
     nav a:hover {
       color: #004d1a;
     }
-    .fruit-deco {
-      position: absolute;
-      width: 80px;
-      opacity: 0.2;
-      z-index: 0;
-    }
-
-    .fruit-deco.top-left { top: 80px; left: 20px; }
-    .fruit-deco.top-right { top: 80px; right: 20px; }
-    .fruit-deco.bottom-left { bottom: 80px; left: 20px; }
-    .fruit-deco.bottom-right { bottom: 80px; right: 20px; }
-    
     main {
       flex: 1;
-      padding: 40px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    h2 {
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    .section {
+      background: #fff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
     }
     .form-row {
+      margin-bottom: 20px;
       display: flex;
-      gap: 20px;
-      width: 100%;
-      max-width: 600px;
-    }
-    .form-group {
-      flex: 1;
-    }
-    label {
-      display: block;
-      margin-bottom: 5px;
+      gap: 15px;
+      flex-wrap: wrap;
     }
     input {
-      width: 100%;
-      padding: 10px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-    }
-    .btn-submit {
+      flex: 1;
       padding: 12px;
-      background-color: #00b73e;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+    button {
+      background: linear-gradient(to right, #00b73e, #009933);
       color: white;
-      font-weight: bold;
+      padding: 12px 24px;
       border: none;
       border-radius: 10px;
       cursor: pointer;
-      width: 100%;
-      max-width: 150px;
+      transition: all 0.3s ease;
+      font-weight: bold;
     }
-    .btn-submit:hover {
-      background-color: #009933;
+    button:hover {
+      transform: translateY(-2px);
     }
-    .result-box {
-      background: #ffffff;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      max-width: 500px;
-      display: none;
-    }
-    .result-container {
-      display: flex;
-      justify-content: space-between;
-      gap: 40px;
-      width: 100%;
-      max-width: 800px;
-    }
-
-    footer {
-      background-color: #ffb347;
-      color: #004d1a;
-      padding: 20px 40px;
+    #hasil {
+      margin-top: 20px;
+      font-size: 16px;
       text-align: center;
+      font-weight: bold;
     }
-    
+    footer {
+      background-color: #ffa94d;
+      text-align: center;
+      padding: 20px;
+      border-top: 3px solid #ffcc70;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
   <header>
-    <div class="logo">🍏 G-Zi</div>
+    <h1>🍏 G-Zi</h1>
     <nav>
       <a href="index.html">Beranda</a>
       <a href="imt.html">Skrining</a>
@@ -156,70 +108,42 @@
     </nav>
   </header>
 
-  <!-- Consistent fruit decoration on background -->
-<img src="https://cdn-icons-png.flaticon.com/512/135/135620.png" class="fruit-deco top-left" />
-<img src="https://cdn-icons-png.flaticon.com/512/135/135651.png" class="fruit-deco top-right" />
-<img src="https://cdn-icons-png.flaticon.com/512/135/135620.png" class="fruit-deco bottom-left" />
-<img src="https://cdn-icons-png.flaticon.com/512/135/135651.png" class="fruit-deco bottom-right" />
-  
   <main>
-    <h2>Skrining Status Gizi</h2>
-    <form id="imtForm">
+    <h2>📊 Skrining Indeks Massa Tubuh (IMT)</h2>
+    <div class="section">
       <div class="form-row">
-        <div class="form-group">
-          <label for="umur">Usia (tahun)</label>
-          <input type="number" id="umur" required>
-        </div>
-        <div class="form-group">
-          <label for="berat">Berat Badan (kg)</label>
-          <input type="number" id="berat" required>
-        </div>
-        <div class="form-group">
-          <label for="tinggi">Tinggi Badan (cm)</label>
-          <input type="number" id="tinggi" required>
-        </div>
+        <input type="number" id="berat" placeholder="Berat Badan (kg)">
+        <input type="number" id="tinggi" placeholder="Tinggi Badan (cm)">
       </div>
-      <div class="result-container">
-        <button type="submit" class="btn-submit">Hitung IMT</button>
-        <div class="result-box" id="hasilIMT"></div>
-      </div>
-    </form>
+      <button onclick="hitungIMT()">Hitung IMT</button>
+      <div id="hasil"></div>
+    </div>
   </main>
 
   <footer>
-     © 2025 G-Zi | All rights reserved. | Make For You | Referensi: Brocca | Kemenkes RI | Instagram: @gzi.id
-    <br />
-    <button class="btn-download" id="downloadBtn" style="display:none;">Unduh Hasil</button>
+    © 2025 G-Zi | All rights reserved. | Make For You | Data: Kemenkes RI
   </footer>
-  
+
   <script>
-    document.getElementById("imtForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      const berat = parseFloat(document.getElementById("berat").value);
-      const tinggiCm = parseFloat(document.getElementById("tinggi").value);
-      const tinggiM = tinggiCm / 100;
-
-      const imt = berat / (tinggiM * tinggiM);
-      const brocca = (tinggiCm - 100) - (0.1 * (tinggiCm - 100));
-
+    function hitungIMT() {
+      const bb = parseFloat(document.getElementById("berat").value);
+      const tb = parseFloat(document.getElementById("tinggi").value) / 100;
+      if (!bb || !tb) {
+        document.getElementById("hasil").innerText = "Mohon isi berat dan tinggi badan!";
+        return;
+      }
+      const imt = bb / (tb * tb);
       let kategori = "";
-      if (imt < 17.0) kategori = "Kurus";
-      else if (imt >= 17.0 && imt <= 25.0) kategori = "Normal";
-      else if (imt > 25.0 && imt <= 27.0) kategori = "Kelebihan Berat Badan";
-      else if (imt > 27.0 && imt <= 30.0) kategori = "Obesitas Kelas I";
-      else if (imt > 30.0 && imt <= 35.0) kategori = "Obesitas Kelas II";
-      else kategori = "Obesitas Kelas III";
+      if (imt < 18.5) kategori = "Kurus";
+      else if (imt < 23) kategori = "Normal";
+      else if (imt < 27) kategori = "Gemuk (Overweight)";
+      else kategori = "Obesitas";
 
-      const hasil = document.getElementById("hasilIMT");
-      hasil.innerHTML = `
-        <h3>Hasil Skrining</h3>
-        <p><strong>IMT:</strong> ${imt.toFixed(2)}</p>
-        <p><strong>Kategori:</strong> ${kategori}</p>
-        <p><strong>Berat Badan Ideal (Brocca):</strong> ${brocca.toFixed(1)} kg</p>
-      `;
-      hasil.style.display = "block";
-    });
+      document.getElementById("hasil").innerHTML =
+        `IMT Anda: <strong>${imt.toFixed(1)}</strong><br>Kategori: <strong>${kategori}</strong>`;
+    }
   </script>
 </body>
 </html>
+
+

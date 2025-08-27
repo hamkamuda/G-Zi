@@ -1,46 +1,23 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyAALBlEZuoqOMyjHXcpg-ToBM4uAazNXq8",
-    authDomain: "gzi-app.firebaseapp.com",
-    projectId: "gzi-app",
-    storageBucket: "gzi-app.firebasestorage.app",
-    messagingSenderId: "62939908860",
-    appId: "1:62939908860:web:5cc5fa90a9bdf2c7e92579",
-    measurementId: "G-4H05HRLEGZ"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth();
-
-  onAuthStateChanged(auth, (user) => {
-    if (!user) {
-      window.location.href = "login.html";
-    }
-  });
-</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Asupan Makan - G-Zi</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
-    html, body {
-      height: 100%;
+    body {
       margin: 0;
       padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #d4ff9d, #fffabe);
+      color: #004d1a;
       display: flex;
       flex-direction: column;
-      background: linear-gradient(to right, #d4ff9d, #fffabe);
-      font-family: 'Poppins', sans-serif;
-      color: #004d1a;
+      min-height: 100vh;
     }
-    header, footer {
+    header {
       background-color: #ffa94d;
       padding: 20px 40px;
       display: flex;
@@ -50,7 +27,6 @@
     }
     header h1 {
       font-size: 28px;
-      font-weight: 600;
       margin: 0;
     }
     nav a {
@@ -65,25 +41,13 @@
     }
     main {
       flex: 1;
-      padding: 30px;
+      padding: 40px 20px;
       max-width: 1100px;
       margin: auto;
-      position: relative;
-      z-index: 1;
     }
     h2, h3 {
       text-align: center;
       font-weight: 600;
-    }
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-    }
-        main {
-      flex: 1; /* membuat main mengambil sisa ruang vertikal */
     }
     .section {
       background: #fff;
@@ -103,6 +67,7 @@
       padding: 12px;
       border: 1px solid #ccc;
       border-radius: 10px;
+      font-size: 14px;
     }
     button {
       background: linear-gradient(to right, #00b73e, #009933);
@@ -112,6 +77,7 @@
       border-radius: 10px;
       cursor: pointer;
       transition: all 0.3s ease;
+      font-weight: bold;
     }
     button:hover {
       transform: translateY(-2px);
@@ -124,12 +90,6 @@
     }
     .result-list li:hover {
       background-color: #d8fcd8;
-    }
-    #hasilF1 ul {
-      columns: 2;
-      -webkit-columns: 2;
-      -moz-columns: 2;
-      padding-left: 20px;
     }
     .grid-2 {
       display: flex;
@@ -144,8 +104,6 @@
       width: 100%;
       border-collapse: collapse;
       margin-top: 10px;
-      table-layout: fixed;
-      word-wrap: break-word;
       font-size: 12px;
     }
     .table-data th, .table-data td {
@@ -156,16 +114,13 @@
     .table-data th {
       background-color: #eaffed;
     }
-    .fruit-deco {
-      position: absolute;
-      width: 80px;
-      opacity: 0.2;
-      z-index: 0;
+    footer {
+      background-color: #ffa94d;
+      text-align: center;
+      padding: 20px;
+      border-top: 3px solid #ffcc70;
+      font-size: 14px;
     }
-    .fruit-deco.top-left { top: 80px; left: 20px; }
-    .fruit-deco.top-right { top: 80px; right: 20px; }
-    .fruit-deco.bottom-left { bottom: 80px; left: 20px; }
-    .fruit-deco.bottom-right { bottom: 80px; right: 20px; }
   </style>
 </head>
 <body>
@@ -180,13 +135,8 @@
     </nav>
   </header>
 
-  <img src="https://cdn-icons-png.flaticon.com/512/135/135620.png" class="fruit-deco top-left" />
-  <img src="https://cdn-icons-png.flaticon.com/512/135/135651.png" class="fruit-deco top-right" />
-  <img src="https://cdn-icons-png.flaticon.com/512/135/135620.png" class="fruit-deco bottom-left" />
-  <img src="https://cdn-icons-png.flaticon.com/512/135/135651.png" class="fruit-deco bottom-right" />
-
   <main>
-    <h2>🥗 Perhitungan Asupan Makan 🥦</h2>
+    <h2>🥗 Perhitungan Asupan Makan</h2>
 
     <section class="section">
       <h3>1. Cek Gizi Bahan Makanan</h3>
@@ -218,16 +168,14 @@
   </main>
 
   <footer>
-     © 2025 G-Zi | All rights reserved. | Make For You | Data: Kemenkes RI TKPI 2020 | Instagram: @gzi.id
+    © 2025 G-Zi | All rights reserved. | Make For You | Data: Kemenkes RI TKPI 2020
   </footer>
-</body>
-</html>
-
 
   <script>
     let DaftarBahanMakanan = [];
     let daftarMakanan = [];
 
+    // Ambil data JSON
     fetch("DaftarBahanMakanan.json")
       .then(res => res.json())
       .then(data => DaftarBahanMakanan = data);
@@ -309,84 +257,29 @@
     }
 
     function unduhPDF() {
-  const hasilF2 = document.getElementById("hasilF2");
+      const hasilF2 = document.getElementById("hasilF2");
+      if (!hasilF2.innerHTML.trim()) {
+        alert("Tidak ada data untuk dicetak.");
+        return;
+      }
+      const clone = hasilF2.cloneNode(true);
+      const wrapper = document.createElement("div");
 
-  if (!hasilF2.innerHTML.trim()) {
-    alert("Tidak ada data untuk dicetak.");
-    return;
-  }
+      wrapper.innerHTML = `
+        <h2 style="text-align:center; color:#00b73e;">🍏 G-Zi - Laporan Asupan Gizi 🍊</h2>
+        <hr>
+      `;
+      wrapper.appendChild(clone);
 
-  const clone = hasilF2.cloneNode(true);
-  const wrapper = document.createElement("div");
-
-  const judul = document.createElement("div");
-  judul.innerHTML = `
-    <h2 style="text-align:center; color:#00b73e; font-size:18px;">🍏 G-Zi - Laporan Asupan Gizi 🍊</h2>
-    <hr style="border: 1px solid #ffa94d; margin-bottom: 15px;">
-  `;
-  wrapper.appendChild(judul);
-  wrapper.appendChild(clone);
-
-  const footer = document.createElement("div");
-  footer.innerHTML = `
-    <hr style="margin-top: 30px;">
-    <p style="text-align:center; font-size:11px; color:#555;">
-      <strong>G-Zi | Laporan Asupan Gizi</strong><br>
-      Dicetak: ${new Date().toLocaleString("id-ID")}<br>
-      Sumber: TKPI Kemenkes RI 2020<br><br>
-      Terima kasih telah menggunakan website ini 🙏🍎🥦
-    </p>
-  `;
-  wrapper.appendChild(footer);
-
-  // Gaya PDF (tabel compact dan tidak terlalu lebar)
-  const style = document.createElement("style");
-  style.textContent = `
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 10px;
-      table-layout: fixed;
-      word-wrap: break-word;
+      html2pdf().from(wrapper).set({
+        margin: [10, 10, 10, 10],
+        filename: `GZi_AsupanGizi_${new Date().toLocaleDateString("id-ID")}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      }).save();
     }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 4px 6px;
-      text-align: left;
-    }
-    th {
-      background-color: #eaffed;
-      color: #004d1a;
-    }
-    h2 {
-      margin-bottom: 8px;
-    }
-  `;
-  wrapper.appendChild(style);
-
-  // Unduh sebagai PDF
-  html2pdf().from(wrapper).set({
-    margin: [10, 10, 10, 10],
-    filename: `GZi_AsupanGizi_${new Date().toLocaleDateString("id-ID")}.pdf`,
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2, useCORS: true },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-  }).save();
-}
-    
-  <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-  const firebaseConfig = { /* config kamu */ };
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth();
-
-  onAuthStateChanged(auth, user => {
-    if (!user) {
-      window.location.href = "login.html"; // jika belum login, redirect
-    }
-  });
-</script>
+  </script>
 </body>
 </html>
+

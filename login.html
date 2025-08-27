@@ -1,1 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🍏 G-Zi - Beranda</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #d4ff9d, #fffabe);
+      color: #004d1a;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      background-color: #ffa94d;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid #ffcc70;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    header h1 {
+      font-size: 28px;
+      font-weight: 600;
+      margin: 0;
+    }
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #004d1a;
+    }
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+      text-align: center;
+      position: relative;
+    }
+    main h2 {
+      font-size: 36px;
+      margin-bottom: 15px;
+    }
+    main p {
+      font-size: 18px;
+      max-width: 600px;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+    }
+    .btn {
+      background: linear-gradient(to right, #00b73e, #009933);
+      color: white;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    }
+    footer {
+      background-color: #ffa94d;
+      text-align: center;
+      padding: 20px;
+      border-top: 3px solid #ffcc70;
+      font-size: 14px;
+    }
+    .fruit-deco {
+      position: absolute;
+      width: 100px;
+      opacity: 0.2;
+      z-index: 0;
+    }
+    .top-left { top: 80px; left: 20px; }
+    .top-right { top: 80px; right: 20px; }
+    .bottom-left { bottom: 80px; left: 20px; }
+    .bottom-right { bottom: 80px; right: 20px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🍏 G-Zi</h1>
+    <nav>
+      <a href="index.html">Beranda</a>
+      <a href="imt.html">Skrining</a>
+      <a href="kebutuhankalori.html">Kebutuhan Kalori</a>
+      <a href="perhitunganasupanmakan.html">Perhitungan Asupan Makan</a>
+      <a href="#">Artikel</a>
+    </nav>
+  </header>
+
+  <!-- Dekorasi buah -->
+  <img src="https://cdn-icons-png.flaticon.com/512/135/135620.png" class="fruit-deco top-left" />
+  <img src="https://cdn-icons-png.flaticon.com/512/135/135651.png" class="fruit-deco top-right" />
+  <img src="https://cdn-icons-png.flaticon.com/512/135/135620.png" class="fruit-deco bottom-left" />
+  <img src="https://cdn-icons-png.flaticon.com/512/135/135651.png" class="fruit-deco bottom-right" />
+
+  <main>
+    <h2>Selamat Datang di G-Zi 🍎🥦</h2>
+    <p>
+      G-Zi adalah platform interaktif untuk membantu Anda menghitung kebutuhan kalori, 
+      skrining gizi, dan memantau asupan makan sehari-hari berdasarkan data 
+      <strong>Kemenkes RI TKPI 2020</strong>.
+    </p>
+    <div class="btn-group">
+      <a href="imt.html" class="btn">📊 Skrining IMT</a>
+      <a href="kebutuhankalori.html" class="btn">🔥 Kebutuhan Kalori</a>
+      <a href="perhitunganasupanmakan.html" class="btn">🥗 Asupan Makan</a>
+      <a href="#" class="btn">📚 Artikel Gizi</a>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 G-Zi | All rights reserved. | Make For You | Data: Kemenkes RI TKPI 2020 | Instagram: @gzi.id
+  </footer>
+</body>
+</html>
 

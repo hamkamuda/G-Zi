@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-
 <meta charset="UTF-8">
 <title>Perhitungan Asupan Makan</title>
 
@@ -10,31 +8,57 @@
 
 body{
 font-family:Arial;
-background:#f5f7fb;
-margin:0;
-padding:30px;
+background:#f4f6f8;
+margin:40px;
+}
+
+h1{
+color:#2c3e50;
 }
 
 .container{
-max-width:1100px;
-margin:auto;
 background:white;
-padding:25px;
+padding:20px;
 border-radius:10px;
-box-shadow:0 0 10px rgba(0,0,0,0.08);
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+max-width:900px;
 }
 
-h2{
-margin-top:0;
+.search-container{
+position:relative;
+width:300px;
+}
+
+#searchMakanan{
+width:100%;
+padding:8px;
+}
+
+#hasilPencarian{
+position:absolute;
+background:white;
+border:1px solid #ccc;
+width:100%;
+max-height:200px;
+overflow-y:auto;
+}
+
+.itemMakanan{
+padding:8px;
+cursor:pointer;
+}
+
+.itemMakanan:hover{
+background:#f2f2f2;
 }
 
 input,button{
 padding:8px;
-margin:5px;
+margin-top:5px;
 }
 
 button{
-background:#2c7be5;
+background:#3498db;
 color:white;
 border:none;
 border-radius:5px;
@@ -42,124 +66,256 @@ cursor:pointer;
 }
 
 button:hover{
-background:#1a5fd0;
-}
-
-#searchMakanan{
-width:300px;
-}
-
-#hasilPencarian{
-border:1px solid #ddd;
-max-height:200px;
-overflow-y:auto;
-width:300px;
-background:white;
-}
-
-.itemMakanan{
-padding:6px;
-cursor:pointer;
-}
-
-.itemMakanan:hover{
-background:#f0f3f8;
+background:#2980b9;
 }
 
 table{
-border-collapse:collapse;
 width:100%;
+border-collapse:collapse;
 margin-top:20px;
 }
 
 th,td{
-border:1px solid #ddd;
+border:1px solid #ccc;
 padding:8px;
 text-align:center;
 }
 
 th{
-background:#f3f6fb;
+background:#3498db;
+color:white;
 }
 
-.totalBox{
-background:#f3f6fb;
-padding:15px;
+.total{
 margin-top:20px;
-border-radius:8px;
+background:#ecf0f1;
+padding:10px;
+border-radius:5px;
 }
 
 </style>
-
 </head>
 
 <body>
 
 <div class="container">
 
-<h2>Perhitungan Asupan Makan</h2>
+<h1>Perhitungan Asupan Makan</h1>
 
-<h3>Cari Makanan</h3>
+<div class="search-container">
 
 <input type="text" id="searchMakanan" placeholder="Cari makanan...">
 
 <div id="hasilPencarian"></div>
 
+</div>
+
 <input type="number" id="beratMakanan" placeholder="Berat (gram)">
 
 <button onclick="tambahMakanan()">Tambah</button>
 
-<h3>Tambah Makanan Manual</h3>
-
-<input id="namaManual" placeholder="Nama makanan">
-<input id="beratManual" placeholder="Berat (g)">
-
-<input id="energiManual" placeholder="Energi">
-<input id="proteinManual" placeholder="Protein">
-<input id="lemakManual" placeholder="Lemak">
-<input id="karboManual" placeholder="Karbohidrat">
-<input id="kalsiumManual" placeholder="Kalsium">
-<input id="zatbesiManual" placeholder="Zat Besi">
-
-<button onclick="tambahManual()">Tambah Manual</button>
-
-<h3>Daftar Makanan</h3>
-
-<table id="tabelMakanan">
+<table>
 
 <thead>
 
 <tr>
-
-<th>Nama</th>
+<th>Makanan</th>
 <th>Berat</th>
 <th>Energi</th>
 <th>Protein</th>
 <th>Lemak</th>
-<th>Karbo</th>
-<th>Kalsium</th>
-<th>Zat Besi</th>
+<th>Karbohidrat</th>
 <th>Aksi</th>
-
 </tr>
 
 </thead>
 
-<tbody></tbody>
+<tbody id="tabelMakanan"></tbody>
 
 </table>
 
-<div class="totalBox">
+<div class="total">
 
-<h3>Total Zat Gizi</h3>
+<b>Total Zat Gizi</b><br>
 
-<div id="totalGizi"></div>
+Energi: <span id="totalEnergi">0</span> kcal<br>
+Protein: <span id="totalProtein">0</span> g<br>
+Lemak: <span id="totalLemak">0</span> g<br>
+Karbohidrat: <span id="totalKarbo">0</span> g
 
 </div>
 
 </div>
 
-<script src="asupanmakan.js"></script>
+<script>
+
+let databaseMakanan=[
+{nama:"Nasi putih",energi:175,protein:4,lemak:0.2,karbo:40},
+{nama:"Ayam goreng",energi:260,protein:27,lemak:15,karbo:0},
+{nama:"Telur rebus",energi:155,protein:13,lemak:11,karbo:1.1},
+{nama:"Tempe goreng",energi:192,protein:20,lemak:11,karbo:9},
+{nama:"Tahu goreng",energi:271,protein:17,lemak:20,karbo:8},
+{nama:"Mie goreng",energi:214,protein:7,lemak:10,karbo:29},
+{nama:"Roti putih",energi:265,protein:9,lemak:3,karbo:49},
+{nama:"Susu sapi",energi:61,protein:3.2,lemak:3.3,karbo:5},
+{nama:"Apel",energi:52,protein:0.3,lemak:0.2,karbo:14},
+{nama:"Pisang",energi:96,protein:1.3,lemak:0.3,karbo:27}
+]
+
+let makananTerpilih=null
+let daftarMakanan=[]
+
+const input=document.getElementById("searchMakanan")
+const hasil=document.getElementById("hasilPencarian")
+
+input.addEventListener("input",function(){
+
+let keyword=this.value.toLowerCase()
+
+hasil.innerHTML=""
+
+if(keyword.length<1)return
+
+let list=databaseMakanan.filter(m=>
+m.nama.toLowerCase().includes(keyword)
+)
+
+list.slice(0,10).forEach(m=>{
+
+let div=document.createElement("div")
+
+div.className="itemMakanan"
+
+div.innerText=m.nama
+
+div.onclick=function(){
+
+makananTerpilih=m
+input.value=m.nama
+hasil.innerHTML=""
+
+}
+
+hasil.appendChild(div)
+
+})
+
+})
+
+function tambahMakanan(){
+
+if(!makananTerpilih)return alert("Pilih makanan")
+
+let berat=parseFloat(document.getElementById("beratMakanan").value)
+
+if(!berat)return alert("Masukkan berat")
+
+let faktor=berat/100
+
+let data={
+nama:makananTerpilih.nama,
+berat:berat,
+energi:(makananTerpilih.energi*faktor),
+protein:(makananTerpilih.protein*faktor),
+lemak:(makananTerpilih.lemak*faktor),
+karbo:(makananTerpilih.karbo*faktor)
+}
+
+daftarMakanan.push(data)
+
+tampilkanTabel()
+
+}
+
+function tampilkanTabel(){
+
+let tbody=document.getElementById("tabelMakanan")
+
+tbody.innerHTML=""
+
+daftarMakanan.forEach((m,i)=>{
+
+let row=`<tr>
+
+<td>${m.nama}</td>
+<td>${m.berat}</td>
+<td>${m.energi.toFixed(1)}</td>
+<td>${m.protein.toFixed(1)}</td>
+<td>${m.lemak.toFixed(1)}</td>
+<td>${m.karbo.toFixed(1)}</td>
+
+<td>
+<button onclick="editMakanan(${i})">Edit</button>
+<button onclick="hapusMakanan(${i})">Hapus</button>
+</td>
+
+</tr>`
+
+tbody.innerHTML+=row
+
+})
+
+hitungTotal()
+
+}
+
+function hapusMakanan(i){
+
+daftarMakanan.splice(i,1)
+
+tampilkanTabel()
+
+}
+
+function editMakanan(i){
+
+let beratBaru=prompt("Masukkan berat baru",daftarMakanan[i].berat)
+
+if(!beratBaru)return
+
+let makanan=databaseMakanan.find(m=>m.nama==daftarMakanan[i].nama)
+
+let faktor=beratBaru/100
+
+daftarMakanan[i]={
+
+nama:makanan.nama,
+berat:beratBaru,
+energi:(makanan.energi*faktor),
+protein:(makanan.protein*faktor),
+lemak:(makanan.lemak*faktor),
+karbo:(makanan.karbo*faktor)
+
+}
+
+tampilkanTabel()
+
+}
+
+function hitungTotal(){
+
+let totalEnergi=0
+let totalProtein=0
+let totalLemak=0
+let totalKarbo=0
+
+daftarMakanan.forEach(m=>{
+
+totalEnergi+=m.energi
+totalProtein+=m.protein
+totalLemak+=m.lemak
+totalKarbo+=m.karbo
+
+})
+
+document.getElementById("totalEnergi").innerText=totalEnergi.toFixed(1)
+document.getElementById("totalProtein").innerText=totalProtein.toFixed(1)
+document.getElementById("totalLemak").innerText=totalLemak.toFixed(1)
+document.getElementById("totalKarbo").innerText=totalKarbo.toFixed(1)
+
+}
+
+</script>
 
 </body>
 </html>

@@ -1,18 +1,69 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
+
 <meta charset="UTF-8">
 <title>Perhitungan Asupan Makan</title>
 
 <style>
+
 body{
 font-family:Arial;
-margin:20px;
+background:#f5f7fb;
+margin:0;
+padding:30px;
 }
 
-input,select,button{
-padding:6px;
+.container{
+max-width:1100px;
+margin:auto;
+background:white;
+padding:25px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.08);
+}
+
+h2{
+margin-top:0;
+}
+
+input,button{
+padding:8px;
 margin:5px;
+}
+
+button{
+background:#2c7be5;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+button:hover{
+background:#1a5fd0;
+}
+
+#searchMakanan{
+width:300px;
+}
+
+#hasilPencarian{
+border:1px solid #ddd;
+max-height:200px;
+overflow-y:auto;
+width:300px;
+background:white;
+}
+
+.itemMakanan{
+padding:6px;
+cursor:pointer;
+}
+
+.itemMakanan:hover{
+background:#f0f3f8;
 }
 
 table{
@@ -22,26 +73,40 @@ margin-top:20px;
 }
 
 th,td{
-border:1px solid #ccc;
-padding:6px;
+border:1px solid #ddd;
+padding:8px;
 text-align:center;
 }
 
 th{
-background:#f2f2f2;
+background:#f3f6fb;
 }
+
+.totalBox{
+background:#f3f6fb;
+padding:15px;
+margin-top:20px;
+border-radius:8px;
+}
+
 </style>
 
 </head>
 
 <body>
 
+<div class="container">
+
 <h2>Perhitungan Asupan Makan</h2>
 
-<h3>Tambah dari Database</h3>
+<h3>Cari Makanan</h3>
 
-<select id="pilihMakanan"></select>
+<input type="text" id="searchMakanan" placeholder="Cari makanan...">
+
+<div id="hasilPencarian"></div>
+
 <input type="number" id="beratMakanan" placeholder="Berat (gram)">
+
 <button onclick="tambahMakanan()">Tambah</button>
 
 <h3>Tambah Makanan Manual</h3>
@@ -61,8 +126,11 @@ background:#f2f2f2;
 <h3>Daftar Makanan</h3>
 
 <table id="tabelMakanan">
+
 <thead>
+
 <tr>
+
 <th>Nama</th>
 <th>Berat</th>
 <th>Energi</th>
@@ -72,14 +140,24 @@ background:#f2f2f2;
 <th>Kalsium</th>
 <th>Zat Besi</th>
 <th>Aksi</th>
+
 </tr>
+
 </thead>
+
 <tbody></tbody>
+
 </table>
+
+<div class="totalBox">
 
 <h3>Total Zat Gizi</h3>
 
 <div id="totalGizi"></div>
+
+</div>
+
+</div>
 
 <script src="asupanmakan.js"></script>
 

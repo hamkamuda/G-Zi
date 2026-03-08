@@ -8,7 +8,7 @@
 
 body{
 font-family:Arial;
-background:#f4f6f8;
+background:#f5f6fa;
 margin:40px;
 }
 
@@ -45,7 +45,7 @@ cursor:pointer;
 }
 
 .itemMakanan:hover{
-background:#f2f2f2;
+background:#f0f0f0;
 }
 
 table{
@@ -67,7 +67,7 @@ color:white;
 }
 
 button{
-padding:6px;
+padding:5px;
 cursor:pointer;
 }
 
@@ -79,6 +79,7 @@ border-radius:5px;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -88,8 +89,11 @@ border-radius:5px;
 <h2>Perhitungan Asupan Makan</h2>
 
 <div class="search-container">
+
 <input type="text" id="searchMakanan" placeholder="Cari makanan...">
+
 <div id="hasilPencarian"></div>
+
 </div>
 
 <input type="number" id="beratMakanan" placeholder="Berat (gram)">
@@ -101,16 +105,16 @@ border-radius:5px;
 <thead>
 
 <tr>
-<th>Makanan</th>
-<th>Berat</th>
+<th>Nama Bahan</th>
+<th>Berat (g)</th>
 <th>Energi</th>
 <th>Protein</th>
 <th>Lemak</th>
 <th>Karbo</th>
 <th>Serat</th>
-<th>K</th>
-<th>P</th>
-<th>Na</th>
+<th>Kalium</th>
+<th>Fosfor</th>
+<th>Natrium</th>
 <th>Vit A</th>
 <th>B1</th>
 <th>B2</th>
@@ -126,20 +130,20 @@ border-radius:5px;
 
 <div class="total">
 
-<b>Total Zat Gizi</b><br><br>
+<h3>Total Zat Gizi</h3>
 
-Energi: <span id="totalEnergi">0</span><br>
-Protein: <span id="totalProtein">0</span><br>
-Lemak: <span id="totalLemak">0</span><br>
-Karbo: <span id="totalKarbo">0</span><br>
-Serat: <span id="totalSerat">0</span><br>
-Kalium: <span id="totalKalium">0</span><br>
-Fosfor: <span id="totalFosfor">0</span><br>
-Natrium: <span id="totalNatrium">0</span><br>
-Vit A: <span id="totalVitA">0</span><br>
-Thiamin: <span id="totalB1">0</span><br>
-Riboflavin: <span id="totalB2">0</span><br>
-Vit C: <span id="totalVitC">0</span>
+Energi : <span id="totalEnergi">0</span> kcal<br>
+Protein : <span id="totalProtein">0</span> g<br>
+Lemak : <span id="totalLemak">0</span> g<br>
+Karbo : <span id="totalKarbo">0</span> g<br>
+Serat : <span id="totalSerat">0</span> g<br>
+Kalium : <span id="totalKalium">0</span> mg<br>
+Fosfor : <span id="totalFosfor">0</span> mg<br>
+Natrium : <span id="totalNatrium">0</span> mg<br>
+Vit A : <span id="totalVitA">0</span> mcg<br>
+Thiamin : <span id="totalB1">0</span> mg<br>
+Riboflavin : <span id="totalB2">0</span> mg<br>
+Vit C : <span id="totalVitC">0</span> mg
 
 </div>
 

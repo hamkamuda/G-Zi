@@ -6,6 +6,21 @@
       .then(res => res.json())
       .then(data => DaftarBahanMakanan = data);
 
+let daftarZatGizi = [];
+
+fetch("DaftarBahanMakanan.json")
+.then(res => res.json())
+.then(data => {
+DaftarBahanMakanan = data;
+
+daftarZatGizi = Object.keys(data[0]).filter(
+k => k !== "Nama Bahan" && k !== "Berat Dapat Dimakan (%)"
+);
+
+buatFormManual();
+buatTabelTotal();
+});
+
     function tampilkanOpsiBahan() {
       const input = document.getElementById("bahanF1").value.toLowerCase();
       const berat = parseFloat(document.getElementById("beratF1").value) || 100;

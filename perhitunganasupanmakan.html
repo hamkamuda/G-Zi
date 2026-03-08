@@ -164,27 +164,33 @@
           <div id="hasilF2" class="table-data"></div>
         </div>
       </div>
+
+      <h3>Tambah Makanan Manual</h3>
+
+<div class="form-row">
+<input type="text" id="manualNama" placeholder="Nama makanan">
+<input type="number" id="manualBerat" placeholder="Berat (gram)">
+</div>
+
+<div id="formManualGizi"></div>
+
+<button onclick="tambahManual()">Tambahkan Makanan Manual</button>
     </section>
 
     <h3>Total Asupan Zat Gizi</h3>
 
-<table id="hasilGizi">
+<div class="table-data">
+<table id="tabelTotalGizi">
+<thead>
 <tr>
 <th>Zat Gizi</th>
 <th>Total</th>
 </tr>
-
-<tr><td>Energi</td><td id="totalEnergi">0</td></tr>
-<tr><td>Protein</td><td id="totalProtein">0</td></tr>
-<tr><td>Lemak</td><td id="totalLemak">0</td></tr>
-<tr><td>Karbohidrat</td><td id="totalKarbo">0</td></tr>
-
-<tr><td>Serat</td><td id="totalSerat">0</td></tr>
-<tr><td>Kalsium</td><td id="totalKalsium">0</td></tr>
-<tr><td>Zat Besi</td><td id="totalBesi">0</td></tr>
-<tr><td>Vitamin A</td><td id="totalVitA">0</td></tr>
-<tr><td>Vitamin C</td><td id="totalVitC">0</td></tr>
-<tr><td>Natrium</td><td id="totalNatrium">0</td></tr>
+</thead>
+<tbody id="bodyTotalGizi">
+</tbody>
+</table>
+</div>
 
 </table>
   </main>

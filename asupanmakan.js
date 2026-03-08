@@ -84,6 +84,115 @@ buatTabelTotal();
         grup[item.waktu].push(item);
       });
 
+     function buatFormManual(){
+
+let html="";
+
+daftarZatGizi.forEach(z=>{
+html+=`
+<div class="form-row">
+<label>${z}</label>
+<input type="number" id="manual_${z}" placeholder="${z}">
+</div>
+`;
+});
+
+document.getElementById("formManualGizi").innerHTML=html;
+
+}
+     function tambahManual(){
+
+const nama=document.getElementById("manualNama").value;
+const berat=parseFloat(document.getElementById("manualBerat").value);
+
+if(!nama || !berat){
+alert("Isi nama dan berat makanan");
+return;
+}
+
+let makanan={
+nama:nama,
+berat:berat,
+waktu:"Manual"
+};
+
+daftarZatGizi.forEach(z=>{
+let val=parseFloat(document.getElementById(`manual_${z}`).value)||0;
+makanan[z]=val*(berat/100);
+});
+
+daftarMakanan.push(makanan);
+
+tampilkanTabelKalori();
+hitungTotalGizi();
+
+}
+
+     function buatTabelTotal(){
+
+let html="";
+
+daftarZatGizi.forEach(z=>{
+html+=`
+<tr>
+<td>${z}</td>
+<td id="total_${z}">0</td>
+</tr>
+`;
+});
+
+document.getElementById("bodyTotalGizi").innerHTML=html;
+
+}
+
+     function hitungTotalGizi(){
+
+let total={};
+
+daftarZatGizi.forEach(z=>{
+total[z]=0;
+});
+
+daftarMakanan.forEach(m=>{
+
+daftarZatGizi.forEach(z=>{
+total[z]+=m[z]||0;
+});
+
+});
+
+daftarZatGizi.forEach(z=>{
+document.getElementById(`total_${z}`).innerText=
+total[z].toFixed(2);
+});
+
+}
+
+     function hitungTotalGizi(){
+
+let total={};
+
+daftarZatGizi.forEach(z=>{
+total[z]=0;
+});
+
+daftarMakanan.forEach(m=>{
+
+daftarZatGizi.forEach(z=>{
+total[z]+=m[z]||0;
+});
+
+});
+
+daftarZatGizi.forEach(z=>{
+document.getElementById(`total_${z}`).innerText=
+total[z].toFixed(2);
+});
+
+}
+
+    hitungTotalGizi();
+
       let html = "";
       for (const waktu in grup) {
         let total = 0;

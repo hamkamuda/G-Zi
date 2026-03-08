@@ -1,210 +1,203 @@
- <script>
-    let DaftarBahanMakanan = [];
-    let daftarMakanan = [];
-
-    fetch("DaftarBahanMakanan.json")
-      .then(res => res.json())
-      .then(data => DaftarBahanMakanan = data);
-
-let daftarZatGizi = [];
+let DaftarBahanMakanan=[]
+let daftarMakanan=[]
+let daftarZatGizi=[]
 
 fetch("DaftarBahanMakanan.json")
-.then(res => res.json())
-.then(data => {
-DaftarBahanMakanan = data;
+.then(res=>res.json())
+.then(data=>{
 
-daftarZatGizi = Object.keys(data[0]).filter(
-k => k !== "Nama Bahan" && k !== "Berat Dapat Dimakan (%)"
-);
+DaftarBahanMakanan=data
 
-buatFormManual();
-buatTabelTotal();
-});
+daftarZatGizi=Object.keys(data[0]).filter(
+k=>k!=="Nama Bahan"
+)
 
-    function tampilkanOpsiBahan() {
-      const input = document.getElementById("bahanF1").value.toLowerCase();
-      const berat = parseFloat(document.getElementById("beratF1").value) || 100;
-      const hasil = DaftarBahanMakanan.filter(item => item["Nama Bahan"].toLowerCase().includes(input));
-      const list = document.getElementById("opsiBahan");
-      list.innerHTML = hasil.map(h => <li onclick="pilihBahan('${h["Nama Bahan"].replace(/'/g, "\'")}', ${berat})">${h["Nama Bahan"]}</li>).join("");
-    }
+buatFormManual()
+buatTabelTotal()
 
-    function pilihBahan(nama, berat) {
-      const hasil = DaftarBahanMakanan.find(item => item["Nama Bahan"] === nama);
-      const f = berat / 100;
-      const satuan = {
-        "Air (ml)": "ml", "Energi (Kkal)": "kkal", "Protein (g)": "g", "Lemak (g)": "g", "Karbohidrat (g)": "g", "Serat (g)": "g", "Abu (g)": "g",
-        "Kalsium (mg)": "mg", "Fosfor (mg)": "mg", "Besi (mg)": "mg", "Natrium (mg)": "mg", "Kalium (mg)": "mg",
-        "Tembaga (mg)": "mg", "Seng (mg)": "mg", "Retinol (mcg)": "mcg", "B-Kar (mcg)": "mcg", "Kar-Total (mcg)": "mcg",
-        "Thiamin (mg)": "mg", "Riboflavin (mg)": "mg", "Niasin (mg)": "mg", "Vit-C (mg)": "mg", "Berat Dapat Dimakan (%)": "%"
-      };
-      let detail = <h4>${nama} (${berat} gram)</h4><ul>;
-      for (const key in hasil) {
-        if (key !== "Nama Bahan") {
-          const nilai = (parseFloat(hasil[key]) * f).toFixed(2);
-          detail += <li>${key}: ${nilai} ${satuan[key] || ''}</li>;
-        }
-      }
-      detail += '</ul>';
-      document.getElementById("hasilF1").innerHTML = detail;
-      document.getElementById("opsiBahan").innerHTML = "";
-    }
+})
 
-    function cariPilihanKalori() {
-      const input = document.getElementById("inputCari").value.toLowerCase();
-      const hasil = DaftarBahanMakanan.filter(item => item["Nama Bahan"].toLowerCase().includes(input));
-      const list = document.getElementById("pilihanKalori");
-      list.innerHTML = hasil.map(h => <li onclick="setMakananInput('${h["Nama Bahan"].replace(/'/g, "\'")}')">${h["Nama Bahan"]}</li>).join("");
-    }
+document.getElementById("inputCari").addEventListener("input",cariMakanan)
 
-    function setMakananInput(nama) {
-      document.getElementById("inputCari").value = nama;
-      document.getElementById("pilihanKalori").innerHTML = "";
-    }
+function cariMakanan(){
 
-    function tambahMakananKeList() {
-      const nama = document.getElementById("inputCari").value;
-      const berat = parseFloat(document.getElementById("beratKalori").value);
-      const waktu = document.getElementById("waktu").value;
-      const bahan = DaftarBahanMakanan.find(item => item["Nama Bahan"] === nama);
-      if (!bahan || isNaN(berat)) return alert("Data tidak valid atau belum dipilih.");
-      const faktor = berat / 100;
-      const energi = parseFloat(bahan["Energi (Kkal)"] || 0) * faktor;
-      const protein = parseFloat(bahan["Protein (g)"] || 0) * faktor;
-      const lemak = parseFloat(bahan["Lemak (g)"] || 0) * faktor;
-      const karbo = parseFloat(bahan["Karbohidrat (g)"] || 0) * faktor;
-      daftarMakanan.push({ nama, berat, energi, protein, lemak, karbo, waktu });
-      tampilkanTabelKalori();
-    }
+let input=document.getElementById("inputCari").value.toLowerCase()
 
-    function tampilkanTabelKalori() {
-      const grup = {};
-      daftarMakanan.forEach(item => {
-        if (!grup[item.waktu]) grup[item.waktu] = [];
-        grup[item.waktu].push(item);
-      });
+let hasil=DaftarBahanMakanan.filter(b=>
+b["Nama Bahan"].toLowerCase().includes(input)
+).slice(0,10)
 
-     function buatFormManual(){
+let html=""
 
-let html="";
+hasil.forEach(h=>{
 
-daftarZatGizi.forEach(z=>{
-html+=`
-<div class="form-row">
-<label>${z}</label>
-<input type="number" id="manual_${z}" placeholder="${z}">
-</div>
-`;
-});
+html+=`<li onclick="pilihMakanan('${h["Nama Bahan"]}')">${h["Nama Bahan"]}</li>`
 
-document.getElementById("formManualGizi").innerHTML=html;
+})
+
+document.getElementById("hasilCari").innerHTML=html
 
 }
-     function tambahManual(){
 
-const nama=document.getElementById("manualNama").value;
-const berat=parseFloat(document.getElementById("manualBerat").value);
+function pilihMakanan(nama){
 
-if(!nama || !berat){
-alert("Isi nama dan berat makanan");
-return;
+document.getElementById("inputCari").value=nama
+document.getElementById("hasilCari").innerHTML=""
+
 }
+
+function tambahMakananDatabase(){
+
+let nama=document.getElementById("inputCari").value
+let berat=parseFloat(document.getElementById("beratMakan").value)
+let waktu=document.getElementById("waktuMakan").value
+
+let bahan=DaftarBahanMakanan.find(
+b=>b["Nama Bahan"]===nama
+)
+
+if(!bahan||!berat)return alert("Data belum lengkap")
+
+let f=berat/100
 
 let makanan={
 nama:nama,
 berat:berat,
-waktu:"Manual"
-};
+waktu:waktu
+}
 
 daftarZatGizi.forEach(z=>{
-let val=parseFloat(document.getElementById(`manual_${z}`).value)||0;
-makanan[z]=val*(berat/100);
-});
 
-daftarMakanan.push(makanan);
+makanan[z]=(parseFloat(bahan[z])||0)*f
 
-tampilkanTabelKalori();
-hitungTotalGizi();
+})
+
+daftarMakanan.push(makanan)
+
+render()
 
 }
 
-     function buatTabelTotal(){
+function tambahManual(){
 
-let html="";
+let nama=document.getElementById("manualNama").value
+let berat=parseFloat(document.getElementById("manualBerat").value)
+
+if(!nama||!berat)return alert("Isi nama dan berat")
+
+let makanan={
+nama:nama,
+berat:berat,
+waktu:"manual"
+}
 
 daftarZatGizi.forEach(z=>{
+
+let val=parseFloat(document.getElementById("manual_"+z).value)||0
+makanan[z]=val*(berat/100)
+
+})
+
+daftarMakanan.push(makanan)
+
+render()
+
+}
+
+function buatFormManual(){
+
+let html=""
+
+daftarZatGizi.forEach(z=>{
+
+html+=`
+<div class="form-row">
+<label style="width:200px">${z}</label>
+<input type="number" id="manual_${z}" placeholder="${z}">
+</div>
+`
+
+})
+
+document.getElementById("formManualGizi").innerHTML=html
+
+}
+
+function render(){
+
+renderTabel()
+hitungTotal()
+
+}
+
+function renderTabel(){
+
+let html=`
+<table>
+<tr>
+<th>Nama</th>
+<th>Berat</th>
+<th>Waktu</th>
+</tr>
+`
+
+daftarMakanan.forEach(m=>{
+
+html+=`
+<tr>
+<td>${m.nama}</td>
+<td>${m.berat} g</td>
+<td>${m.waktu}</td>
+</tr>
+`
+
+})
+
+html+="</table>"
+
+document.getElementById("tabelMakanan").innerHTML=html
+
+}
+
+function buatTabelTotal(){
+
+let html=""
+
+daftarZatGizi.forEach(z=>{
+
 html+=`
 <tr>
 <td>${z}</td>
 <td id="total_${z}">0</td>
 </tr>
-`;
-});
+`
 
-document.getElementById("bodyTotalGizi").innerHTML=html;
+})
+
+document.getElementById("bodyTotalGizi").innerHTML=html
 
 }
 
-     function hitungTotalGizi(){
+function hitungTotal(){
 
-let total={};
+let total={}
 
-daftarZatGizi.forEach(z=>{
-total[z]=0;
-});
+daftarZatGizi.forEach(z=>total[z]=0)
 
 daftarMakanan.forEach(m=>{
 
 daftarZatGizi.forEach(z=>{
-total[z]+=m[z]||0;
-});
 
-});
+total[z]+=m[z]||0
+
+})
+
+})
 
 daftarZatGizi.forEach(z=>{
-document.getElementById(`total_${z}`).innerText=
-total[z].toFixed(2);
-});
+
+document.getElementById("total_"+z).innerText=total[z].toFixed(2)
+
+})
 
 }
-
-     function hitungTotalGizi(){
-
-let total={};
-
-daftarZatGizi.forEach(z=>{
-total[z]=0;
-});
-
-daftarMakanan.forEach(m=>{
-
-daftarZatGizi.forEach(z=>{
-total[z]+=m[z]||0;
-});
-
-});
-
-daftarZatGizi.forEach(z=>{
-document.getElementById(`total_${z}`).innerText=
-total[z].toFixed(2);
-});
-
-}
-
-    hitungTotalGizi();
-
-      let html = "";
-      for (const waktu in grup) {
-        let total = 0;
-        html += <h4>${waktu}</h4><table><tr><th>Nama</th><th>Berat</th><th>Energi</th><th>Protein</th><th>Lemak</th><th>Karbohidrat</th></tr>;
-        grup[waktu].forEach(i => {
-          html += <tr><td>${i.nama}</td><td>${i.berat} g</td><td>${i.energi.toFixed(1)} kkal</td><td>${i.protein.toFixed(1)} g</td><td>${i.lemak.toFixed(1)} g</td><td>${i.karbo.toFixed(1)} g</td></tr>;
-          total += i.energi;
-        });
-        html += <tr><td colspan="5"><strong>Total Kalori</strong></td><td><strong>${total.toFixed(1)} kkal</strong></td></tr></table>;
-      }
-      document.getElementById("hasilF2").innerHTML = html;
-    }
-  </script>
-</body>
-</html>

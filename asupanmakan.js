@@ -1,10 +1,9 @@
 let databaseMakanan = []
 let daftarMakan = []
-let editIndex = null
 
 fetch("DaftarBahanMakanan.json")
-.then(res=>res.json())
-.then(data=>{
+.then(res => res.json())
+.then(data => {
 
 databaseMakanan = data
 
@@ -13,8 +12,9 @@ let select = document.getElementById("pilihMakanan")
 data.forEach((m,i)=>{
 
 let option = document.createElement("option")
+
 option.value = i
-option.textContent = m.nama
+option.textContent = m["Nama Bahan"]
 
 select.appendChild(option)
 
@@ -27,40 +27,45 @@ function tambahMakanan(){
 let index = document.getElementById("pilihMakanan").value
 let berat = parseFloat(document.getElementById("beratMakanan").value)
 
+if(!berat) return
+
 let makanan = databaseMakanan[index]
 
 let faktor = berat / 100
 
 let item = {
 
-nama:makanan.nama,
-berat:berat,
-energi:makanan.energi * faktor,
-protein:makanan.protein * faktor,
-lemak:makanan.lemak * faktor,
-karbo:makanan.karbohidrat * faktor,
-kalsium:makanan.kalsium * faktor,
-zatbesi:makanan.zat_besi * faktor
+nama : makanan["Nama Bahan"],
+berat : berat,
+
+energi : parseFloat(makanan["Energi (Kkal)"]) * faktor,
+protein : parseFloat(makanan["Protein (g)"]) * faktor,
+lemak : parseFloat(makanan["Lemak (g)"]) * faktor,
+karbo : parseFloat(makanan["Karbohidrat (g)"]) * faktor,
+kalsium : parseFloat(makanan["Kalsium (mg)"]) * faktor,
+zatbesi : parseFloat(makanan["Besi (mg)"]) * faktor
 
 }
 
 daftarMakan.push(item)
 
 renderTabel()
+
 }
 
 function tambahManual(){
 
 let item = {
 
-nama:document.getElementById("namaManual").value,
-berat:parseFloat(document.getElementById("beratManual").value),
-energi:parseFloat(document.getElementById("energiManual").value),
-protein:parseFloat(document.getElementById("proteinManual").value),
-lemak:parseFloat(document.getElementById("lemakManual").value),
-karbo:parseFloat(document.getElementById("karboManual").value),
-kalsium:parseFloat(document.getElementById("kalsiumManual").value),
-zatbesi:parseFloat(document.getElementById("zatbesiManual").value)
+nama : document.getElementById("namaManual").value,
+berat : parseFloat(document.getElementById("beratManual").value),
+
+energi : parseFloat(document.getElementById("energiManual").value) || 0,
+protein : parseFloat(document.getElementById("proteinManual").value) || 0,
+lemak : parseFloat(document.getElementById("lemakManual").value) || 0,
+karbo : parseFloat(document.getElementById("karboManual").value) || 0,
+kalsium : parseFloat(document.getElementById("kalsiumManual").value) || 0,
+zatbesi : parseFloat(document.getElementById("zatbesiManual").value) || 0
 
 }
 
@@ -78,8 +83,9 @@ tbody.innerHTML = ""
 
 daftarMakan.forEach((m,i)=>{
 
-let row = `
-<tr>
+let row = document.createElement("tr")
+
+row.innerHTML = `
 
 <td>${m.nama}</td>
 <td>${m.berat}</td>
@@ -91,16 +97,13 @@ let row = `
 <td>${m.zatbesi.toFixed(2)}</td>
 
 <td>
-
 <button onclick="editMakanan(${i})">Edit</button>
 <button onclick="hapusMakanan(${i})">Hapus</button>
-
 </td>
 
-</tr>
 `
 
-tbody.innerHTML += row
+tbody.appendChild(row)
 
 })
 
@@ -108,16 +111,55 @@ hitungTotal()
 
 }
 
+function hapusMakanan(index){
+
+daftarMakan.splice(index,1)
+
+renderTabel()
+
+}
+
+function editMakanan(index){
+
+let m = daftarMakan[index]
+
+let nama = prompt("Nama makanan", m.nama)
+let berat = prompt("Berat", m.berat)
+let energi = prompt("Energi", m.energi)
+let protein = prompt("Protein", m.protein)
+let lemak = prompt("Lemak", m.lemak)
+let karbo = prompt("Karbo", m.karbo)
+let kalsium = prompt("Kalsium", m.kalsium)
+let zatbesi = prompt("Zat Besi", m.zatbesi)
+
+daftarMakan[index] = {
+
+nama : nama,
+berat : parseFloat(berat),
+
+energi : parseFloat(energi),
+protein : parseFloat(protein),
+lemak : parseFloat(lemak),
+karbo : parseFloat(karbo),
+kalsium : parseFloat(kalsium),
+zatbesi : parseFloat(zatbesi)
+
+}
+
+renderTabel()
+
+}
+
 function hitungTotal(){
 
 let total = {
 
-energi:0,
-protein:0,
-lemak:0,
-karbo:0,
-kalsium:0,
-zatbesi:0
+energi : 0,
+protein : 0,
+lemak : 0,
+karbo : 0,
+kalsium : 0,
+zatbesi : 0
 
 }
 
@@ -134,7 +176,7 @@ total.zatbesi += m.zatbesi
 
 document.getElementById("totalGizi").innerHTML = `
 
-Energi : ${total.energi.toFixed(2)} kcal <br>
+Energi : ${total.energi.toFixed(2)} kkal <br>
 Protein : ${total.protein.toFixed(2)} g <br>
 Lemak : ${total.lemak.toFixed(2)} g <br>
 Karbohidrat : ${total.karbo.toFixed(2)} g <br>
@@ -142,43 +184,5 @@ Kalsium : ${total.kalsium.toFixed(2)} mg <br>
 Zat Besi : ${total.zatbesi.toFixed(2)} mg
 
 `
-
-}
-
-function hapusMakanan(index){
-
-daftarMakan.splice(index,1)
-
-renderTabel()
-
-}
-
-function editMakanan(index){
-
-let m = daftarMakan[index]
-
-let nama = prompt("Nama",m.nama)
-let berat = prompt("Berat",m.berat)
-let energi = prompt("Energi",m.energi)
-let protein = prompt("Protein",m.protein)
-let lemak = prompt("Lemak",m.lemak)
-let karbo = prompt("Karbo",m.karbo)
-let kalsium = prompt("Kalsium",m.kalsium)
-let zatbesi = prompt("Zat Besi",m.zatbesi)
-
-daftarMakan[index] = {
-
-nama:nama,
-berat:parseFloat(berat),
-energi:parseFloat(energi),
-protein:parseFloat(protein),
-lemak:parseFloat(lemak),
-karbo:parseFloat(karbo),
-kalsium:parseFloat(kalsium),
-zatbesi:parseFloat(zatbesi)
-
-}
-
-renderTabel()
 
 }

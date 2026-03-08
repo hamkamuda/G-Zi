@@ -12,16 +12,16 @@ background:#f4f6f8;
 margin:40px;
 }
 
-h1{
-color:#2c3e50;
-}
-
 .container{
 background:white;
 padding:20px;
 border-radius:10px;
 box-shadow:0 0 10px rgba(0,0,0,0.1);
-max-width:900px;
+max-width:1100px;
+}
+
+h1{
+color:#2c3e50;
 }
 
 .search-container{
@@ -73,11 +73,12 @@ table{
 width:100%;
 border-collapse:collapse;
 margin-top:20px;
+font-size:14px;
 }
 
 th,td{
 border:1px solid #ccc;
-padding:8px;
+padding:6px;
 text-align:center;
 }
 
@@ -89,7 +90,7 @@ color:white;
 .total{
 margin-top:20px;
 background:#ecf0f1;
-padding:10px;
+padding:15px;
 border-radius:5px;
 }
 
@@ -124,7 +125,15 @@ border-radius:5px;
 <th>Energi</th>
 <th>Protein</th>
 <th>Lemak</th>
-<th>Karbohidrat</th>
+<th>Karbo</th>
+<th>Serat</th>
+<th>K</th>
+<th>P</th>
+<th>Na</th>
+<th>Vit A</th>
+<th>B1</th>
+<th>B2</th>
+<th>Vit C</th>
 <th>Aksi</th>
 </tr>
 
@@ -136,12 +145,20 @@ border-radius:5px;
 
 <div class="total">
 
-<b>Total Zat Gizi</b><br>
+<b>Total Zat Gizi</b><br><br>
 
-Energi: <span id="totalEnergi">0</span> kcal<br>
-Protein: <span id="totalProtein">0</span> g<br>
-Lemak: <span id="totalLemak">0</span> g<br>
-Karbohidrat: <span id="totalKarbo">0</span> g
+Energi : <span id="totalEnergi">0</span> kcal<br>
+Protein : <span id="totalProtein">0</span> g<br>
+Lemak : <span id="totalLemak">0</span> g<br>
+Karbo : <span id="totalKarbo">0</span> g<br>
+Serat : <span id="totalSerat">0</span> g<br>
+Kalium : <span id="totalKalium">0</span> mg<br>
+Fosfor : <span id="totalFosfor">0</span> mg<br>
+Natrium : <span id="totalNatrium">0</span> mg<br>
+Vit A : <span id="totalVitA">0</span> mcg<br>
+Thiamin : <span id="totalB1">0</span> mg<br>
+Riboflavin : <span id="totalB2">0</span> mg<br>
+Vit C : <span id="totalVitC">0</span> mg
 
 </div>
 
@@ -150,16 +167,15 @@ Karbohidrat: <span id="totalKarbo">0</span> g
 <script>
 
 let databaseMakanan=[
-{nama:"Nasi putih",energi:175,protein:4,lemak:0.2,karbo:40},
-{nama:"Ayam goreng",energi:260,protein:27,lemak:15,karbo:0},
-{nama:"Telur rebus",energi:155,protein:13,lemak:11,karbo:1.1},
-{nama:"Tempe goreng",energi:192,protein:20,lemak:11,karbo:9},
-{nama:"Tahu goreng",energi:271,protein:17,lemak:20,karbo:8},
-{nama:"Mie goreng",energi:214,protein:7,lemak:10,karbo:29},
-{nama:"Roti putih",energi:265,protein:9,lemak:3,karbo:49},
-{nama:"Susu sapi",energi:61,protein:3.2,lemak:3.3,karbo:5},
-{nama:"Apel",energi:52,protein:0.3,lemak:0.2,karbo:14},
-{nama:"Pisang",energi:96,protein:1.3,lemak:0.3,karbo:27}
+
+{nama:"Nasi putih",energi:175,protein:4,lemak:0.2,karbo:40,serat:0.2,kalium:26,fosfor:37,natrium:2,vitA:0,b1:0.02,b2:0.02,vitC:0},
+
+{nama:"Ayam goreng",energi:260,protein:27,lemak:15,karbo:0,serat:0,kalium:223,fosfor:200,natrium:90,vitA:40,b1:0.07,b2:0.15,vitC:0},
+
+{nama:"Telur rebus",energi:155,protein:13,lemak:11,karbo:1.1,serat:0,kalium:126,fosfor:172,natrium:124,vitA:160,b1:0.04,b2:0.45,vitC:0},
+
+{nama:"Tempe goreng",energi:192,protein:20,lemak:11,karbo:9,serat:1.4,kalium:412,fosfor:200,natrium:9,vitA:0,b1:0.19,b2:0.12,vitC:0}
+
 ]
 
 let makananTerpilih=null
@@ -185,7 +201,6 @@ list.slice(0,10).forEach(m=>{
 let div=document.createElement("div")
 
 div.className="itemMakanan"
-
 div.innerText=m.nama
 
 div.onclick=function(){
@@ -208,17 +223,26 @@ if(!makananTerpilih)return alert("Pilih makanan")
 
 let berat=parseFloat(document.getElementById("beratMakanan").value)
 
-if(!berat)return alert("Masukkan berat")
-
 let faktor=berat/100
 
 let data={
+
 nama:makananTerpilih.nama,
 berat:berat,
-energi:(makananTerpilih.energi*faktor),
-protein:(makananTerpilih.protein*faktor),
-lemak:(makananTerpilih.lemak*faktor),
-karbo:(makananTerpilih.karbo*faktor)
+
+energi:makananTerpilih.energi*faktor,
+protein:makananTerpilih.protein*faktor,
+lemak:makananTerpilih.lemak*faktor,
+karbo:makananTerpilih.karbo*faktor,
+serat:makananTerpilih.serat*faktor,
+kalium:makananTerpilih.kalium*faktor,
+fosfor:makananTerpilih.fosfor*faktor,
+natrium:makananTerpilih.natrium*faktor,
+vitA:makananTerpilih.vitA*faktor,
+b1:makananTerpilih.b1*faktor,
+b2:makananTerpilih.b2*faktor,
+vitC:makananTerpilih.vitC*faktor
+
 }
 
 daftarMakanan.push(data)
@@ -243,6 +267,14 @@ let row=`<tr>
 <td>${m.protein.toFixed(1)}</td>
 <td>${m.lemak.toFixed(1)}</td>
 <td>${m.karbo.toFixed(1)}</td>
+<td>${m.serat.toFixed(1)}</td>
+<td>${m.kalium.toFixed(1)}</td>
+<td>${m.fosfor.toFixed(1)}</td>
+<td>${m.natrium.toFixed(1)}</td>
+<td>${m.vitA.toFixed(1)}</td>
+<td>${m.b1.toFixed(2)}</td>
+<td>${m.b2.toFixed(2)}</td>
+<td>${m.vitC.toFixed(1)}</td>
 
 <td>
 <button onclick="editMakanan(${i})">Edit</button>
@@ -271,8 +303,6 @@ function editMakanan(i){
 
 let beratBaru=prompt("Masukkan berat baru",daftarMakanan[i].berat)
 
-if(!beratBaru)return
-
 let makanan=databaseMakanan.find(m=>m.nama==daftarMakanan[i].nama)
 
 let faktor=beratBaru/100
@@ -281,10 +311,19 @@ daftarMakanan[i]={
 
 nama:makanan.nama,
 berat:beratBaru,
-energi:(makanan.energi*faktor),
-protein:(makanan.protein*faktor),
-lemak:(makanan.lemak*faktor),
-karbo:(makanan.karbo*faktor)
+
+energi:makanan.energi*faktor,
+protein:makanan.protein*faktor,
+lemak:makanan.lemak*faktor,
+karbo:makanan.karbo*faktor,
+serat:makanan.serat*faktor,
+kalium:makanan.kalium*faktor,
+fosfor:makanan.fosfor*faktor,
+natrium:makanan.natrium*faktor,
+vitA:makanan.vitA*faktor,
+b1:makanan.b1*faktor,
+b2:makanan.b2*faktor,
+vitC:makanan.vitC*faktor
 
 }
 
@@ -294,24 +333,36 @@ tampilkanTabel()
 
 function hitungTotal(){
 
-let totalEnergi=0
-let totalProtein=0
-let totalLemak=0
-let totalKarbo=0
+let total={
+
+energi:0,protein:0,lemak:0,karbo:0,serat:0,
+kalium:0,fosfor:0,natrium:0,
+vitA:0,b1:0,b2:0,vitC:0
+
+}
 
 daftarMakanan.forEach(m=>{
 
-totalEnergi+=m.energi
-totalProtein+=m.protein
-totalLemak+=m.lemak
-totalKarbo+=m.karbo
+for(let key in total){
+
+total[key]+=m[key]
+
+}
 
 })
 
-document.getElementById("totalEnergi").innerText=totalEnergi.toFixed(1)
-document.getElementById("totalProtein").innerText=totalProtein.toFixed(1)
-document.getElementById("totalLemak").innerText=totalLemak.toFixed(1)
-document.getElementById("totalKarbo").innerText=totalKarbo.toFixed(1)
+document.getElementById("totalEnergi").innerText=total.energi.toFixed(1)
+document.getElementById("totalProtein").innerText=total.protein.toFixed(1)
+document.getElementById("totalLemak").innerText=total.lemak.toFixed(1)
+document.getElementById("totalKarbo").innerText=total.karbo.toFixed(1)
+document.getElementById("totalSerat").innerText=total.serat.toFixed(1)
+document.getElementById("totalKalium").innerText=total.kalium.toFixed(1)
+document.getElementById("totalFosfor").innerText=total.fosfor.toFixed(1)
+document.getElementById("totalNatrium").innerText=total.natrium.toFixed(1)
+document.getElementById("totalVitA").innerText=total.vitA.toFixed(1)
+document.getElementById("totalB1").innerText=total.b1.toFixed(2)
+document.getElementById("totalB2").innerText=total.b2.toFixed(2)
+document.getElementById("totalVitC").innerText=total.vitC.toFixed(1)
 
 }
 

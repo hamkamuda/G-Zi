@@ -1,44 +1,40 @@
-let databaseMakanan = []
-let makananTerpilih = null
-let daftarMakanan = []
+let databaseMakanan=[]
+let makananTerpilih=null
+let daftarMakanan=[]
 
 fetch("DaftarBahanMakanan.json")
-.then(res => res.json())
-.then(data => {
-
-databaseMakanan = data
-
-console.log("Database makanan loaded:", data.length)
-
+.then(res=>res.json())
+.then(data=>{
+databaseMakanan=data
 })
 
-const input = document.getElementById("searchMakanan")
-const hasil = document.getElementById("hasilPencarian")
+const input=document.getElementById("searchMakanan")
+const hasil=document.getElementById("hasilPencarian")
 
-input.addEventListener("input", function(){
+input.addEventListener("input",function(){
 
-let keyword = this.value.toLowerCase()
+let keyword=this.value.toLowerCase()
 
-hasil.innerHTML = ""
+hasil.innerHTML=""
 
-if(keyword.length < 1) return
+if(keyword.length<1)return
 
-let list = databaseMakanan.filter(m =>
+let list=databaseMakanan.filter(m=>
 m["Nama Bahan"].toLowerCase().includes(keyword)
 )
 
-list.slice(0,15).forEach(m => {
+list.slice(0,15).forEach(m=>{
 
-let div = document.createElement("div")
+let div=document.createElement("div")
 
-div.className = "itemMakanan"
-div.innerText = m["Nama Bahan"]
+div.className="itemMakanan"
+div.innerText=m["Nama Bahan"]
 
-div.onclick = function(){
+div.onclick=function(){
 
-makananTerpilih = m
-input.value = m["Nama Bahan"]
-hasil.innerHTML = ""
+makananTerpilih=m
+input.value=m["Nama Bahan"]
+hasil.innerHTML=""
 
 }
 
@@ -50,29 +46,31 @@ hasil.appendChild(div)
 
 function tambahMakanan(){
 
-if(!makananTerpilih) return alert("Pilih makanan")
+if(!makananTerpilih)return alert("Pilih makanan")
 
-let berat = parseFloat(document.getElementById("beratMakanan").value)
+let berat=parseFloat(document.getElementById("beratMakanan").value)
 
-let faktor = berat / 100
+let faktor=berat/100
 
-let data = {
+let data={
 
 nama:makananTerpilih["Nama Bahan"],
 berat:berat,
 
-energi:makananTerpilih["Energi"]*faktor,
-protein:makananTerpilih["Protein"]*faktor,
-lemak:makananTerpilih["Lemak"]*faktor,
-karbo:makananTerpilih["Karbohidrat"]*faktor,
-serat:makananTerpilih["Serat"]*faktor,
-kalium:makananTerpilih["Kalium"]*faktor,
-fosfor:makananTerpilih["Fosfor"]*faktor,
-natrium:makananTerpilih["Natrium"]*faktor,
-vitA:makananTerpilih["Vit A"]*faktor,
-b1:makananTerpilih["Thiamin"]*faktor,
-b2:makananTerpilih["Riboflavin"]*faktor,
-vitC:makananTerpilih["Vit C"]*faktor
+energi:parseFloat(makananTerpilih["Energi (Kkal)"]||0)*faktor,
+protein:parseFloat(makananTerpilih["Protein (g)"]||0)*faktor,
+lemak:parseFloat(makananTerpilih["Lemak (g)"]||0)*faktor,
+karbo:parseFloat(makananTerpilih["Karbohidrat (g)"]||0)*faktor,
+serat:parseFloat(makananTerpilih["Serat (g)"]||0)*faktor,
+
+kalium:parseFloat(makananTerpilih["Kalium (mg)"]||0)*faktor,
+fosfor:parseFloat(makananTerpilih["Fosfor (mg)"]||0)*faktor,
+natrium:parseFloat(makananTerpilih["Natrium (mg)"]||0)*faktor,
+
+vitA:parseFloat(makananTerpilih["Retinol (mcg)"]||0)*faktor,
+b1:parseFloat(makananTerpilih["Thiamin (mg)"]||0)*faktor,
+b2:parseFloat(makananTerpilih["Riboflavin (mg)"]||0)*faktor,
+vitC:parseFloat(makananTerpilih["Vit-C (mg)"]||0)*faktor
 
 }
 
@@ -84,13 +82,13 @@ tampilkanTabel()
 
 function tampilkanTabel(){
 
-let tbody = document.getElementById("tabelMakanan")
+let tbody=document.getElementById("tabelMakanan")
 
-tbody.innerHTML = ""
+tbody.innerHTML=""
 
 daftarMakanan.forEach((m,i)=>{
 
-let row = `<tr>
+let row=`<tr>
 
 <td>${m.nama}</td>
 <td>${m.berat}</td>
@@ -114,7 +112,7 @@ let row = `<tr>
 
 </tr>`
 
-tbody.innerHTML += row
+tbody.innerHTML+=row
 
 })
 
@@ -132,31 +130,33 @@ tampilkanTabel()
 
 function editMakanan(i){
 
-let beratBaru = prompt("Masukkan berat baru", daftarMakanan[i].berat)
+let beratBaru=prompt("Masukkan berat baru",daftarMakanan[i].berat)
 
-let faktor = beratBaru / 100
-
-let makanan = databaseMakanan.find(m =>
-m["Nama Bahan"] == daftarMakanan[i].nama
+let makanan=databaseMakanan.find(m=>
+m["Nama Bahan"]==daftarMakanan[i].nama
 )
 
-daftarMakanan[i] = {
+let faktor=beratBaru/100
+
+daftarMakanan[i]={
 
 nama:makanan["Nama Bahan"],
 berat:beratBaru,
 
-energi:makanan["Energi"]*faktor,
-protein:makanan["Protein"]*faktor,
-lemak:makanan["Lemak"]*faktor,
-karbo:makanan["Karbohidrat"]*faktor,
-serat:makanan["Serat"]*faktor,
-kalium:makanan["Kalium"]*faktor,
-fosfor:makanan["Fosfor"]*faktor,
-natrium:makanan["Natrium"]*faktor,
-vitA:makanan["Vit A"]*faktor,
-b1:makanan["Thiamin"]*faktor,
-b2:makanan["Riboflavin"]*faktor,
-vitC:makanan["Vit C"]*faktor
+energi:parseFloat(makanan["Energi (Kkal)"]||0)*faktor,
+protein:parseFloat(makanan["Protein (g)"]||0)*faktor,
+lemak:parseFloat(makanan["Lemak (g)"]||0)*faktor,
+karbo:parseFloat(makanan["Karbohidrat (g)"]||0)*faktor,
+serat:parseFloat(makanan["Serat (g)"]||0)*faktor,
+
+kalium:parseFloat(makanan["Kalium (mg)"]||0)*faktor,
+fosfor:parseFloat(makanan["Fosfor (mg)"]||0)*faktor,
+natrium:parseFloat(makanan["Natrium (mg)"]||0)*faktor,
+
+vitA:parseFloat(makanan["Retinol (mcg)"]||0)*faktor,
+b1:parseFloat(makanan["Thiamin (mg)"]||0)*faktor,
+b2:parseFloat(makanan["Riboflavin (mg)"]||0)*faktor,
+vitC:parseFloat(makanan["Vit-C (mg)"]||0)*faktor
 
 }
 
@@ -173,11 +173,9 @@ vitA:0,b1:0,b2:0,vitC:0
 }
 
 daftarMakanan.forEach(m=>{
-
 for(let key in total){
 total[key]+=m[key]
 }
-
 })
 
 document.getElementById("totalEnergi").innerText=total.energi.toFixed(1)

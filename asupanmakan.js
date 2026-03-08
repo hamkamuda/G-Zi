@@ -1,184 +1,305 @@
-let databaseMakanan = []
-let daftarMakan = []
-let editIndex = null
+let DaftarBahanMakanan = [];
+let daftarMakanan = [];
+let daftarZatGizi = [];
+
+// ========================
+// AMBIL DATA JSON
+// ========================
 
 fetch("DaftarBahanMakanan.json")
-.then(res=>res.json())
-.then(data=>{
+.then(res => res.json())
+.then(data => {
 
-databaseMakanan = data
+DaftarBahanMakanan = data;
 
-let select = document.getElementById("pilihMakanan")
+daftarZatGizi = Object.keys(data[0]).filter(k =>
+k !== "Nama Bahan" &&
+k !== "Berat Dapat Dimakan (%)"
+);
 
-data.forEach((m,i)=>{
+buatFormManual();
+buatTabelTotal();
 
-let option = document.createElement("option")
-option.value = i
-option.textContent = m.nama
+});
 
-select.appendChild(option)
+// ========================
+// CARI MAKANAN
+// ========================
 
-})
+document.getElementById("inputCari").addEventListener("input", cariMakanan);
 
-})
+function cariMakanan(){
 
-function tambahMakanan(){
+let input = document.getElementById("inputCari").value.toLowerCase();
 
-let index = document.getElementById("pilihMakanan").value
-let berat = parseFloat(document.getElementById("beratMakanan").value)
+let hasil = DaftarBahanMakanan.filter(b =>
+b["Nama Bahan"].toLowerCase().includes(input)
+).slice(0,10);
 
-let makanan = databaseMakanan[index]
+let html="";
 
-let faktor = berat / 100
+hasil.forEach(h=>{
 
-let item = {
+html+=`<li onclick="pilihMakanan('${h["Nama Bahan"]}')">${h["Nama Bahan"]}</li>`;
 
-nama:makanan.nama,
+});
+
+document.getElementById("hasilCari").innerHTML = html;
+
+}
+
+function pilihMakanan(nama){
+
+document.getElementById("inputCari").value = nama;
+document.getElementById("hasilCari").innerHTML = "";
+
+}
+
+// ========================
+// TAMBAH MAKANAN DATABASE
+// ========================
+
+function tambahMakananDatabase(){
+
+let nama = document.getElementById("inputCari").value;
+let berat = parseFloat(document.getElementById("beratMakan").value);
+let waktu = document.getElementById("waktuMakan").value;
+
+let bahan = DaftarBahanMakanan.find(
+b => b["Nama Bahan"] === nama
+);
+
+if(!bahan || !berat){
+
+alert("Data belum lengkap");
+return;
+
+}
+
+let faktor = berat / 100;
+
+let makanan = {
+nama:nama,
 berat:berat,
-energi:makanan.energi * faktor,
-protein:makanan.protein * faktor,
-lemak:makanan.lemak * faktor,
-karbo:makanan.karbohidrat * faktor,
-kalsium:makanan.kalsium * faktor,
-zatbesi:makanan.zat_besi * faktor
+waktu:waktu
+};
+
+daftarZatGizi.forEach(z => {
+
+let nilai = parseFloat(bahan[z]) || 0;
+
+makanan[z] = nilai * faktor;
+
+});
+
+daftarMakanan.push(makanan);
+
+render();
 
 }
 
-daftarMakan.push(item)
-
-renderTabel()
-}
+// ========================
+// TAMBAH MAKANAN MANUAL
+// ========================
 
 function tambahManual(){
 
-let item = {
+let nama = document.getElementById("manualNama").value;
+let berat = parseFloat(document.getElementById("manualBerat").value);
 
-nama:document.getElementById("namaManual").value,
-berat:parseFloat(document.getElementById("beratManual").value),
-energi:parseFloat(document.getElementById("energiManual").value),
-protein:parseFloat(document.getElementById("proteinManual").value),
-lemak:parseFloat(document.getElementById("lemakManual").value),
-karbo:parseFloat(document.getElementById("karboManual").value),
-kalsium:parseFloat(document.getElementById("kalsiumManual").value),
-zatbesi:parseFloat(document.getElementById("zatbesiManual").value)
+if(!nama || !berat){
+
+alert("Isi nama dan berat makanan");
+return;
 
 }
 
-daftarMakan.push(item)
+let makanan = {
+nama:nama,
+berat:berat,
+waktu:"manual"
+};
 
-renderTabel()
+daftarZatGizi.forEach(z => {
+
+let val = parseFloat(document.getElementById("manual_"+z).value) || 0;
+
+makanan[z] = val * (berat/100);
+
+});
+
+daftarMakanan.push(makanan);
+
+render();
 
 }
+
+// ========================
+// FORM INPUT MANUAL
+// ========================
+
+function buatFormManual(){
+
+let html="";
+
+daftarZatGizi.forEach(z=>{
+
+html+=`
+<div class="form-row">
+<label style="width:200px">${z}</label>
+<input type="number" id="manual_${z}" placeholder="${z}">
+</div>
+`;
+
+});
+
+document.getElementById("formManualGizi").innerHTML = html;
+
+}
+
+// ========================
+// RENDER DATA
+// ========================
+
+function render(){
+
+renderTabel();
+hitungTotal();
+
+}
+
+// ========================
+// TABEL MAKANAN
+// ========================
 
 function renderTabel(){
 
-let tbody = document.querySelector("#tabelMakanan tbody")
-
-tbody.innerHTML = ""
-
-daftarMakan.forEach((m,i)=>{
-
-let row = `
+let html=`
+<table>
 <tr>
+<th>Nama</th>
+<th>Berat</th>
+<th>Waktu</th>
+<th>Aksi</th>
+</tr>
+`;
 
+daftarMakanan.forEach((m,index)=>{
+
+html+=`
+<tr>
 <td>${m.nama}</td>
-<td>${m.berat}</td>
-<td>${m.energi.toFixed(2)}</td>
-<td>${m.protein.toFixed(2)}</td>
-<td>${m.lemak.toFixed(2)}</td>
-<td>${m.karbo.toFixed(2)}</td>
-<td>${m.kalsium.toFixed(2)}</td>
-<td>${m.zatbesi.toFixed(2)}</td>
+<td>${m.berat} g</td>
+<td>${m.waktu}</td>
 
 <td>
-
-<button onclick="editMakanan(${i})">Edit</button>
-<button onclick="hapusMakanan(${i})">Hapus</button>
-
+<button onclick="editMakanan(${index})">Edit</button>
+<button onclick="hapusMakanan(${index})">Hapus</button>
 </td>
 
 </tr>
-`
+`;
 
-tbody.innerHTML += row
+});
 
-})
+html+="</table>";
 
-hitungTotal()
-
-}
-
-function hitungTotal(){
-
-let total = {
-
-energi:0,
-protein:0,
-lemak:0,
-karbo:0,
-kalsium:0,
-zatbesi:0
+document.getElementById("tabelMakanan").innerHTML = html;
 
 }
 
-daftarMakan.forEach(m=>{
-
-total.energi += m.energi
-total.protein += m.protein
-total.lemak += m.lemak
-total.karbo += m.karbo
-total.kalsium += m.kalsium
-total.zatbesi += m.zatbesi
-
-})
-
-document.getElementById("totalGizi").innerHTML = `
-
-Energi : ${total.energi.toFixed(2)} kcal <br>
-Protein : ${total.protein.toFixed(2)} g <br>
-Lemak : ${total.lemak.toFixed(2)} g <br>
-Karbohidrat : ${total.karbo.toFixed(2)} g <br>
-Kalsium : ${total.kalsium.toFixed(2)} mg <br>
-Zat Besi : ${total.zatbesi.toFixed(2)} mg
-
-`
-
-}
+// ========================
+// HAPUS MAKANAN
+// ========================
 
 function hapusMakanan(index){
 
-daftarMakan.splice(index,1)
+if(confirm("Hapus makanan ini?")){
 
-renderTabel()
+daftarMakanan.splice(index,1);
+
+render();
 
 }
+
+}
+
+// ========================
+// EDIT MAKANAN
+// ========================
 
 function editMakanan(index){
 
-let m = daftarMakan[index]
+let makanan = daftarMakanan[index];
 
-let nama = prompt("Nama",m.nama)
-let berat = prompt("Berat",m.berat)
-let energi = prompt("Energi",m.energi)
-let protein = prompt("Protein",m.protein)
-let lemak = prompt("Lemak",m.lemak)
-let karbo = prompt("Karbo",m.karbo)
-let kalsium = prompt("Kalsium",m.kalsium)
-let zatbesi = prompt("Zat Besi",m.zatbesi)
+let beratBaru = prompt("Masukkan berat baru (gram):", makanan.berat);
 
-daftarMakan[index] = {
+if(!beratBaru) return;
 
-nama:nama,
-berat:parseFloat(berat),
-energi:parseFloat(energi),
-protein:parseFloat(protein),
-lemak:parseFloat(lemak),
-karbo:parseFloat(karbo),
-kalsium:parseFloat(kalsium),
-zatbesi:parseFloat(zatbesi)
+beratBaru = parseFloat(beratBaru);
+
+let faktor = beratBaru / makanan.berat;
+
+makanan.berat = beratBaru;
+
+daftarZatGizi.forEach(z => {
+
+makanan[z] = makanan[z] * faktor;
+
+});
+
+render();
 
 }
 
-renderTabel()
+// ========================
+// BUAT TABEL TOTAL GIZI
+// ========================
+
+function buatTabelTotal(){
+
+let html="";
+
+daftarZatGizi.forEach(z=>{
+
+html+=`
+<tr>
+<td>${z}</td>
+<td id="total_${z}">0</td>
+</tr>
+`;
+
+});
+
+document.getElementById("bodyTotalGizi").innerHTML = html;
+
+}
+
+// ========================
+// HITUNG TOTAL GIZI
+// ========================
+
+function hitungTotal(){
+
+let total = {};
+
+daftarZatGizi.forEach(z => total[z] = 0);
+
+daftarMakanan.forEach(m => {
+
+daftarZatGizi.forEach(z => {
+
+total[z] += m[z] || 0;
+
+});
+
+});
+
+daftarZatGizi.forEach(z => {
+
+document.getElementById("total_" + z).innerText =
+total[z].toFixed(2);
+
+});
 
 }

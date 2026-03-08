@@ -1,22 +1,46 @@
 let databaseMakanan = []
 let daftarMakan = []
+let makananTerpilih = null
 
 fetch("DaftarBahanMakanan.json")
-.then(res => res.json())
-.then(data => {
+.then(res=>res.json())
+.then(data=>{
 
 databaseMakanan = data
 
-let select = document.getElementById("pilihMakanan")
+})
 
-data.forEach((m,i)=>{
+document.getElementById("searchMakanan").addEventListener("input",function(){
 
-let option = document.createElement("option")
+let keyword = this.value.toLowerCase()
 
-option.value = i
-option.textContent = m["Nama Bahan"]
+let hasil = databaseMakanan.filter(m =>
+m["Nama Bahan"].toLowerCase().includes(keyword)
+)
 
-select.appendChild(option)
+let container = document.getElementById("hasilPencarian")
+
+container.innerHTML = ""
+
+hasil.slice(0,20).forEach(m=>{
+
+let div = document.createElement("div")
+
+div.className="itemMakanan"
+
+div.textContent = m["Nama Bahan"]
+
+div.onclick=function(){
+
+makananTerpilih = m
+
+document.getElementById("searchMakanan").value = m["Nama Bahan"]
+
+container.innerHTML=""
+
+}
+
+container.appendChild(div)
 
 })
 
@@ -24,26 +48,25 @@ select.appendChild(option)
 
 function tambahMakanan(){
 
-let index = document.getElementById("pilihMakanan").value
+if(!makananTerpilih) return
+
 let berat = parseFloat(document.getElementById("beratMakanan").value)
 
 if(!berat) return
-
-let makanan = databaseMakanan[index]
 
 let faktor = berat / 100
 
 let item = {
 
-nama : makanan["Nama Bahan"],
+nama : makananTerpilih["Nama Bahan"],
 berat : berat,
 
-energi : parseFloat(makanan["Energi (Kkal)"]) * faktor,
-protein : parseFloat(makanan["Protein (g)"]) * faktor,
-lemak : parseFloat(makanan["Lemak (g)"]) * faktor,
-karbo : parseFloat(makanan["Karbohidrat (g)"]) * faktor,
-kalsium : parseFloat(makanan["Kalsium (mg)"]) * faktor,
-zatbesi : parseFloat(makanan["Besi (mg)"]) * faktor
+energi : parseFloat(makananTerpilih["Energi (Kkal)"]) * faktor,
+protein : parseFloat(makananTerpilih["Protein (g)"]) * faktor,
+lemak : parseFloat(makananTerpilih["Lemak (g)"]) * faktor,
+karbo : parseFloat(makananTerpilih["Karbohidrat (g)"]) * faktor,
+kalsium : parseFloat(makananTerpilih["Kalsium (mg)"]) * faktor,
+zatbesi : parseFloat(makananTerpilih["Besi (mg)"]) * faktor
 
 }
 
@@ -79,13 +102,13 @@ function renderTabel(){
 
 let tbody = document.querySelector("#tabelMakanan tbody")
 
-tbody.innerHTML = ""
+tbody.innerHTML=""
 
 daftarMakan.forEach((m,i)=>{
 
-let row = document.createElement("tr")
+let row=document.createElement("tr")
 
-row.innerHTML = `
+row.innerHTML=`
 
 <td>${m.nama}</td>
 <td>${m.berat}</td>
@@ -123,26 +146,26 @@ function editMakanan(index){
 
 let m = daftarMakan[index]
 
-let nama = prompt("Nama makanan", m.nama)
-let berat = prompt("Berat", m.berat)
-let energi = prompt("Energi", m.energi)
-let protein = prompt("Protein", m.protein)
-let lemak = prompt("Lemak", m.lemak)
-let karbo = prompt("Karbo", m.karbo)
-let kalsium = prompt("Kalsium", m.kalsium)
-let zatbesi = prompt("Zat Besi", m.zatbesi)
+let nama = prompt("Nama makanan",m.nama)
+let berat = prompt("Berat",m.berat)
+let energi = prompt("Energi",m.energi)
+let protein = prompt("Protein",m.protein)
+let lemak = prompt("Lemak",m.lemak)
+let karbo = prompt("Karbo",m.karbo)
+let kalsium = prompt("Kalsium",m.kalsium)
+let zatbesi = prompt("Zat Besi",m.zatbesi)
 
-daftarMakan[index] = {
+daftarMakan[index]={
 
-nama : nama,
-berat : parseFloat(berat),
+nama:nama,
+berat:parseFloat(berat),
 
-energi : parseFloat(energi),
-protein : parseFloat(protein),
-lemak : parseFloat(lemak),
-karbo : parseFloat(karbo),
-kalsium : parseFloat(kalsium),
-zatbesi : parseFloat(zatbesi)
+energi:parseFloat(energi),
+protein:parseFloat(protein),
+lemak:parseFloat(lemak),
+karbo:parseFloat(karbo),
+kalsium:parseFloat(kalsium),
+zatbesi:parseFloat(zatbesi)
 
 }
 
@@ -152,29 +175,29 @@ renderTabel()
 
 function hitungTotal(){
 
-let total = {
+let total={
 
-energi : 0,
-protein : 0,
-lemak : 0,
-karbo : 0,
-kalsium : 0,
-zatbesi : 0
+energi:0,
+protein:0,
+lemak:0,
+karbo:0,
+kalsium:0,
+zatbesi:0
 
 }
 
 daftarMakan.forEach(m=>{
 
-total.energi += m.energi
-total.protein += m.protein
-total.lemak += m.lemak
-total.karbo += m.karbo
-total.kalsium += m.kalsium
-total.zatbesi += m.zatbesi
+total.energi+=m.energi
+total.protein+=m.protein
+total.lemak+=m.lemak
+total.karbo+=m.karbo
+total.kalsium+=m.kalsium
+total.zatbesi+=m.zatbesi
 
 })
 
-document.getElementById("totalGizi").innerHTML = `
+document.getElementById("totalGizi").innerHTML=`
 
 Energi : ${total.energi.toFixed(2)} kkal <br>
 Protein : ${total.protein.toFixed(2)} g <br>

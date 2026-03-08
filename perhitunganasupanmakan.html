@@ -17,11 +17,7 @@ background:white;
 padding:20px;
 border-radius:10px;
 box-shadow:0 0 10px rgba(0,0,0,0.1);
-max-width:1100px;
-}
-
-h1{
-color:#2c3e50;
+max-width:1200px;
 }
 
 .search-container{
@@ -52,28 +48,11 @@ cursor:pointer;
 background:#f2f2f2;
 }
 
-input,button{
-padding:8px;
-margin-top:5px;
-}
-
-button{
-background:#3498db;
-color:white;
-border:none;
-border-radius:5px;
-cursor:pointer;
-}
-
-button:hover{
-background:#2980b9;
-}
-
 table{
 width:100%;
 border-collapse:collapse;
 margin-top:20px;
-font-size:14px;
+font-size:13px;
 }
 
 th,td{
@@ -85,6 +64,11 @@ text-align:center;
 th{
 background:#3498db;
 color:white;
+}
+
+button{
+padding:6px;
+cursor:pointer;
 }
 
 .total{
@@ -101,14 +85,11 @@ border-radius:5px;
 
 <div class="container">
 
-<h1>Perhitungan Asupan Makan</h1>
+<h2>Perhitungan Asupan Makan</h2>
 
 <div class="search-container">
-
 <input type="text" id="searchMakanan" placeholder="Cari makanan...">
-
 <div id="hasilPencarian"></div>
-
 </div>
 
 <input type="number" id="beratMakanan" placeholder="Berat (gram)">
@@ -147,226 +128,24 @@ border-radius:5px;
 
 <b>Total Zat Gizi</b><br><br>
 
-Energi : <span id="totalEnergi">0</span> kcal<br>
-Protein : <span id="totalProtein">0</span> g<br>
-Lemak : <span id="totalLemak">0</span> g<br>
-Karbo : <span id="totalKarbo">0</span> g<br>
-Serat : <span id="totalSerat">0</span> g<br>
-Kalium : <span id="totalKalium">0</span> mg<br>
-Fosfor : <span id="totalFosfor">0</span> mg<br>
-Natrium : <span id="totalNatrium">0</span> mg<br>
-Vit A : <span id="totalVitA">0</span> mcg<br>
-Thiamin : <span id="totalB1">0</span> mg<br>
-Riboflavin : <span id="totalB2">0</span> mg<br>
-Vit C : <span id="totalVitC">0</span> mg
+Energi: <span id="totalEnergi">0</span><br>
+Protein: <span id="totalProtein">0</span><br>
+Lemak: <span id="totalLemak">0</span><br>
+Karbo: <span id="totalKarbo">0</span><br>
+Serat: <span id="totalSerat">0</span><br>
+Kalium: <span id="totalKalium">0</span><br>
+Fosfor: <span id="totalFosfor">0</span><br>
+Natrium: <span id="totalNatrium">0</span><br>
+Vit A: <span id="totalVitA">0</span><br>
+Thiamin: <span id="totalB1">0</span><br>
+Riboflavin: <span id="totalB2">0</span><br>
+Vit C: <span id="totalVitC">0</span>
 
 </div>
 
 </div>
 
-<script>
-
-let databaseMakanan=[
-
-{nama:"Nasi putih",energi:175,protein:4,lemak:0.2,karbo:40,serat:0.2,kalium:26,fosfor:37,natrium:2,vitA:0,b1:0.02,b2:0.02,vitC:0},
-
-{nama:"Ayam goreng",energi:260,protein:27,lemak:15,karbo:0,serat:0,kalium:223,fosfor:200,natrium:90,vitA:40,b1:0.07,b2:0.15,vitC:0},
-
-{nama:"Telur rebus",energi:155,protein:13,lemak:11,karbo:1.1,serat:0,kalium:126,fosfor:172,natrium:124,vitA:160,b1:0.04,b2:0.45,vitC:0},
-
-{nama:"Tempe goreng",energi:192,protein:20,lemak:11,karbo:9,serat:1.4,kalium:412,fosfor:200,natrium:9,vitA:0,b1:0.19,b2:0.12,vitC:0}
-
-]
-
-let makananTerpilih=null
-let daftarMakanan=[]
-
-const input=document.getElementById("searchMakanan")
-const hasil=document.getElementById("hasilPencarian")
-
-input.addEventListener("input",function(){
-
-let keyword=this.value.toLowerCase()
-
-hasil.innerHTML=""
-
-if(keyword.length<1)return
-
-let list=databaseMakanan.filter(m=>
-m.nama.toLowerCase().includes(keyword)
-)
-
-list.slice(0,10).forEach(m=>{
-
-let div=document.createElement("div")
-
-div.className="itemMakanan"
-div.innerText=m.nama
-
-div.onclick=function(){
-
-makananTerpilih=m
-input.value=m.nama
-hasil.innerHTML=""
-
-}
-
-hasil.appendChild(div)
-
-})
-
-})
-
-function tambahMakanan(){
-
-if(!makananTerpilih)return alert("Pilih makanan")
-
-let berat=parseFloat(document.getElementById("beratMakanan").value)
-
-let faktor=berat/100
-
-let data={
-
-nama:makananTerpilih.nama,
-berat:berat,
-
-energi:makananTerpilih.energi*faktor,
-protein:makananTerpilih.protein*faktor,
-lemak:makananTerpilih.lemak*faktor,
-karbo:makananTerpilih.karbo*faktor,
-serat:makananTerpilih.serat*faktor,
-kalium:makananTerpilih.kalium*faktor,
-fosfor:makananTerpilih.fosfor*faktor,
-natrium:makananTerpilih.natrium*faktor,
-vitA:makananTerpilih.vitA*faktor,
-b1:makananTerpilih.b1*faktor,
-b2:makananTerpilih.b2*faktor,
-vitC:makananTerpilih.vitC*faktor
-
-}
-
-daftarMakanan.push(data)
-
-tampilkanTabel()
-
-}
-
-function tampilkanTabel(){
-
-let tbody=document.getElementById("tabelMakanan")
-
-tbody.innerHTML=""
-
-daftarMakanan.forEach((m,i)=>{
-
-let row=`<tr>
-
-<td>${m.nama}</td>
-<td>${m.berat}</td>
-<td>${m.energi.toFixed(1)}</td>
-<td>${m.protein.toFixed(1)}</td>
-<td>${m.lemak.toFixed(1)}</td>
-<td>${m.karbo.toFixed(1)}</td>
-<td>${m.serat.toFixed(1)}</td>
-<td>${m.kalium.toFixed(1)}</td>
-<td>${m.fosfor.toFixed(1)}</td>
-<td>${m.natrium.toFixed(1)}</td>
-<td>${m.vitA.toFixed(1)}</td>
-<td>${m.b1.toFixed(2)}</td>
-<td>${m.b2.toFixed(2)}</td>
-<td>${m.vitC.toFixed(1)}</td>
-
-<td>
-<button onclick="editMakanan(${i})">Edit</button>
-<button onclick="hapusMakanan(${i})">Hapus</button>
-</td>
-
-</tr>`
-
-tbody.innerHTML+=row
-
-})
-
-hitungTotal()
-
-}
-
-function hapusMakanan(i){
-
-daftarMakanan.splice(i,1)
-
-tampilkanTabel()
-
-}
-
-function editMakanan(i){
-
-let beratBaru=prompt("Masukkan berat baru",daftarMakanan[i].berat)
-
-let makanan=databaseMakanan.find(m=>m.nama==daftarMakanan[i].nama)
-
-let faktor=beratBaru/100
-
-daftarMakanan[i]={
-
-nama:makanan.nama,
-berat:beratBaru,
-
-energi:makanan.energi*faktor,
-protein:makanan.protein*faktor,
-lemak:makanan.lemak*faktor,
-karbo:makanan.karbo*faktor,
-serat:makanan.serat*faktor,
-kalium:makanan.kalium*faktor,
-fosfor:makanan.fosfor*faktor,
-natrium:makanan.natrium*faktor,
-vitA:makanan.vitA*faktor,
-b1:makanan.b1*faktor,
-b2:makanan.b2*faktor,
-vitC:makanan.vitC*faktor
-
-}
-
-tampilkanTabel()
-
-}
-
-function hitungTotal(){
-
-let total={
-
-energi:0,protein:0,lemak:0,karbo:0,serat:0,
-kalium:0,fosfor:0,natrium:0,
-vitA:0,b1:0,b2:0,vitC:0
-
-}
-
-daftarMakanan.forEach(m=>{
-
-for(let key in total){
-
-total[key]+=m[key]
-
-}
-
-})
-
-document.getElementById("totalEnergi").innerText=total.energi.toFixed(1)
-document.getElementById("totalProtein").innerText=total.protein.toFixed(1)
-document.getElementById("totalLemak").innerText=total.lemak.toFixed(1)
-document.getElementById("totalKarbo").innerText=total.karbo.toFixed(1)
-document.getElementById("totalSerat").innerText=total.serat.toFixed(1)
-document.getElementById("totalKalium").innerText=total.kalium.toFixed(1)
-document.getElementById("totalFosfor").innerText=total.fosfor.toFixed(1)
-document.getElementById("totalNatrium").innerText=total.natrium.toFixed(1)
-document.getElementById("totalVitA").innerText=total.vitA.toFixed(1)
-document.getElementById("totalB1").innerText=total.b1.toFixed(2)
-document.getElementById("totalB2").innerText=total.b2.toFixed(2)
-document.getElementById("totalVitC").innerText=total.vitC.toFixed(1)
-
-}
-
-</script>
+<script src="asupanmakan.js"></script>
 
 </body>
 </html>

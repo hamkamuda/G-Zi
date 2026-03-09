@@ -1,8 +1,13 @@
+document.addEventListener("DOMContentLoaded", function(){
+
 let databaseMakanan=[]
 let makananTerpilih=null
 let daftarMakanan=[]
 
 let makananManual = JSON.parse(localStorage.getItem("makananManual")) || []
+
+const input=document.getElementById("searchMakanan")
+const hasil=document.getElementById("hasilPencarian")
 
 fetch("DaftarBahanMakanan.json")
 .then(res=>res.json())
@@ -10,8 +15,9 @@ fetch("DaftarBahanMakanan.json")
 databaseMakanan = data.concat(makananManual)
 })
 
-const input=document.getElementById("searchMakanan")
-const hasil=document.getElementById("hasilPencarian")
+/* =========================
+   SEARCH MAKANAN
+========================= */
 
 input.addEventListener("input",function(){
 
@@ -45,11 +51,18 @@ hasil.appendChild(div)
 
 })
 
-function tambahMakanan(){
+/* =========================
+   TAMBAH MAKANAN
+========================= */
 
-if(!makananTerpilih)return alert("Pilih makanan")
+window.tambahMakanan=function(){
+
+if(!makananTerpilih)return alert("Pilih makanan dulu")
 
 let berat=parseFloat(document.getElementById("beratMakanan").value)
+
+if(!berat)return alert("Masukkan berat makanan")
+
 let faktor=berat/100
 
 let data={
@@ -80,9 +93,14 @@ tampilkanTabel()
 
 }
 
+/* =========================
+   TAMPILKAN TABEL
+========================= */
+
 function tampilkanTabel(){
 
 let tbody=document.getElementById("tabelMakanan")
+
 tbody.innerHTML=""
 
 daftarMakanan.forEach((m,i)=>{
@@ -119,12 +137,23 @@ hitungTotal()
 
 }
 
-function hapusMakanan(i){
+/* =========================
+   HAPUS MAKANAN
+========================= */
+
+window.hapusMakanan=function(i){
+
 daftarMakanan.splice(i,1)
+
 tampilkanTabel()
+
 }
 
-function editMakanan(i){
+/* =========================
+   EDIT MAKANAN
+========================= */
+
+window.editMakanan=function(i){
 
 let beratBaru=prompt("Masukkan berat baru",daftarMakanan[i].berat)
 
@@ -160,6 +189,10 @@ tampilkanTabel()
 
 }
 
+/* =========================
+   TOTAL ZAT GIZI
+========================= */
+
 function hitungTotal(){
 
 let total={
@@ -189,7 +222,11 @@ document.getElementById("totalVitC").innerText=total.vitC.toFixed(1)
 
 }
 
-function tambahManual(){
+/* =========================
+   TAMBAH MAKANAN MANUAL
+========================= */
+
+window.tambahManual=function(){
 
 let bahanBaru={
 
@@ -213,6 +250,7 @@ let bahanBaru={
 }
 
 makananManual.push(bahanBaru)
+
 localStorage.setItem("makananManual",JSON.stringify(makananManual))
 
 databaseMakanan.push(bahanBaru)
@@ -220,3 +258,5 @@ databaseMakanan.push(bahanBaru)
 alert("Bahan makanan tersimpan permanen")
 
 }
+
+})

@@ -2,10 +2,12 @@ let databaseMakanan=[]
 let makananTerpilih=null
 let daftarMakanan=[]
 
+let makananManual = JSON.parse(localStorage.getItem("makananManual")) || []
+
 fetch("DaftarBahanMakanan.json")
 .then(res=>res.json())
 .then(data=>{
-databaseMakanan=data
+databaseMakanan = data.concat(makananManual)
 })
 
 const input=document.getElementById("searchMakanan")
@@ -26,7 +28,6 @@ m["Nama Bahan"].toLowerCase().includes(keyword)
 list.slice(0,15).forEach(m=>{
 
 let div=document.createElement("div")
-
 div.className="itemMakanan"
 div.innerText=m["Nama Bahan"]
 
@@ -49,7 +50,6 @@ function tambahMakanan(){
 if(!makananTerpilih)return alert("Pilih makanan")
 
 let berat=parseFloat(document.getElementById("beratMakanan").value)
-
 let faktor=berat/100
 
 let data={
@@ -57,20 +57,20 @@ let data={
 nama:makananTerpilih["Nama Bahan"],
 berat:berat,
 
-energi:parseFloat(makananTerpilih["Energi (Kkal)"]||0)*faktor,
-protein:parseFloat(makananTerpilih["Protein (g)"]||0)*faktor,
-lemak:parseFloat(makananTerpilih["Lemak (g)"]||0)*faktor,
-karbo:parseFloat(makananTerpilih["Karbohidrat (g)"]||0)*faktor,
-serat:parseFloat(makananTerpilih["Serat (g)"]||0)*faktor,
+energi:(makananTerpilih["Energi (Kkal)"]||0)*faktor,
+protein:(makananTerpilih["Protein (g)"]||0)*faktor,
+lemak:(makananTerpilih["Lemak (g)"]||0)*faktor,
+karbo:(makananTerpilih["Karbohidrat (g)"]||0)*faktor,
+serat:(makananTerpilih["Serat (g)"]||0)*faktor,
 
-kalium:parseFloat(makananTerpilih["Kalium (mg)"]||0)*faktor,
-fosfor:parseFloat(makananTerpilih["Fosfor (mg)"]||0)*faktor,
-natrium:parseFloat(makananTerpilih["Natrium (mg)"]||0)*faktor,
+kalium:(makananTerpilih["Kalium (mg)"]||0)*faktor,
+fosfor:(makananTerpilih["Fosfor (mg)"]||0)*faktor,
+natrium:(makananTerpilih["Natrium (mg)"]||0)*faktor,
 
-vitA:parseFloat(makananTerpilih["Retinol (mcg)"]||0)*faktor,
-b1:parseFloat(makananTerpilih["Thiamin (mg)"]||0)*faktor,
-b2:parseFloat(makananTerpilih["Riboflavin (mg)"]||0)*faktor,
-vitC:parseFloat(makananTerpilih["Vit-C (mg)"]||0)*faktor
+vitA:(makananTerpilih["Retinol (mcg)"]||0)*faktor,
+b1:(makananTerpilih["Thiamin (mg)"]||0)*faktor,
+b2:(makananTerpilih["Riboflavin (mg)"]||0)*faktor,
+vitC:(makananTerpilih["Vit-C (mg)"]||0)*faktor
 
 }
 
@@ -83,7 +83,6 @@ tampilkanTabel()
 function tampilkanTabel(){
 
 let tbody=document.getElementById("tabelMakanan")
-
 tbody.innerHTML=""
 
 daftarMakanan.forEach((m,i)=>{
@@ -121,11 +120,8 @@ hitungTotal()
 }
 
 function hapusMakanan(i){
-
 daftarMakanan.splice(i,1)
-
 tampilkanTabel()
-
 }
 
 function editMakanan(i){
@@ -143,20 +139,20 @@ daftarMakanan[i]={
 nama:makanan["Nama Bahan"],
 berat:beratBaru,
 
-energi:parseFloat(makanan["Energi (Kkal)"]||0)*faktor,
-protein:parseFloat(makanan["Protein (g)"]||0)*faktor,
-lemak:parseFloat(makanan["Lemak (g)"]||0)*faktor,
-karbo:parseFloat(makanan["Karbohidrat (g)"]||0)*faktor,
-serat:parseFloat(makanan["Serat (g)"]||0)*faktor,
+energi:(makanan["Energi (Kkal)"]||0)*faktor,
+protein:(makanan["Protein (g)"]||0)*faktor,
+lemak:(makanan["Lemak (g)"]||0)*faktor,
+karbo:(makanan["Karbohidrat (g)"]||0)*faktor,
+serat:(makanan["Serat (g)"]||0)*faktor,
 
-kalium:parseFloat(makanan["Kalium (mg)"]||0)*faktor,
-fosfor:parseFloat(makanan["Fosfor (mg)"]||0)*faktor,
-natrium:parseFloat(makanan["Natrium (mg)"]||0)*faktor,
+kalium:(makanan["Kalium (mg)"]||0)*faktor,
+fosfor:(makanan["Fosfor (mg)"]||0)*faktor,
+natrium:(makanan["Natrium (mg)"]||0)*faktor,
 
-vitA:parseFloat(makanan["Retinol (mcg)"]||0)*faktor,
-b1:parseFloat(makanan["Thiamin (mg)"]||0)*faktor,
-b2:parseFloat(makanan["Riboflavin (mg)"]||0)*faktor,
-vitC:parseFloat(makanan["Vit-C (mg)"]||0)*faktor
+vitA:(makanan["Retinol (mcg)"]||0)*faktor,
+b1:(makanan["Thiamin (mg)"]||0)*faktor,
+b2:(makanan["Riboflavin (mg)"]||0)*faktor,
+vitC:(makanan["Vit-C (mg)"]||0)*faktor
 
 }
 
@@ -193,42 +189,34 @@ document.getElementById("totalVitC").innerText=total.vitC.toFixed(1)
 
 }
 
-function tambahManual() {
+function tambahManual(){
 
-let bahanBaru = {
-"Nama Bahan": document.getElementById("manualNama").value,
+let bahanBaru={
 
-"Energi (Kkal)": document.getElementById("manualEnergi").value,
-"Protein (g)": document.getElementById("manualProtein").value,
-"Lemak (g)": document.getElementById("manualLemak").value,
-"Karbohidrat (g)": document.getElementById("manualKarbo").value,
-"Serat (g)": document.getElementById("manualSerat").value,
+"Nama Bahan":document.getElementById("manualNama").value,
 
-"Kalium (mg)": document.getElementById("manualKalium").value,
-"Fosfor (mg)": document.getElementById("manualFosfor").value,
-"Natrium (mg)": document.getElementById("manualNatrium").value,
+"Energi (Kkal)":document.getElementById("manualEnergi").value||0,
+"Protein (g)":document.getElementById("manualProtein").value||0,
+"Lemak (g)":document.getElementById("manualLemak").value||0,
+"Karbohidrat (g)":document.getElementById("manualKarbo").value||0,
+"Serat (g)":document.getElementById("manualSerat").value||0,
 
-"Retinol (mcg)": document.getElementById("manualVitA").value,
-"Thiamin (mg)": document.getElementById("manualB1").value,
-"Riboflavin (mg)": document.getElementById("manualB2").value,
-"Vit-C (mg)": document.getElementById("manualVitC").value
-};
+"Kalium (mg)":document.getElementById("manualKalium").value||0,
+"Fosfor (mg)":document.getElementById("manualFosfor").value||0,
+"Natrium (mg)":document.getElementById("manualNatrium").value||0,
 
-dataMakanan.push(bahanBaru);
+"Retinol (mcg)":document.getElementById("manualVitA").value||0,
+"Thiamin (mg)":document.getElementById("manualB1").value||0,
+"Riboflavin (mg)":document.getElementById("manualB2").value||0,
+"Vit-C (mg)":document.getElementById("manualVitC").value||0
 
-alert("Bahan makanan berhasil ditambahkan!");
+}
 
-document.getElementById("manualNama").value="";
-document.getElementById("manualEnergi").value="";
-document.getElementById("manualProtein").value="";
-document.getElementById("manualLemak").value="";
-document.getElementById("manualKarbo").value="";
-document.getElementById("manualSerat").value="";
-document.getElementById("manualKalium").value="";
-document.getElementById("manualFosfor").value="";
-document.getElementById("manualNatrium").value="";
-document.getElementById("manualVitA").value="";
-document.getElementById("manualB1").value="";
-document.getElementById("manualB2").value="";
-document.getElementById("manualVitC").value="";
+makananManual.push(bahanBaru)
+localStorage.setItem("makananManual",JSON.stringify(makananManual))
+
+databaseMakanan.push(bahanBaru)
+
+alert("Bahan makanan tersimpan permanen")
+
 }

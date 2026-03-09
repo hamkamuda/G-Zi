@@ -192,3 +192,43 @@ document.getElementById("totalB2").innerText=total.b2.toFixed(2)
 document.getElementById("totalVitC").innerText=total.vitC.toFixed(1)
 
 }
+
+function tambahManual() {
+
+let bahanBaru = {
+"Nama Bahan": document.getElementById("manualNama").value,
+
+"Energi (Kkal)": document.getElementById("manualEnergi").value,
+"Protein (g)": document.getElementById("manualProtein").value,
+"Lemak (g)": document.getElementById("manualLemak").value,
+"Karbohidrat (g)": document.getElementById("manualKarbo").value,
+"Serat (g)": document.getElementById("manualSerat").value,
+
+"Kalium (mg)": document.getElementById("manualKalium").value,
+"Fosfor (mg)": document.getElementById("manualFosfor").value,
+"Natrium (mg)": document.getElementById("manualNatrium").value,
+
+"Retinol (mcg)": document.getElementById("manualVitA").value,
+"Thiamin (mg)": document.getElementById("manualB1").value,
+"Riboflavin (mg)": document.getElementById("manualB2").value,
+"Vit-C (mg)": document.getElementById("manualVitC").value
+};
+
+dataMakanan.push(bahanBaru);
+
+alert("Bahan makanan berhasil ditambahkan!");
+
+document.getElementById("manualNama").value="";
+document.getElementById("manualEnergi").value="";
+document.getElementById("manualProtein").value="";
+document.getElementById("manualLemak").value="";
+document.getElementById("manualKarbo").value="";
+document.getElementById("manualSerat").value="";
+document.getElementById("manualKalium").value="";
+document.getElementById("manualFosfor").value="";
+document.getElementById("manualNatrium").value="";
+document.getElementById("manualVitA").value="";
+document.getElementById("manualB1").value="";
+document.getElementById("manualB2").value="";
+document.getElementById("manualVitC").value="";
+}

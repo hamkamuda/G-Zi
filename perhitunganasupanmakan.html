@@ -22,7 +22,7 @@ max-width:1200px;
 
 .search-container{
 position:relative;
-width:300px;
+width:350px;
 }
 
 #searchMakanan{
@@ -37,6 +37,7 @@ border:1px solid #ccc;
 width:100%;
 max-height:200px;
 overflow-y:auto;
+z-index:99;
 }
 
 .itemMakanan{
@@ -45,7 +46,7 @@ cursor:pointer;
 }
 
 .itemMakanan:hover{
-background:#f0f0f0;
+background:#eee;
 }
 
 table{
@@ -67,7 +68,7 @@ color:white;
 }
 
 button{
-padding:5px;
+padding:6px 10px;
 cursor:pointer;
 }
 
@@ -78,8 +79,20 @@ padding:15px;
 border-radius:5px;
 }
 
-</style>
+.manual{
+margin-top:40px;
+background:#fafafa;
+padding:20px;
+border-radius:10px;
+}
 
+.manual input{
+width:120px;
+margin:3px;
+padding:5px;
+}
+
+</style>
 </head>
 
 <body>
@@ -96,6 +109,8 @@ border-radius:5px;
 
 </div>
 
+<br>
+
 <input type="number" id="beratMakanan" placeholder="Berat (gram)">
 
 <button onclick="tambahMakanan()">Tambah</button>
@@ -106,19 +121,19 @@ border-radius:5px;
 
 <tr>
 <th>Nama Bahan</th>
-<th>Berat (g)</th>
-<th>Energi (Kkal)</th>
-<th>Protein (g)</th>
-<th>Lemak (g)</th>
-<th>Karbohidrat (g)</th>
-<th>Serat (g)</th>
-<th>Kalium (mg)</th>
-<th>Fosfor (mg)</th>
-<th>Natrium (mg)</th>
-<th>Retinol (mcg)</th>
-<th>Thiamin (mg)</th>
-<th>Riboflavin (mg)</th>
-<th>Vit-C (mg)</th>
+<th>Berat</th>
+<th>Energi</th>
+<th>Protein</th>
+<th>Lemak</th>
+<th>Karbo</th>
+<th>Serat</th>
+<th>Kalium</th>
+<th>Fosfor</th>
+<th>Natrium</th>
+<th>Vit A</th>
+<th>B1</th>
+<th>B2</th>
+<th>Vit C</th>
 <th>Aksi</th>
 </tr>
 
@@ -132,49 +147,51 @@ border-radius:5px;
 
 <h3>Total Zat Gizi</h3>
 
-Energi (Kkal) : <span id="totalEnergi">0</span><br>
-Protein (g) : <span id="totalProtein">0</span><br>
-Lemak (g) : <span id="totalLemak">0</span><br>
-Karbohidrat (g) : <span id="totalKarbo">0</span><br>
-Serat (g) : <span id="totalSerat">0</span><br>
-Kalium (mg) : <span id="totalKalium">0</span><br>
-Fosfor (mg) : <span id="totalFosfor">0</span><br>
-Natrium (mg) : <span id="totalNatrium">0</span><br>
-Retinol (mcg) : <span id="totalVitA">0</span><br>
-Thiamin (mg) : <span id="totalB1">0</span><br>
-Riboflavin (mg) : <span id="totalB2">0</span><br>
-Vit-C (mg) : <span id="totalVitC">0</span>
+Energi : <span id="totalEnergi">0</span> kcal<br>
+Protein : <span id="totalProtein">0</span> g<br>
+Lemak : <span id="totalLemak">0</span> g<br>
+Karbo : <span id="totalKarbo">0</span> g<br>
+Serat : <span id="totalSerat">0</span> g<br>
+Kalium : <span id="totalKalium">0</span> mg<br>
+Fosfor : <span id="totalFosfor">0</span> mg<br>
+Natrium : <span id="totalNatrium">0</span> mg<br>
+Vit A : <span id="totalVitA">0</span> mcg<br>
+Thiamin : <span id="totalB1">0</span> mg<br>
+Riboflavin : <span id="totalB2">0</span> mg<br>
+Vit C : <span id="totalVitC">0</span> mg
 
 </div>
 
-</div>
+<div class="manual">
 
-  <hr>
+<h3>Tambah Bahan Makanan Manual (per 100g)</h3>
 
-<h3>Tambah Bahan Makanan Manual (per 100 gram)</h3>
+<input id="manualNama" placeholder="Nama">
+<input id="manualEnergi" placeholder="Energi">
+<input id="manualProtein" placeholder="Protein">
+<input id="manualLemak" placeholder="Lemak">
+<input id="manualKarbo" placeholder="Karbo">
+<input id="manualSerat" placeholder="Serat">
 
-<input type="text" id="manualNama" placeholder="Nama Bahan">
+<br>
 
-<input type="number" id="manualEnergi" placeholder="Energi (kkal)">
-<input type="number" id="manualProtein" placeholder="Protein (g)">
-<input type="number" id="manualLemak" placeholder="Lemak (g)">
-<input type="number" id="manualKarbo" placeholder="Karbohidrat (g)">
-<input type="number" id="manualSerat" placeholder="Serat (g)">
-
-<input type="number" id="manualKalium" placeholder="Kalium (mg)">
-<input type="number" id="manualFosfor" placeholder="Fosfor (mg)">
-<input type="number" id="manualNatrium" placeholder="Natrium (mg)">
-
-<input type="number" id="manualVitA" placeholder="Retinol / Vit A (mcg)">
-<input type="number" id="manualB1" placeholder="Thiamin (mg)">
-<input type="number" id="manualB2" placeholder="Riboflavin (mg)">
-<input type="number" id="manualVitC" placeholder="Vit C (mg)">
+<input id="manualKalium" placeholder="Kalium">
+<input id="manualFosfor" placeholder="Fosfor">
+<input id="manualNatrium" placeholder="Natrium">
+<input id="manualVitA" placeholder="Vit A">
+<input id="manualB1" placeholder="B1">
+<input id="manualB2" placeholder="B2">
+<input id="manualVitC" placeholder="Vit C">
 
 <br><br>
 
 <button onclick="tambahManual()">Simpan Bahan Manual</button>
 
-<script src="asupanmakan.js"></script>
+</div>
+
+</div>
+
+<script src="script.js"></script>
 
 </body>
 </html>
